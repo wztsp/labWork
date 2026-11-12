@@ -38,7 +38,9 @@ export const HIS_SERVICE_MAP: Record<string, string> = {
   S4009: '申请状态回写',
   S4010: '报告回传',
   S4011: '取消报告',
-  S4020: '批量查询申请'
+  S4014: '撤销检验申请',
+  S4020: '批量查询申请',
+  APPLY: '检验申请接收'
 }
 
 export function getHisLogPage(params: {

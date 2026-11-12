@@ -2,6 +2,7 @@ package com.lis.sample.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.lis.sample.service.HisApplyService;
+import com.lis.sample.service.HisInboundLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class HisApplyController {
 
     private final HisApplyService hisApplyService;
+    private final HisInboundLogService inboundLogService;
 
     /**
      * 接收 HIS 检验申请，落库为检验申请(待采集任务)。
@@ -34,7 +36,10 @@ public class HisApplyController {
                                        @RequestHeader(value = "X-HIS-Token", required = false) String headerToken,
                                        @RequestParam(value = "token", required = false) String paramToken) {
         String token = (headerToken != null && !headerToken.trim().isEmpty()) ? headerToken : paramToken;
-        return hisApplyService.receive(body, token);
+        long start = System.currentTimeMillis();
+        Map<String, Object> result = hisApplyService.receive(body, token);
+        inboundLogService.record("/api/his/apply/receive", body, result, "APPLY", start);
+        return result;
     }
 
     /**
@@ -45,6 +50,9 @@ public class HisApplyController {
                                       @RequestHeader(value = "X-HIS-Token", required = false) String headerToken,
                                       @RequestParam(value = "token", required = false) String paramToken) {
         String token = (headerToken != null && !headerToken.trim().isEmpty()) ? headerToken : paramToken;
-        return hisApplyService.cancel(body, token);
+        long start = System.currentTimeMillis();
+        Map<String, Object> result = hisApplyService.cancel(body, token);
+        inboundLogService.record("/api/his/apply/cancel", body, result, "S4014", start);
+        return result;
     }
 }
