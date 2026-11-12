@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>技师工作站 - LIS 临床实验室信息系统</title>
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <link rel="stylesheet" href="../components.css">
+  <style id="critical-layout">
+    /* ============================================================
+       LIS Shell — Critical Layout (Full Navigation)
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans); color: var(--lis-foreground);
+      background: var(--lis-background); font-size: 14px; line-height: 1.5;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    .app-container { display: flex; flex-direction: column; height: 100vh; width: 100%; overflow: hidden; }
+    .app-header {
+      height: 48px; flex-shrink: 0; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 16px;
+      background: var(--lis-background); border-bottom: 1px solid var(--lis-border);
+    }
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .logo {
+      width: 28px; height: 28px; border-radius: var(--radius-sm);
+      background: var(--lis-primary); color: var(--lis-primary-foreground);
+      font-weight: 700; font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .system-title { font-size: 15px; font-weight: 600; color: var(--lis-foreground); }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .header-datetime { font-size: 12px; color: var(--lis-muted-foreground); }
+    .header-user { display: flex; align-items: center; gap: 6px; }
+    .user-avatar {
+      width: 28px; height: 28px; border-radius: var(--radius-full);
+      background: var(--color-primary-50); color: var(--color-primary-600);
+      font-size: 12px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .user-meta { display: flex; flex-direction: column; line-height: 1.2; }
+    .user-name { font-size: 13px; font-weight: 600; color: var(--lis-foreground); }
+    .user-role { font-size: 11px; color: var(--lis-muted-foreground); }
+
+    .app-body { display: flex; flex: 1; min-height: 0; }
+    .app-sidebar {
+      width: 56px; flex-shrink: 0; background: var(--lis-background);
+      border-right: 1px solid var(--lis-border); padding: 6px 0;
+      overflow-y: auto; overflow-x: hidden;
+    }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+    .nav-item {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; margin: 2px auto;
+      border-radius: var(--radius-md); cursor: pointer; user-select: none;
+      color: var(--lis-muted-foreground); transition: all 0.2s ease;
+      position: relative;
+    }
+    .nav-item:hover { background: var(--color-neutral-50); color: var(--lis-foreground); }
+    .nav-item.active { background: var(--color-primary-50); color: var(--color-primary-600); }
+    .nav-item svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .nav-item .nav-tooltip {
+      position: absolute; left: 48px; top: 50%; transform: translateY(-50%);
+      background: var(--color-neutral-800); color: var(--color-neutral-0);
+      font-size: 12px; padding: 4px 10px; border-radius: var(--radius-sm);
+      white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s;
+      z-index: 100;
+    }
+    .nav-item:hover .nav-tooltip { opacity: 1; }
+
+    /* Workstation fills remaining space, no page padding */
+    .app-main { flex: 1; min-width: 0; padding: 0; overflow: hidden; background: var(--color-neutral-50); }
+  </style>
+
+  <style id="page-styles">
+    /* ============================================================
+       技师工作站 — Technician Workstation
+       Three-column resizable productivity layout
+       Based on actual Vue implementation feature set
+       ============================================================ */
+
+    .tech-page {
+      display: flex; flex-direction: column; height: 100%; overflow: hidden;
+    }
+
+    /* ---------- Top Bar: Filters + Stats + Shortcuts ---------- */
+    .top-bar {
+      flex-shrink: 0; background: var(--lis-card);
+      border-bottom: 1px solid var(--lis-border);
+      padding: 6px 12px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .top-bar-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .top-bar-row.stats-row { justify-content: space-between; }
+    .filter-group { display: flex; align-items: center; gap: 6px; }
+    .filter-label { font-size: 12px; color: var(--lis-muted-foreground); white-space: nowrap; }
+    .filter-input, .filter-select {
+      height: 28px; border: 1px solid var(--lis-border); border-radius: var(--radius-sm);
+      padding: 0 8px; font-size: 12px; background: var(--lis-background);
+      color: var(--lis-foreground); outline: none; font-family: var(--font-sans);
+    }
+    .filter-input:focus, .filter-select:focus { border-color: var(--lis-primary); }
+    .filter-select { appearance: none; padding-right: 22px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 6px center; }
+    .btn-sm {
+      display: inline-flex; align-items: center; gap: 4px;
+      height: 28px; padding: 0 10px; border-radius: var(--radius-sm);
+      font-size: 12px; cursor: pointer; border: none; font-family: var(--font-sans);
+      transition: all 0.2s ease;
+    }
+    .btn-sm svg { width: 14px; height: 14px; }
+    .btn-sm.primary { background: var(--lis-primary); color: var(--lis-primary-foreground); }
+    .btn-sm.primary:hover { background: var(--color-primary-600); }
+    .btn-sm.ghost { background: var(--lis-background); color: var(--lis-muted-foreground); border: 1px solid var(--lis-border); }
+    .btn-sm.ghost:hover { background: var(--color-neutral-50); }
+
+    .top-stats { display: flex; align-items: center; gap: 6px; }
+    .stat-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 10px; border-radius: var(--radius-full);
+      font-size: 12px; border: 1px solid var(--lis-border); background: var(--lis-background);
+    }
+    .stat-chip b { font-weight: 700; }
+    .stat-chip.info { border-color: var(--state-info-border); background: var(--state-info-bg); color: var(--state-info); }
+    .stat-chip.warn { border-color: var(--state-warning-border); background: var(--state-warning-bg); color: var(--state-warning); }
+    .stat-chip.danger { border-color: var(--state-error-border); background: var(--state-error-bg); color: var(--state-error); }
+    .stat-chip.success { border-color: var(--state-success-border); background: var(--state-success-bg); color: var(--state-success); }
+
+    .shortcut-hint { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--lis-muted-foreground); }
+    .shortcut-hint kbd {
+      background: var(--color-neutral-100); border: 1px solid var(--lis-border);
+      border-radius: 3px; padding: 0 4px; font-size: 10px;
+      font-family: var(--font-mono); font-weight: 600; color: var(--lis-foreground);
+    }
+    .hint-sep { color: var(--color-neutral-300); margin: 0 2px; }
+
+    /* ---------- Main Content: Three Columns ---------- */
+    .main-content { flex: 1; display: flex; gap: 4px; overflow: hidden; padding: 4px; }
+
+    .col-panel {
+      background: var(--lis-card); border-radius: var(--radius-md);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .col-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 12px; border-bottom: 1px solid var(--lis-border);
+      flex-shrink: 0; min-height: 34px;
+    }
+    .col-header-title { font-size: 13px; font-weight: 600; color: var(--lis-foreground); display: flex; align-items: center; gap: 6px; }
+    .col-header-actions { display: flex; align-items: center; gap: 4px; }
+
+    /* ---------- Left Column: Specimen List ---------- */
+    .left-col { width: 360px; flex-shrink: 0; }
+
+    .receive-toolbar { padding: 6px 8px; border-bottom: 1px solid var(--lis-border); display: flex; gap: 4px; align-items: center; }
+    .receive-input {
+      flex: 1; height: 30px; border: 1px solid var(--lis-border); border-radius: var(--radius-sm);
+      padding: 0 8px; font-size: 12px; background: var(--lis-background);
+      color: var(--lis-foreground); outline: none; font-family: var(--font-sans);
+    }
+    .receive-input:focus { border-color: var(--lis-primary); }
+    .receive-type {
+      height: 30px; border: 1px solid var(--lis-border); border-radius: var(--radius-sm);
+      padding: 0 6px; font-size: 11px; background: var(--color-neutral-50); cursor: pointer;
+      appearance: none; outline: none;
+    }
+    .receive-btn {
+      height: 30px; padding: 0 12px; background: var(--state-success); color: #fff;
+      border: none; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500;
+      cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap;
+    }
+    .receive-btn svg { width: 14px; height: 14px; }
+
+    .quick-filter { padding: 4px 8px; border-bottom: 1px solid var(--lis-border); }
+    .quick-filter input {
+      width: 100%; height: 26px; border: 1px solid var(--lis-border);
+      border-radius: var(--radius-sm); padding: 0 8px; font-size: 12px;
+      background: var(--lis-background); color: var(--lis-foreground); outline: none;
+    }
+    .quick-filter input:focus { border-color: var(--lis-primary); }
+
+    .specimen-table-wrap { flex: 1; overflow-y: auto; }
+    .specimen-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .specimen-table thead th {
+      background: var(--color-neutral-50); color: var(--lis-muted-foreground);
+      font-weight: 600; font-size: 11px; text-align: left; padding: 5px 6px;
+      border-bottom: 1px solid var(--lis-border); white-space: nowrap;
+      position: sticky; top: 0; z-index: 1;
+    }
+    .specimen-table tbody td { padding: 4px 6px; border-bottom: 1px solid var(--color-neutral-100); color: var(--lis-foreground); white-space: nowrap; }
+    .specimen-table tbody tr { cursor: pointer; }
+    .specimen-table tbody tr:hover { background: var(--color-primary-50); }
+    .specimen-table tbody tr.selected { background: var(--color-primary-100); }
+    .specimen-table tbody tr.urgent { background: var(--state-error-bg); }
+    .specimen-table tbody tr.urgent:hover { background: var(--state-error-border); }
+    .specimen-table .cb { width: 28px; text-align: center; }
+    .specimen-table .cb input { width: 14px; height: 14px; accent-color: var(--lis-primary); cursor: pointer; }
+    .specimen-table .urgent-flag { color: var(--state-error); font-weight: 700; font-size: 14px; }
+    .specimen-table .mono { font-family: var(--font-mono); font-size: 11px; }
+
+    .left-footer { flex-shrink: 0; border-top: 1px solid var(--lis-border); padding: 4px 8px; display: flex; gap: 4px; }
+    .status-tab {
+      padding: 3px 10px; font-size: 11px; border-radius: var(--radius-sm);
+      background: var(--color-neutral-100); color: var(--lis-muted-foreground); cursor: pointer;
+      border: none; font-family: var(--font-sans);
+    }
+    .status-tab.active { background: var(--lis-primary); color: var(--lis-primary-foreground); font-weight: 600; }
+
+    /* ---------- Resize Handle ---------- */
+    .resize-handle {
+      width: 4px; flex-shrink: 0; cursor: col-resize; border-radius: 2px;
+      background: transparent; transition: background 0.2s ease;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .resize-handle:hover { background: var(--color-primary-300); }
+    .resize-handle::after {
+      content: ''; width: 2px; height: 24px; border-radius: 1px;
+      background: var(--color-neutral-300);
+    }
+    .resize-handle:hover::after { background: var(--lis-primary); }
+
+    /* ---------- Middle Column: Patient Info ---------- */
+    .middle-col { width: 300px; flex-shrink: 0; }
+    .middle-col .col-body { flex: 1; overflow-y: auto; padding: 0; }
+
+    .patient-edit-bar { padding: 6px 12px; border-bottom: 1px solid var(--color-neutral-100); display: flex; gap: 6px; }
+
+    .patient-main {
+      display: flex; align-items: center; gap: 10px; padding: 12px;
+      border-bottom: 1px solid var(--color-neutral-100);
+    }
+    .patient-avatar {
+      width: 40px; height: 40px; border-radius: var(--radius-full);
+      background: var(--color-primary-50); color: var(--color-primary-600);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .patient-avatar svg { width: 22px; height: 22px; }
+    .patient-basic { flex: 1; min-width: 0; }
+    .patient-name { font-size: 16px; font-weight: 700; color: var(--lis-foreground); display: flex; align-items: center; gap: 6px; }
+    .patient-age { font-size: 13px; color: var(--lis-muted-foreground); font-weight: 400; }
+    .patient-meta { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+
+    .info-section { padding: 8px 12px; border-bottom: 1px solid var(--color-neutral-100); }
+    .section-title-bar { font-size: 12px; font-weight: 600; color: var(--lis-muted-foreground); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; font-size: 12px; }
+    .info-row .info-label { color: var(--lis-muted-foreground); white-space: nowrap; }
+    .info-row .info-value { font-weight: 500; color: var(--lis-foreground); text-align: right; }
+    .info-row .info-value.fee { color: var(--state-success); font-family: var(--font-mono); }
+    .info-row .info-value.mono { font-family: var(--font-mono); }
+
+    /* ---------- Right Column: Results ---------- */
+    .right-col { flex: 1; min-width: 0; }
+
+    .result-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 12px; border-bottom: 1px solid var(--lis-border); gap: 8px; flex-wrap: wrap;
+    }
+    .toolbar-left { display: flex; align-items: center; gap: 8px; }
+    .toolbar-summary { font-size: 12px; color: var(--lis-muted-foreground); }
+    .toolbar-summary b { font-weight: 700; }
+    .toolbar-summary .green { color: var(--state-success); }
+    .toolbar-summary .orange { color: var(--state-warning); }
+    .toolbar-summary .red { color: var(--state-error); }
+    .toolbar-right { display: flex; align-items: center; gap: 6px; }
+    .toolbar-right .filter-select { height: 26px; font-size: 11px; }
+    .toggle-switch { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--lis-muted-foreground); cursor: pointer; }
+    .toggle-switch input { width: 14px; height: 14px; accent-color: var(--lis-primary); }
+
+    .right-body { flex: 1; overflow-y: auto; padding: 8px 12px; }
+
+    /* ---------- Critical Value Board ---------- */
+    .critical-board {
+      border: 1px solid var(--state-error); border-radius: var(--radius-md);
+      background: var(--state-error-bg); margin-bottom: 12px; overflow: hidden;
+    }
+    .critical-board-header {
+      display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+      background: var(--state-error); color: #fff;
+    }
+    .critical-board-header svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .critical-board-title { font-size: 13px; font-weight: 600; flex: 1; }
+    .critical-board-header .tag-light { background: rgba(255,255,255,0.2); color: #fff; font-size: 11px; padding: 2px 8px; border-radius: var(--radius-sm); }
+    .critical-board-header .btn-confirm-all {
+      background: #fff; color: var(--state-error); border: none;
+      padding: 4px 12px; border-radius: var(--radius-sm); font-size: 12px;
+      font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px;
+    }
+    .critical-board-body { padding: 4px 0; }
+    .critical-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 12px; border-bottom: 1px solid var(--state-error-border);
+    }
+    .critical-item:last-child { border-bottom: none; }
+    .critical-item.confirmed { opacity: 0.5; }
+    .critical-item-main { display: flex; align-items: center; gap: 8px; }
+    .critical-item-main svg { width: 14px; height: 14px; color: var(--state-error); flex-shrink: 0; }
+    .critical-item-name { font-size: 13px; font-weight: 500; color: var(--lis-foreground); }
+    .critical-item-value { font-size: 14px; font-weight: 700; color: var(--state-error); font-family: var(--font-mono); }
+    .critical-item-ref { font-size: 11px; color: var(--lis-muted-foreground); }
+    .critical-item-action { display: flex; align-items: center; gap: 6px; }
+    .btn-confirm {
+      background: var(--state-error); color: #fff; border: none;
+      padding: 4px 12px; border-radius: var(--radius-sm); font-size: 12px;
+      font-weight: 500; cursor: pointer;
+    }
+    .confirmed-tag { font-size: 11px; color: var(--state-success); display: flex; align-items: center; gap: 4px; }
+    .confirmed-tag svg { width: 14px; height: 14px; }
+
+    /* ---------- Result Table (Grouped) ---------- */
+    .result-group { margin-bottom: 12px; }
+    .result-group-title {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 4px 8px; background: var(--color-primary-50);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      border: 1px solid var(--color-primary-100); border-bottom: none;
+    }
+    .result-group-title .group-name { font-size: 12px; font-weight: 600; color: var(--color-primary-600); }
+    .result-group-title .group-count { font-size: 11px; color: var(--lis-muted-foreground); }
+
+    .result-table { width: 100%; border-collapse: collapse; font-size: 12px; border: 1px solid var(--color-primary-100); border-top: none; border-radius: 0 0 var(--radius-sm) var(--radius-sm); overflow: hidden; }
+    .result-table thead th {
+      background: var(--color-neutral-50); color: var(--lis-muted-foreground);
+      font-weight: 600; font-size: 11px; text-align: left; padding: 5px 8px;
+      border-bottom: 1px solid var(--lis-border); white-space: nowrap;
+    }
+    .result-table tbody td { padding: 4px 8px; border-bottom: 1px solid var(--color-neutral-100); color: var(--lis-foreground); }
+    .result-table tbody tr:last-child td { border-bottom: none; }
+    .result-table tbody tr:hover { background: var(--color-primary-50); }
+    .result-table .col-no { width: 36px; text-align: center; color: var(--lis-muted-foreground); }
+    .result-table .col-name { min-width: 120px; font-weight: 500; }
+    .result-table .col-name.critical { color: var(--state-error); }
+    .result-table .col-name.abnormal { color: var(--state-warning); }
+    .result-table .col-en { min-width: 80px; font-size: 10px; color: var(--lis-muted-foreground); font-style: italic; }
+    .result-table .col-result { width: 110px; text-align: center; }
+    .result-input {
+      width: 70px; height: 24px; border: 1px solid var(--lis-border); border-radius: var(--radius-sm);
+      padding: 0 4px; font-size: 12px; text-align: center; background: var(--lis-background);
+      color: var(--lis-foreground); outline: none; font-family: var(--font-mono);
+    }
+    .result-input:focus { border-color: var(--lis-primary); box-shadow: 0 0 0 2px var(--color-primary-100); }
+    .result-input.abnormal { border-color: var(--state-warning); background: var(--state-warning-bg); color: var(--state-warning); font-weight: 600; }
+    .result-input.critical { border-color: var(--state-error); background: var(--state-error-bg); color: var(--state-error); font-weight: 700; }
+    .arrow-flag { font-size: 14px; font-weight: 700; color: var(--state-error); margin-left: 4px; }
+    .result-table .col-unit { width: 70px; text-align: center; font-size: 11px; color: var(--lis-muted-foreground); }
+    .result-table .col-ref { width: 110px; text-align: center; font-size: 11px; color: var(--lis-muted-foreground); }
+    .result-table .col-hint { width: 60px; text-align: center; }
+    .result-table .col-last { width: 90px; text-align: center; font-size: 11px; color: var(--lis-muted-foreground); }
+    .result-table .col-audit { width: 70px; text-align: center; }
+    .result-table .col-knowledge { min-width: 120px; font-size: 11px; color: var(--lis-muted-foreground); }
+    .result-table .col-detail { width: 50px; text-align: center; }
+    .detail-btn {
+      padding: 2px 8px; font-size: 11px; border: 1px solid var(--lis-border);
+      border-radius: var(--radius-sm); background: var(--lis-background);
+      color: var(--lis-primary); cursor: pointer; font-family: var(--font-sans);
+    }
+    .detail-btn:hover { background: var(--color-primary-50); border-color: var(--lis-primary); }
+    .text-green { color: var(--state-success); }
+    .text-orange { color: var(--state-warning); }
+    .text-red { color: var(--state-error); }
+
+    /* ---------- Conclusion ---------- */
+    .conclusion-section { margin-top: 12px; }
+    .conclusion-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--lis-foreground); }
+    .conclusion-input {
+      width: 100%; min-height: 50px; border: 1px solid var(--lis-border); border-radius: var(--radius-md);
+      padding: 8px 12px; font-size: 13px; background: var(--lis-background); color: var(--lis-foreground);
+      outline: none; font-family: var(--font-sans); resize: vertical; line-height: 1.5;
+    }
+    .conclusion-input:focus { border-color: var(--lis-primary); }
+
+    /* ---------- Action Bar ---------- */
+    .action-bar { display: flex; gap: 8px; margin-top: 12px; padding-bottom: 8px; }
+    .btn-action {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 34px; padding: 0 16px; border-radius: var(--radius-md);
+      font-size: 13px; font-weight: 500; cursor: pointer; border: none;
+      font-family: var(--font-sans); transition: all 0.2s ease;
+    }
+    .btn-action svg { width: 16px; height: 16px; }
+    .btn-action.primary { background: var(--lis-primary); color: var(--lis-primary-foreground); }
+    .btn-action.primary:hover { background: var(--color-primary-600); }
+    .btn-action.success { background: var(--state-success); color: #fff; }
+    .btn-action.success:hover { opacity: 0.9; }
+    .btn-action.secondary { background: var(--lis-background); color: var(--lis-foreground); border: 1px solid var(--lis-border); }
+    .btn-action.secondary:hover { border-color: var(--lis-primary); color: var(--lis-primary); }
+
+    /* ---------- Context Menu ---------- */
+    .context-menu-overlay { position: fixed; inset: 0; z-index: 999; }
+    .context-menu {
+      position: fixed; z-index: 1000; min-width: 180px;
+      background: var(--lis-popover); border: 1px solid var(--lis-border);
+      border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      padding: 4px 0; max-height: 400px; overflow-y: auto;
+    }
+    .context-menu-title { font-size: 11px; font-weight: 600; color: var(--lis-muted-foreground); padding: 4px 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .context-menu-item {
+      display: flex; align-items: center; gap: 8px; padding: 6px 12px;
+      font-size: 13px; color: var(--lis-foreground); cursor: pointer; transition: background 0.15s;
+    }
+    .context-menu-item:hover { background: var(--color-primary-50); color: var(--color-primary-600); }
+    .context-menu-item svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .context-menu-item.danger { color: var(--state-error); }
+    .context-menu-item.danger:hover { background: var(--state-error-bg); }
+    .context-menu-sep { height: 1px; background: var(--lis-border); margin: 2px 0; }
+
+    /* ---------- Dialog Overlay ---------- */
+    .dialog-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+    .dialog {
+      background: var(--lis-background); border-radius: var(--radius-lg);
+      width: 420px; max-width: 90vw; box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .dialog-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--lis-border); }
+    .dialog-header h3 { margin: 0; font-size: 16px; font-weight: 600; color: var(--lis-foreground); }
+    .dialog-close { background: none; border: none; cursor: pointer; color: var(--lis-muted-foreground); font-size: 18px; padding: 4px; line-height: 1; }
+    .dialog-body { padding: 20px; }
+    .dialog-footer { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--lis-border); }
+    .dialog-form-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .dialog-form-row .form-label { font-size: 13px; color: var(--lis-muted-foreground); min-width: 70px; }
+    .radio-group { display: flex; gap: 0; border: 1px solid var(--lis-border); border-radius: var(--radius-sm); overflow: hidden; }
+    .radio-btn { padding: 6px 16px; font-size: 13px; cursor: pointer; background: var(--lis-background); color: var(--lis-foreground); border: none; font-family: var(--font-sans); }
+    .radio-btn.active { background: var(--lis-primary); color: var(--lis-primary-foreground); }
+    .dialog-alert { padding: 10px 14px; border-radius: var(--radius-md); font-size: 12px; display: flex; gap: 8px; align-items: flex-start; margin-top: 8px; }
+    .dialog-alert.warn { background: var(--state-warning-bg); color: var(--state-warning); border: 1px solid var(--state-warning-border); }
+    .dialog-alert svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ---------- Checked count badge ---------- */
+    .checked-count { font-size: 11px; color: var(--lis-primary); display: flex; align-items: center; gap: 4px; }
+    .checked-count .clear-btn { color: var(--state-error); cursor: pointer; font-size: 11px; background: none; border: none; }
+
+    /* ---------- Sample Image Section ---------- */
+    .sample-image-section { margin-bottom: 12px; }
+    .sample-image-title { font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--lis-foreground); display: flex; align-items: center; gap: 6px; }
+    .sample-image-count { font-size: 11px; color: var(--lis-muted-foreground); font-weight: 400; }
+    .sample-image-list { display: flex; gap: 8px; flex-wrap: wrap; }
+    .sample-image-item { width: 80px; height: 60px; border: 1px solid var(--lis-border); border-radius: var(--radius-sm); overflow: hidden; cursor: pointer; position: relative; }
+    .sample-image-item:hover { border-color: var(--lis-primary); }
+    .sample-image-thumb { width: 100%; height: 100%; object-fit: cover; display: flex; align-items: center; justify-content: center; background: var(--color-neutral-100); color: var(--lis-muted-foreground); }
+
+    /* ---------- Detail Dialog & Trend Chart ---------- */
+    .detail-dialog { width: 560px; }
+    .detail-container { display: flex; flex-direction: column; gap: 0; }
+    .detail-row { display: flex; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--color-neutral-100); font-size: 13px; }
+    .detail-label { width: 90px; color: var(--lis-muted-foreground); flex-shrink: 0; }
+    .detail-value { font-weight: 500; color: var(--lis-foreground); }
+    .detail-value .text-danger { color: var(--state-error); font-weight: 700; }
+    .trend-section { margin-top: 16px; border-top: 1px solid var(--lis-border); padding-top: 12px; }
+    .trend-title { font-size: 13px; font-weight: 600; color: var(--lis-foreground); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .trend-chart {
+      height: 180px; border: 1px solid var(--lis-border); border-radius: var(--radius-md);
+      background: var(--color-neutral-50); padding: 12px; position: relative;
+      display: flex; align-items: flex-end; gap: 6px;
+    }
+    .trend-bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; height: 100%; justify-content: flex-end; }
+    .trend-bar { width: 100%; max-width: 24px; border-radius: 3px 3px 0 0; transition: opacity 0.2s; position: relative; }
+    .trend-bar.normal { background: var(--state-success); }
+    .trend-bar.high { background: var(--state-warning); }
+    .trend-bar.low { background: var(--color-info-500, #3b82f6); }
+    .trend-bar.critical { background: var(--state-error); }
+    .trend-bar:hover { opacity: 0.8; }
+    .trend-bar .bar-value { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 9px; color: var(--lis-muted-foreground); white-space: nowrap; font-family: var(--font-mono); }
+    .trend-bar-label { font-size: 9px; color: var(--lis-muted-foreground); font-family: var(--font-mono); }
+    .trend-ref-line { position: absolute; left: 12px; right: 12px; border-top: 1px dashed var(--state-success); pointer-events: none; }
+    .trend-ref-label { position: absolute; right: 0; top: -14px; font-size: 9px; color: var(--state-success); background: var(--color-neutral-50); padding: 0 4px; }
+    .trend-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 8px; }
+    .trend-table th { background: var(--color-neutral-50); color: var(--lis-muted-foreground); font-weight: 600; padding: 4px 6px; text-align: left; border-bottom: 1px solid var(--lis-border); }
+    .trend-table td { padding: 3px 6px; border-bottom: 1px solid var(--color-neutral-100); color: var(--lis-foreground); }
+    .trend-table .val-normal { color: var(--state-success); }
+    .trend-table .val-high { color: var(--state-warning); font-weight: 600; }
+    .trend-table .val-low { color: #3b82f6; font-weight: 600; }
+    .trend-table .val-critical { color: var(--state-error); font-weight: 700; }
+
+    /* ---------- Scrollbar ---------- */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--color-neutral-300); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--color-neutral-400); }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo">LIS</div>
+        <span class="system-title">临床实验室信息系统</span>
+      </div>
+      <div class="header-right">
+        <span class="header-datetime">2026-08-16 10:30:00</span>
+        <div class="header-user">
+          <span class="user-avatar">张</span>
+          <div class="user-meta">
+            <span class="user-name">张三</span>
+            <span class="user-role">检验技师</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-body">
+      <!-- Compact Sidebar -->
+      <aside class="app-sidebar">
+        <nav class="sidebar-nav">
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="nav-tooltip">首页</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8v8"/><path d="M11 8v8"/><path d="M15 8v8"/><path d="M19 8v8"/></svg><span class="nav-tooltip">标本采集</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7.5" cy="18.5" r="2.5"/><circle cx="17.5" cy="18.5" r="2.5"/></svg><span class="nav-tooltip">标本送检</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="nav-tooltip">标本签收</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span class="nav-tooltip">标本核收</span></a>
+          <a class="nav-item active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span class="nav-tooltip">技师工作站</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span class="nav-tooltip">报告审核</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="nav-tooltip">报告查询</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg><span class="nav-tooltip">日常质控</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5"/><path d="M3 12h18"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg><span class="nav-tooltip">仪器状态</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg><span class="nav-tooltip">试剂看板</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="nav-tooltip">员工档案</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="8"/><rect x="12" y="6" width="3" height="12"/><rect x="17" y="13" width="3" height="5"/></svg><span class="nav-tooltip">工作量统计</span></a>
+          <a class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg><span class="nav-tooltip">系统管理</span></a>
+        </nav>
+      </aside>
+
+      <!-- Main: Technician Workstation -->
+      <main class="app-main">
+        <div class="tech-page">
+
+          <!-- ========== Top Bar: Filters + Stats + Shortcuts ========== -->
+          <div class="top-bar">
+            <div class="top-bar-row">
+              <div class="filter-group">
+                <span class="filter-label">核收仪器</span>
+                <select class="filter-select" style="width: 150px;">
+                  <option>Sysmex XN-9000</option>
+                  <option>Beckman AU5800</option>
+                  <option>Roche cobas 8000</option>
+                  <option>全部仪器</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <span class="filter-label">核收日期</span>
+                <input type="text" class="filter-input" style="width: 110px;" value="2026-08-16" />
+              </div>
+              <div class="filter-group">
+                <span class="filter-label">关键字</span>
+                <input type="text" class="filter-input" style="width: 120px;" placeholder="条码号/姓名" />
+              </div>
+              <div class="filter-group">
+                <span class="filter-label">就诊类型</span>
+                <select class="filter-select" style="width: 70px;">
+                  <option>全部</option>
+                  <option>门诊</option>
+                  <option>住院</option>
+                  <option>体检</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <span class="filter-label">状态</span>
+                <select class="filter-select" style="width: 70px;">
+                  <option>全部</option>
+                  <option>待审</option>
+                  <option>终审</option>
+                  <option>急诊</option>
+                  <option>已完成</option>
+                </select>
+              </div>
+              <button class="btn-sm primary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                查询
+              </button>
+              <button class="btn-sm ghost">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                重置
+              </button>
+            </div>
+            <div class="top-bar-row stats-row">
+              <div class="top-stats">
+                <span class="stat-chip info">总数: <b>86</b></span>
+                <span class="stat-chip warn">待审: <b>23</b></span>
+                <span class="stat-chip danger">急诊: <b>5</b></span>
+                <span class="stat-chip success">已审: <b>58</b></span>
+              </div>
+              <div class="shortcut-hint">
+                <span><kbd>Ctrl+S</kbd> 保存</span>
+                <span class="hint-sep">|</span>
+                <span><kbd>F4</kbd> 终审</span>
+                <span class="hint-sep">|</span>
+                <span><kbd>Alt+↑↓</kbd> 切换标本</span>
+                <span class="hint-sep">|</span>
+                <span><kbd>F8</kbd> 危急值/核收</span>
+                <span class="hint-sep">|</span>
+                <span><kbd>F9</kbd> 批量审核</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== Three-Column Main Content ========== -->
+          <div class="main-content">
+
+            <!-- ===== Left Column: Specimen List ===== -->
+            <div class="col-panel left-col">
+              <div class="col-header">
+                <span class="col-header-title">标本列表</span>
+                <div class="col-header-actions">
+                  <span class="checked-count">已选 <b>3</b> <button class="clear-btn">清空</button></span>
+                  <button class="btn-sm ghost" style="height: 24px; padding: 0 6px;">列</button>
+                  <select class="filter-select" style="height: 24px; width: 70px; font-size: 11px;">
+                    <option>全部状态</option>
+                    <option>待审</option>
+                    <option>终审</option>
+                    <option>已完成</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Receive toolbar -->
+              <div class="receive-toolbar">
+                <input type="text" class="receive-input" placeholder="扫描/输入条码号回车核收" />
+                <select class="receive-type">
+                  <option>条码</option>
+                  <option>就诊号</option>
+                  <option>门诊号</option>
+                  <option>住院号</option>
+                </select>
+                <button class="receive-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  核收
+                </button>
+              </div>
+
+              <!-- Quick filter -->
+              <div class="quick-filter">
+                <input type="text" placeholder="快速筛选..." />
+              </div>
+
+              <!-- Specimen table -->
+              <div class="specimen-table-wrap">
+                <table class="specimen-table">
+                  <thead>
+                    <tr>
+                      <th class="cb"><input type="checkbox" /></th>
+                      <th>姓名</th>
+                      <th>性别</th>
+                      <th>年龄</th>
+                      <th>标本号</th>
+                      <th>条码号</th>
+                      <th>类型</th>
+                      <th>科室</th>
+                      <th>项目</th>
+                      <th>急</th>
+                      <th>核收时间</th>
+                      <th>状态</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="selected">
+                      <td class="cb"><input type="checkbox" checked /></td>
+                      <td>张三</td>
+                      <td>男</td>
+                      <td>35</td>
+                      <td class="mono">S001</td>
+                      <td class="mono">20260816001</td>
+                      <td>门诊</td>
+                      <td>内科</td>
+                      <td>血常规</td>
+                      <td></td>
+                      <td class="mono">10:25</td>
+                      <td><span class="tag tag-warning">待审</span></td>
+                    </tr>
+                    <tr class="urgent">
+                      <td class="cb"><input type="checkbox" checked /></td>
+                      <td>李四</td>
+                      <td>女</td>
+                      <td>58</td>
+                      <td class="mono">S002</td>
+                      <td class="mono">20260816002</td>
+                      <td>住院</td>
+                      <td>急诊科</td>
+                      <td>生化全套</td>
+                      <td><span class="urgent-flag">!</span></td>
+                      <td class="mono">10:20</td>
+                      <td><span class="tag tag-error">急诊</span></td>
+                    </tr>
+                    <tr>
+                      <td class="cb"><input type="checkbox" checked /></td>
+                      <td>王五</td>
+                      <td>男</td>
+                      <td>42</td>
+                      <td class="mono">S003</td>
+                      <td class="mono">20260816003</td>
+                      <td>门诊</td>
+                      <td>外科</td>
+                      <td>凝血四项</td>
+                      <td></td>
+                      <td class="mono">10:15</td>
+                      <td><span class="tag tag-warning">待审</span></td>
+                    </tr>
+                    <tr>
+                      <td class="cb"><input type="checkbox" /></td>
+                      <td>赵六</td>
+                      <td>女</td>
+                      <td>28</td>
+                      <td class="mono">S004</td>
+                      <td class="mono">20260816004</td>
+                      <td>体检</td>
+                      <td>体检科</td>
+                      <td>免疫五项</td>
+                      <td></td>
+                      <td class="mono">10:10</td>
+                      <td><span class="tag tag-success">终审</span></td>
+                    </tr>
+                    <tr>
+                      <td class="cb"><input type="checkbox" /></td>
+                      <td>钱七</td>
+                      <td>男</td>
+                      <td>65</td>
+                      <td class="mono">S005</td>
+                      <td class="mono">20260816005</td>
+                      <td>住院</td>
+                      <td>心内科</td>
+                      <td>心肌酶谱</td>
+                      <td></td>
+                      <td class="mono">10:05</td>
+                      <td><span class="tag tag-success">已完成</span></td>
+                    </tr>
+                    <tr>
+                      <td class="cb"><input type="checkbox" /></td>
+                      <td>孙八</td>
+                      <td>女</td>
+                      <td>33</td>
+                      <td class="mono">S006</td>
+                      <td class="mono">20260816006</td>
+                      <td>门诊</td>
+                      <td>妇科</td>
+                      <td>尿常规</td>
+                      <td></td>
+                      <td class="mono">10:00</td>
+                      <td><span class="tag tag-warning">待审</span></td>
+                    </tr>
+                    <tr>
+                      <td class="cb"><input type="checkbox" /></td>
+                      <td>周九</td>
+                      <td>男</td>
+                      <td>47</td>
+                      <td class="mono">S007</td>
+                      <td class="mono">20260816007</td>
+                      <td>住院</td>
+                      <td>消化科</td>
+                      <td>肝功能</td>
+                      <td></td>
+                      <td class="mono">09:55</td>
+                      <td><span class="tag tag-success">终审</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Status tabs -->
+              <div class="left-footer">
+                <button class="status-tab active">全部(86)</button>
+                <button class="status-tab">待审(23)</button>
+                <button class="status-tab">已完成(58)</button>
+              </div>
+            </div>
+
+            <!-- Resize Handle -->
+            <div class="resize-handle"></div>
+
+            <!-- ===== Middle Column: Patient Info ===== -->
+            <div class="col-panel middle-col">
+              <div class="col-header">
+                <span class="col-header-title">患者信息</span>
+                <span class="tag tag-warning">待审</span>
+              </div>
+              <div class="col-body">
+                <div class="patient-edit-bar">
+                  <button class="btn-sm primary" style="height: 26px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    修改标本信息
+                  </button>
+                </div>
+
+                <!-- Patient main -->
+                <div class="patient-main">
+                  <div class="patient-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  </div>
+                  <div class="patient-basic">
+                    <div class="patient-name">
+                      张三
+                      <span class="tag tag-primary" style="font-size: 11px;">男</span>
+                      <span class="patient-age">35岁</span>
+                    </div>
+                    <div class="patient-meta">
+                      <span class="tag tag-info" style="font-size: 11px;">门诊</span>
+                      <span class="tag tag-neutral" style="font-size: 11px;">内科</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Basic info -->
+                <div class="info-section">
+                  <div class="section-title-bar">基本信息</div>
+                  <div class="info-row"><span class="info-label">就诊号</span><span class="info-value mono">M20260816001</span></div>
+                  <div class="info-row"><span class="info-label">身份证</span><span class="info-value mono">3201**********1234</span></div>
+                  <div class="info-row"><span class="info-label">联系电话</span><span class="info-value mono">138****5678</span></div>
+                  <div class="info-row"><span class="info-label">住址</span><span class="info-value">南京市鼓楼区</span></div>
+                </div>
+
+                <!-- Application info -->
+                <div class="info-section">
+                  <div class="section-title-bar">申请信息</div>
+                  <div class="info-row"><span class="info-label">开单医生</span><span class="info-value">王医生</span></div>
+                  <div class="info-row"><span class="info-label">送检科室</span><span class="info-value">内科</span></div>
+                  <div class="info-row"><span class="info-label">临床诊断</span><span class="info-value">发热待查</span></div>
+                  <div class="info-row"><span class="info-label">申请时间</span><span class="info-value mono">10:15:30</span></div>
+                </div>
+
+                <!-- Specimen info -->
+                <div class="info-section">
+                  <div class="section-title-bar">标本信息</div>
+                  <div class="info-row"><span class="info-label">标本号</span><span class="info-value mono">S001</span></div>
+                  <div class="info-row"><span class="info-label">条码号</span><span class="info-value mono">20260816001</span></div>
+                  <div class="info-row"><span class="info-label">标本类型</span><span class="info-value">全血</span></div>
+                  <div class="info-row"><span class="info-label">核收仪器</span><span class="info-value">Sysmex XN-9000</span></div>
+                  <div class="info-row"><span class="info-label">采集时间</span><span class="info-value mono">10:20:00</span></div>
+                  <div class="info-row"><span class="info-label">核收时间</span><span class="info-value mono">10:25:00</span></div>
+                  <div class="info-row"><span class="info-label">检验时间</span><span class="info-value mono">10:28:00</span></div>
+                  <div class="info-row"><span class="info-label">报告时间</span><span class="info-value">-</span></div>
+                </div>
+
+                <!-- Personnel records -->
+                <div class="info-section">
+                  <div class="section-title-bar">人员记录</div>
+                  <div class="info-row"><span class="info-label">采集人</span><span class="info-value">李护士</span></div>
+                  <div class="info-row"><span class="info-label">核收人</span><span class="info-value">张三</span></div>
+                  <div class="info-row"><span class="info-label">检验人</span><span class="info-value">张三</span></div>
+                  <div class="info-row"><span class="info-label">报告人</span><span class="info-value">-</span></div>
+                </div>
+
+                <!-- Fee info -->
+                <div class="info-section">
+                  <div class="section-title-bar">费用信息</div>
+                  <div class="info-row"><span class="info-label">应收费用</span><span class="info-value fee">¥45.00</span></div>
+                  <div class="info-row"><span class="info-label">实收费用</span><span class="info-value fee">¥45.00</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Resize Handle -->
+            <div class="resize-handle"></div>
+
+            <!-- ===== Right Column: Results ===== -->
+            <div class="col-panel right-col">
+              <div class="col-header">
+                <span class="col-header-title">检验结果 <span style="font-weight: 400; color: var(--lis-muted-foreground);">(共 12 项)</span></span>
+                <div class="col-header-actions">
+                  <button class="btn-sm ghost" style="height: 24px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    刷新
+                  </button>
+                  <button class="btn-sm ghost" style="height: 24px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    打印
+                  </button>
+                </div>
+              </div>
+
+              <!-- Result toolbar -->
+              <div class="result-toolbar">
+                <div class="toolbar-left">
+                  <span class="tag tag-primary" style="font-size: 11px;">血常规</span>
+                  <span class="toolbar-summary">
+                    正常 <b class="green">8</b> 项 ·
+                    异常 <b class="orange">3</b> 项 ·
+                    危急 <b class="red">1</b> 项
+                  </span>
+                </div>
+                <div class="toolbar-right">
+                  <select class="filter-select">
+                    <option>全部检验项目</option>
+                    <option>血常规</option>
+                    <option>生化全套</option>
+                  </select>
+                  <label class="toggle-switch"><input type="checkbox" checked /> 分组</label>
+                  <label class="toggle-switch"><input type="checkbox" /> 双列</label>
+                  <button class="btn-sm ghost" style="height: 24px; padding: 0 6px;">列</button>
+                </div>
+              </div>
+
+              <div class="right-body">
+
+                <!-- ===== Critical Value Board ===== -->
+                <div class="critical-board">
+                  <div class="critical-board-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <span class="critical-board-title">危急值处理 (1/2)</span>
+                    <button class="btn-confirm-all">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      全部确认 (F8)
+                    </button>
+                  </div>
+                  <div class="critical-board-body">
+                    <div class="critical-item">
+                      <div class="critical-item-main">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <span class="critical-item-name">GLU 葡萄糖</span>
+                        <span class="critical-item-value">18.5 mmol/L</span>
+                        <span class="critical-item-ref">参考: 3.9-6.1</span>
+                      </div>
+                      <div class="critical-item-action">
+                        <button class="btn-confirm">确认危急值</button>
+                      </div>
+                    </div>
+                    <div class="critical-item confirmed">
+                      <div class="critical-item-main">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <span class="critical-item-name">K+ 血钾</span>
+                        <span class="critical-item-value">6.8 mmol/L</span>
+                        <span class="critical-item-ref">参考: 3.5-5.5</span>
+                      </div>
+                      <div class="critical-item-action">
+                        <span class="confirmed-tag">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                          已确认 10:30
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ===== Sample Images (morphology) ===== -->
+                <div class="sample-image-section">
+                  <div class="sample-image-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>标本图像</span>
+                    <span class="sample-image-count">3 张</span>
+                  </div>
+                  <div class="sample-image-list">
+                    <div class="sample-image-item" title="血涂片 1">
+                      <div class="sample-image-thumb">IMG</div>
+                    </div>
+                    <div class="sample-image-item" title="血涂片 2">
+                      <div class="sample-image-thumb">IMG</div>
+                    </div>
+                    <div class="sample-image-item" title="血涂片 3">
+                      <div class="sample-image-thumb">IMG</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ===== Grouped Result Tables ===== -->
+
+                <!-- Group: 血常规 -->
+                <div class="result-group">
+                  <div class="result-group-title">
+                    <span class="group-name">血常规</span>
+                    <span class="group-count">8 项</span>
+                  </div>
+                  <table class="result-table">
+                    <thead>
+                      <tr>
+                        <th class="col-no">NO.</th>
+                        <th>指标名称</th>
+                        <th class="col-en">英文名</th>
+                        <th class="col-result">结果</th>
+                        <th class="col-unit">单位</th>
+                        <th class="col-ref">参考范围</th>
+                        <th class="col-hint">提示</th>
+                        <th class="col-last">上次结果</th>
+                        <th class="col-last">上次时间</th>
+                        <th class="col-audit">自动审核</th>
+                        <th class="col-detail">详情</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="col-no">1</td>
+                        <td class="col-name">白细胞</td>
+                        <td class="col-en">WBC</td>
+                        <td class="col-result"><input type="text" class="result-input" value="6.5" /></td>
+                        <td class="col-unit">10^9/L</td>
+                        <td class="col-ref">4.0-10.0</td>
+                        <td class="col-hint"><span class="text-green">正常</span></td>
+                        <td class="col-last">5.8</td>
+                        <td class="col-last mono">08-10</td>
+                        <td class="col-audit"><span class="tag tag-success" style="font-size: 10px;">通过</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                      <tr>
+                        <td class="col-no">2</td>
+                        <td class="col-name">红细胞</td>
+                        <td class="col-en">RBC</td>
+                        <td class="col-result"><input type="text" class="result-input" value="4.52" /></td>
+                        <td class="col-unit">10^12/L</td>
+                        <td class="col-ref">3.5-5.5</td>
+                        <td class="col-hint"><span class="text-green">正常</span></td>
+                        <td class="col-last">4.38</td>
+                        <td class="col-last mono">08-10</td>
+                        <td class="col-audit"><span class="tag tag-success" style="font-size: 10px;">通过</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                      <tr>
+                        <td class="col-no">3</td>
+                        <td class="col-name">血红蛋白</td>
+                        <td class="col-en">HGB</td>
+                        <td class="col-result"><input type="text" class="result-input" value="135" /></td>
+                        <td class="col-unit">g/L</td>
+                        <td class="col-ref">120-160</td>
+                        <td class="col-hint"><span class="text-green">正常</span></td>
+                        <td class="col-last">142</td>
+                        <td class="col-last mono">08-10</td>
+                        <td class="col-audit"><span class="tag tag-success" style="font-size: 10px;">通过</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                      <tr>
+                        <td class="col-no">4</td>
+                        <td class="col-name">血小板</td>
+                        <td class="col-en">PLT</td>
+                        <td class="col-result"><input type="text" class="result-input" value="220" /></td>
+                        <td class="col-unit">10^9/L</td>
+                        <td class="col-ref">100-300</td>
+                        <td class="col-hint"><span class="text-green">正常</span></td>
+                        <td class="col-last">198</td>
+                        <td class="col-last mono">08-10</td>
+                        <td class="col-audit"><span class="tag tag-success" style="font-size: 10px;">通过</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                      <tr>
+                        <td class="col-no">5</td>
+                        <td class="col-name abnormal">中性粒细胞百分比</td>
+                        <td class="col-en">NEUT%</td>
+                        <td class="col-result"><input type="text" class="result-input abnormal" value="78.5" /><span class="arrow-flag">↑</span></td>
+                        <td class="col-unit">%</td>
+                        <td class="col-ref">40-75</td>
+                        <td class="col-hint"><span class="text-orange">↑</span></td>
+                        <td class="col-last">65.2</td>
+                        <td class="col-last mono">08-10</td>
+                        <td class="col-audit"><span class="tag tag-warning" style="font-size: 10px;">异常</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                      <tr>
+                        <td class="col-no">6</td>
+                        <td class="col-name">淋巴细胞百分比</td>
+                        <td class="col-en">LYMPH%</td>
+                        <td class="col-result"><input type="text" class="result-input abnormal" value="15.2" /><span class="arrow-flag">↓</span></td>
+                        <td class="col-unit">%</td>
+                        <td class="col-ref">20-50</td>
+                        <td class="col-hint"><span class="text-orange">↓</span></td>
+                        <td class="col-last">25.8</td>
+                        <td class="col-last mono">08-10</td>
+                        <td class="col-audit"><span class="tag tag-warning" style="font-size: 10px;">异常</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                      <tr>
+                        <td class="col-no">7</td>
+                        <td class="col-name">单核细胞百分比</td>
+                        <td class="col-en">MONO%</td>
+                        <td class="col-result"><input type="text" class="result-input" value="5.8" /></td>
+                        <td class="col-unit">%</td>
+                        <td class="col-ref">3-10</td>
+                        <td class="col-hint"><span class="text-green">正常</span></td>
+                        <td class="col-last">7.1</td>
+                        <td class="col-last mono">08-10</td>
+                        <td class="col-audit"><span class="tag tag-success" style="font-size: 10px;">通过</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                      <tr>
+                        <td class="col-no">8</td>
+                        <td class="col-name">嗜酸性粒细胞百分比</td>
+                        <td class="col-en">EOS%</td>
+                        <td class="col-result"><input type="text" class="result-input" value="0.5" /></td>
+                        <td class="col-unit">%</td>
+                        <td class="col-ref">0.5-5</td>
+                        <td class="col-hint"><span class="text-green">正常</span></td>
+                        <td class="col-last">2.1</td>
+                        <td class="col-last mono">08-10</td>
+                        <td class="col-audit"><span class="tag tag-success" style="font-size: 10px;">通过</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Group: 生化全套 -->
+                <div class="result-group">
+                  <div class="result-group-title">
+                    <span class="group-name">生化全套</span>
+                    <span class="group-count">4 项</span>
+                  </div>
+                  <table class="result-table">
+                    <thead>
+                      <tr>
+                        <th class="col-no">NO.</th>
+                        <th>指标名称</th>
+                        <th class="col-en">英文名</th>
+                        <th class="col-result">结果</th>
+                        <th class="col-unit">单位</th>
+                        <th class="col-ref">参考范围</th>
+                        <th class="col-hint">提示</th>
+                        <th class="col-last">上次结果</th>
+                        <th class="col-last">上次时间</th>
+                        <th class="col-audit">自动审核</th>
+                        <th class="col-detail">详情</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="col-no">1</td>
+                        <td class="col-name critical">葡萄糖</td>
+                        <td class="col-en">GLU</td>
+                        <td class="col-result"><input type="text" class="result-input critical" value="18.5" /><span class="arrow-flag">↑</span></td>
+                        <td class="col-unit">mmol/L</td>
+                        <td class="col-ref">3.9-6.1</td>
+                        <td class="col-hint"><span class="tag tag-error" style="font-size: 10px;">危急</span></td>
+                        <td class="col-last">5.8</td>
+                        <td class="col-last mono">08-05</td>
+                        <td class="col-audit"><span class="tag tag-warning" style="font-size: 10px;">异常</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                      <tr>
+                        <td class="col-no">2</td>
+                        <td class="col-name">谷丙转氨酶</td>
+                        <td class="col-en">ALT</td>
+                        <td class="col-result"><input type="text" class="result-input abnormal" value="45" /><span class="arrow-flag">↑</span></td>
+                        <td class="col-unit">U/L</td>
+                        <td class="col-ref">0-40</td>
+                        <td class="col-hint"><span class="text-orange">↑</span></td>
+                        <td class="col-last">32</td>
+                        <td class="col-last mono">08-05</td>
+                        <td class="col-audit"><span class="tag tag-success" style="font-size: 10px;">通过</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                      <tr>
+                        <td class="col-no">3</td>
+                        <td class="col-name">谷草转氨酶</td>
+                        <td class="col-en">AST</td>
+                        <td class="col-result"><input type="text" class="result-input" value="28" /></td>
+                        <td class="col-unit">U/L</td>
+                        <td class="col-ref">0-40</td>
+                        <td class="col-hint"><span class="text-green">正常</span></td>
+                        <td class="col-last">25</td>
+                        <td class="col-last mono">08-05</td>
+                        <td class="col-audit"><span class="tag tag-success" style="font-size: 10px;">通过</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                      <tr>
+                        <td class="col-no">4</td>
+                        <td class="col-name">总胆红素</td>
+                        <td class="col-en">TBIL</td>
+                        <td class="col-result"><input type="text" class="result-input" value="12.5" /></td>
+                        <td class="col-unit">μmol/L</td>
+                        <td class="col-ref">3.4-20.5</td>
+                        <td class="col-hint"><span class="text-green">正常</span></td>
+                        <td class="col-last">14.2</td>
+                        <td class="col-last mono">08-05</td>
+                        <td class="col-audit"><span class="tag tag-success" style="font-size: 10px;">通过</span></td>
+                        <td class="col-detail"><button class="detail-btn">详情</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- ===== Conclusion ===== -->
+                <div class="conclusion-section">
+                  <div class="conclusion-title">检验结论 / 建议</div>
+                  <textarea class="conclusion-input" placeholder="请输入检验结论和医生建议...">血糖明显升高，建议复查并结合临床进一步检查。</textarea>
+                </div>
+
+                <!-- ===== Action Bar ===== -->
+                <div class="action-bar">
+                  <button class="btn-action primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    保存结果
+                  </button>
+                  <button class="btn-action success">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    终审通过
+                  </button>
+                  <button class="btn-action secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    打印报告
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== Right-Click Context Menu ========== -->
+          <div class="context-menu-overlay"></div>
+          <div class="context-menu" style="left: 380px; top: 320px;">
+            <div class="context-menu-title">标本操作</div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>
+              撤销核收
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              让步核收
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+              修改标本号
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              仪器人员签到
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              收藏夹
+            </div>
+            <div class="context-menu-sep"></div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              标本复制
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              批量导入
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c.552 0 1-.448 1-1V5c0-.552-.448-1-1-1H3c-.552 0-1 .448-1 1v6c0 .552.448 1 1 1"/></svg>
+              自动审核签到
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              标本拆分
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              撤销拆分
+            </div>
+            <div class="context-menu-sep"></div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              批量审核(F9)
+            </div>
+            <div class="context-menu-item danger">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              批量撤销审核
+            </div>
+            <div class="context-menu-item danger">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              取消完成
+            </div>
+            <div class="context-menu-sep"></div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              批量修改结果
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              批量修改检验人
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              转为质控标本
+            </div>
+            <div class="context-menu-item danger">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              取消质控结果
+            </div>
+            <div class="context-menu-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              批量补打条码
+            </div>
+            <div class="context-menu-item danger">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+              标本销毁
+            </div>
+          </div>
+
+          <!-- ========== Audit Dialog ========== -->
+          <div class="dialog-overlay">
+            <div class="dialog">
+              <div class="dialog-header">
+                <h3>报告终审</h3>
+                <button class="dialog-close">&times;</button>
+              </div>
+              <div class="dialog-body">
+                <div class="dialog-form-row">
+                  <span class="form-label">终审结果</span>
+                  <div class="radio-group">
+                    <button class="radio-btn active">通过</button>
+                    <button class="radio-btn">驳回</button>
+                  </div>
+                </div>
+                <div class="dialog-alert warn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <span>终审通过后报告将自动完成，临床端可见，无需再单独发布。</span>
+                </div>
+              </div>
+              <div class="dialog-footer">
+                <button class="btn-action secondary">取消</button>
+                <button class="btn-action primary">确认终审</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== Result Detail Dialog with History Trend ========== -->
+          <div class="dialog-overlay">
+            <div class="dialog detail-dialog">
+              <div class="dialog-header">
+                <h3>指标详情</h3>
+                <button class="dialog-close">&times;</button>
+              </div>
+              <div class="dialog-body">
+                <div class="detail-container">
+                  <div class="detail-row"><span class="detail-label">指标代码</span><span class="detail-value">GLU</span></div>
+                  <div class="detail-row"><span class="detail-label">指标名称</span><span class="detail-value">葡萄糖</span></div>
+                  <div class="detail-row"><span class="detail-label">结果值</span><span class="detail-value">18.5 <b class="text-danger">↑↑</b></span></div>
+                  <div class="detail-row"><span class="detail-label">单位</span><span class="detail-value">mmol/L</span></div>
+                  <div class="detail-row"><span class="detail-label">参考范围</span><span class="detail-value">3.9-6.1</span></div>
+                  <div class="detail-row"><span class="detail-label">检验仪器</span><span class="detail-value">Beckman AU5800</span></div>
+                  <div class="detail-row"><span class="detail-label">检验项目</span><span class="detail-value">生化全套</span></div>
+                  <div class="detail-row"><span class="detail-label">分类</span><span class="detail-value">常规</span></div>
+                </div>
+
+                <!-- History Trend Chart -->
+                <div class="trend-section">
+                  <div class="trend-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                    历史趋势 (近 8 次结果)
+                  </div>
+                  <div class="trend-chart">
+                    <div class="trend-ref-line" style="bottom: 35%;"></div>
+                    <span class="trend-ref-label" style="bottom: 35%;">均值 5.9</span>
+                    <div class="trend-bar-group">
+                      <div class="trend-bar normal" style="height: 28%;"><span class="bar-value">5.2</span></div>
+                      <span class="trend-bar-label">07-20</span>
+                    </div>
+                    <div class="trend-bar-group">
+                      <div class="trend-bar normal" style="height: 32%;"><span class="bar-value">5.8</span></div>
+                      <span class="trend-bar-label">07-28</span>
+                    </div>
+                    <div class="trend-bar-group">
+                      <div class="trend-bar normal" style="height: 30%;"><span class="bar-value">5.5</span></div>
+                      <span class="trend-bar-label">08-02</span>
+                    </div>
+                    <div class="trend-bar-group">
+                      <div class="trend-bar normal" style="height: 34%;"><span class="bar-value">6.0</span></div>
+                      <span class="trend-bar-label">08-05</span>
+                    </div>
+                    <div class="trend-bar-group">
+                      <div class="trend-bar high" style="height: 52%;"><span class="bar-value">8.2</span></div>
+                      <span class="trend-bar-label">08-08</span>
+                    </div>
+                    <div class="trend-bar-group">
+                      <div class="trend-bar high" style="height: 65%;"><span class="bar-value">10.5</span></div>
+                      <span class="trend-bar-label">08-12</span>
+                    </div>
+                    <div class="trend-bar-group">
+                      <div class="trend-bar critical" style="height: 82%;"><span class="bar-value">15.3</span></div>
+                      <span class="trend-bar-label">08-14</span>
+                    </div>
+                    <div class="trend-bar-group">
+                      <div class="trend-bar critical" style="height: 95%;"><span class="bar-value">18.5</span></div>
+                      <span class="trend-bar-label">08-16</span>
+                    </div>
+                  </div>
+                  <table class="trend-table">
+                    <thead>
+                      <tr><th>日期</th><th>结果</th><th>参考范围</th><th>标识</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>2026-08-16</td><td class="val-critical">18.5</td><td>3.9-6.1</td><td class="val-critical">危急</td></tr>
+                      <tr><td>2026-08-14</td><td class="val-critical">15.3</td><td>3.9-6.1</td><td class="val-critical">危急</td></tr>
+                      <tr><td>2026-08-12</td><td class="val-high">10.5</td><td>3.9-6.1</td><td class="val-high">偏高</td></tr>
+                      <tr><td>2026-08-08</td><td class="val-high">8.2</td><td>3.9-6.1</td><td class="val-high">偏高</td></tr>
+                      <tr><td>2026-08-05</td><td class="val-normal">6.0</td><td>3.9-6.1</td><td class="val-normal">正常</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="dialog-footer">
+                <button class="btn-action secondary">关闭</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

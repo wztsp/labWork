@@ -1,0 +1,2 @@
+﻿PATH_PSQL=NONE
+D:\Program Files\PostgreSQL\13\bin\psql.exe

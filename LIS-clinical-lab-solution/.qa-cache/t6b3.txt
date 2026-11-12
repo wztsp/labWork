@@ -1,0 +1,41 @@
+=== 6b-3 run the ACTUAL SupplierMapper.licenseExpiryWithinDays SQL against lis_supplier ===
+BEGIN
+SAVEPOINT
+INSERT 0 4
+--- NEW form, parameterized PREPARE(int) = MyBatis Integer bind, days=30 ---
+PREPARE
+ supplier_code | license_expiry | medical_cert_expiry 
+---------------+----------------+---------------------
+ QA_EXP4       | 2026-07-25     | 
+ QA_EXP1       | 2026-08-07     | 
+ QA_EXP2       |                | 2026-08-24
+(3 rows)
+
+--- OLD form same query, days=30 ---
+PREPARE
+ supplier_code 
+---------------
+ QA_EXP1
+ QA_EXP2
+ QA_EXP4
+(3 rows)
+
+--- old vs new numeric equivalence over 0/1/7/30/365/-5 (expect all t) ---
+  d  | same 
+-----+------
+   0 | t
+   1 | t
+   7 | t
+  30 | t
+ 365 | t
+  -5 | t
+(6 rows)
+
+ROLLBACK
+--- residue check after rollback (expect 0) ---
+ qa_left 
+---------
+       0
+(1 row)
+
+EXIT=0

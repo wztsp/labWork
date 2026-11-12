@@ -1,0 +1,22 @@
+{
+  "name": "lis-admin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LIS 运维后台管理系统 —— 服务状态监控 + 异常日志查看（独立部署，零侵入）",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix server && npm install --prefix web",
+    "dev:server": "npm run dev --prefix server",
+    "dev:web": "npm run dev --prefix web",
+    "dev": "concurrently -n server,web -c cyan,magenta \"npm run dev:server\" \"npm run dev:web\"",
+    "build:server": "npm run build --prefix server",
+    "build:web": "npm run build --prefix web",
+    "build": "npm run build:server && npm run build:web",
+    "start": "npm run start --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

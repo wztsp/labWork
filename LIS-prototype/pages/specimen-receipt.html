@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>标本签收</title>
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <style id="critical-layout">
+    /* ============================================================
+       LIS Shell — Critical Layout
+       All colors reference CSS variables from colors_and_type.css
+       ============================================================ */
+
+    /* ---------- Reset & Base ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--lis-foreground);
+      background: var(--lis-background);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ---------- App Container ---------- */
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* ---------- App Header ---------- */
+    .app-header {
+      height: 56px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: var(--lis-background);
+      border-bottom: 1px solid var(--lis-border);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      background: var(--lis-primary);
+      color: var(--lis-primary-foreground);
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.02em;
+    }
+    .system-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--lis-foreground);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-datetime {
+      font-size: 13px;
+      color: var(--lis-muted-foreground);
+    }
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .user-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--lis-foreground);
+    }
+    .user-role {
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+    }
+
+    /* ---------- App Body ---------- */
+    .app-body {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* ---------- App Sidebar ---------- */
+    .app-sidebar {
+      width: 200px;
+      flex-shrink: 0;
+      background: var(--lis-background);
+      border-right: 1px solid var(--lis-border);
+      padding: 8px 0;
+      overflow-y: auto;
+    }
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      margin: 0 8px;
+      font-size: 14px;
+      color: var(--lis-muted-foreground);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      user-select: none;
+    }
+    .nav-item:hover {
+      background: var(--color-neutral-50);
+      color: var(--lis-foreground);
+    }
+    .nav-item.active {
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      font-weight: 600;
+    }
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ---------- App Main ---------- */
+    .app-main {
+      flex: 1;
+      min-width: 0;
+      padding: 24px;
+      overflow-y: auto;
+      background: var(--color-neutral-50);
+    }
+
+    /* ---------- Page Header Slot ---------- */
+    .page-header {
+      margin-bottom: 20px;
+    }
+    .page-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--lis-foreground);
+      line-height: 32px;
+    }
+    .page-content {
+      /* Slot container for page body content */
+    }
+  </style>
+  <style id="page-styles">
+    /* ============================================================
+       Page: 标本签收 (Specimen Receipt)
+       Dual-panel layout with instant scan feedback
+       ============================================================ */
+
+    .receipt-layout {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .left-column {
+      width: 280px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .right-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    /* ---------- Section label (shared) ---------- */
+    .section-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--lis-foreground);
+    }
+
+    /* ---------- Stats card ---------- */
+    .stats-card {
+      background: var(--lis-card);
+      border: 1px solid var(--lis-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+    }
+
+    /* ---------- Urgent priority card ---------- */
+    .urgent-card {
+      background: var(--lis-card);
+      border: 1px solid var(--state-error-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .urgent-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .urgent-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--state-error);
+      flex-shrink: 0;
+    }
+    .urgent-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--state-error);
+    }
+    .urgent-badge {
+      background: var(--state-error);
+      color: var(--lis-primary-foreground);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .urgent-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      background: var(--state-error-bg);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    .urgent-item:last-child {
+      margin-bottom: 0;
+    }
+    .urgent-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .urgent-patient {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--lis-foreground);
+    }
+    .urgent-project {
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+    }
+    .urgent-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .urgent-tag {
+      font-size: 11px;
+      background: var(--state-error);
+      color: var(--lis-primary-foreground);
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+    .urgent-time {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .btn-urgent {
+      font-size: 12px;
+      background: var(--lis-primary);
+      color: var(--lis-primary-foreground);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-family: var(--font-sans);
+    }
+
+    /* ---------- Scan receipt card ---------- */
+    .scan-receipt-card {
+      background: var(--lis-card);
+      border: 2px solid var(--lis-primary);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .scan-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .scan-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--lis-foreground);
+    }
+    .scan-hint {
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+    }
+    .scan-input {
+      width: 100%;
+      height: 44px;
+      border: 2px solid var(--lis-primary);
+      border-radius: 8px;
+      padding: 0 16px;
+      font-size: 15px;
+      background: var(--color-primary-50);
+      color: var(--lis-foreground);
+      margin-bottom: 16px;
+      font-family: var(--font-sans);
+      outline: none;
+    }
+    .scan-input::placeholder {
+      color: var(--lis-muted-foreground);
+    }
+    .feedback-area {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .feedback-success {
+      display: flex;
+      flex-direction: row;
+      gap: 6px;
+      align-items: center;
+      font-size: 13px;
+      color: var(--state-success);
+      background: var(--state-success-bg);
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    .feedback-success svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .feedback-error {
+      display: flex;
+      flex-direction: row;
+      gap: 6px;
+      align-items: center;
+      font-size: 13px;
+      color: var(--state-error);
+      background: var(--state-error-bg);
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    .feedback-error svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ---------- Recent receipt list ---------- */
+    .recent-card {
+      background: var(--lis-card);
+      border: 1px solid var(--lis-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .receipt-list {
+      display: flex;
+      flex-direction: column;
+      margin-top: 12px;
+    }
+    .receipt-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-neutral-100);
+    }
+    .receipt-row:last-child {
+      border-bottom: none;
+    }
+    .receipt-row.success .receipt-icon {
+      color: var(--state-success);
+    }
+    .receipt-row.error .receipt-icon {
+      color: var(--state-error);
+    }
+    .receipt-row.error {
+      background: var(--state-error-bg);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border-bottom: none;
+    }
+    .receipt-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .receipt-patient {
+      font-size: 14px;
+      font-weight: 500;
+      min-width: 60px;
+      color: var(--lis-foreground);
+    }
+    .receipt-project {
+      font-size: 13px;
+      color: var(--lis-muted-foreground);
+      flex: 1;
+    }
+    .receipt-time {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--lis-muted-foreground);
+    }
+    .receipt-reason {
+      font-size: 12px;
+      color: var(--state-error);
+      background: var(--state-error-bg);
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+
+    /* ---------- Quick reject card ---------- */
+    .reject-card {
+      background: var(--lis-card);
+      border: 1px solid var(--lis-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .reject-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .reject-btn {
+      padding: 10px;
+      border: 1px solid var(--state-error-border);
+      background: var(--state-error-bg);
+      color: var(--state-error);
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: center;
+      font-family: var(--font-sans);
+      transition: background-color 0.2s ease;
+    }
+    .reject-btn:hover {
+      background: var(--state-error-border);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo">LIS</div>
+        <span class="system-title">临床实验室信息系统</span>
+      </div>
+      <div class="header-right">
+        <span class="header-datetime">2026-08-15 10:30:00</span>
+        <div class="header-user">
+          <span class="user-avatar">张</span>
+          <div class="user-meta">
+            <span class="user-name">张三</span>
+            <span class="user-role">检验技师</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-body">
+      <!-- Sidebar -->
+      <aside class="app-sidebar">
+        <nav class="sidebar-nav">
+          <a class="nav-item" data-nav-key="collection">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6L4.5 18a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7.5 14h9"/></svg>
+            <span>标本采集</span>
+          </a>
+          <a class="nav-item" data-nav-key="transport">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7.5" cy="18.5" r="2.5"/><path d="M15 18.5h-4"/><circle cx="17.5" cy="18.5" r="2.5"/></svg>
+            <span>标本送检</span>
+          </a>
+          <a class="nav-item active" data-nav-key="receipt" data-dom-id="nav-receipt">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>标本签收</span>
+          </a>
+          <a class="nav-item" data-nav-key="workstation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg>
+            <span>技师工作站</span>
+          </a>
+          <a class="nav-item" data-nav-key="report">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+            <span>报告查询</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <main class="app-main">
+        <div class="page-header">
+          <h1 class="page-title">标本签收</h1>
+        </div>
+        <div class="page-content">
+          <div class="receipt-layout">
+            <!-- Left column: Stats + Urgent -->
+            <div class="left-column">
+              <!-- Stats card -->
+              <div class="stats-card">
+                <div class="section-label">今日统计</div>
+                <div class="stats-grid">
+                  <div class="stat-item">
+                    <span class="stat-value" style="color: var(--lis-primary);">342</span>
+                    <span class="stat-label">已签收</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value" style="color: var(--state-warning);">18</span>
+                    <span class="stat-label">待签收</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value" style="color: var(--state-error);">3</span>
+                    <span class="stat-label">已拒收</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value" style="color: var(--state-error);">5</span>
+                    <span class="stat-label">急诊待检</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Urgent priority panel -->
+              <div class="urgent-card">
+                <div class="urgent-header">
+                  <span class="urgent-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                  </span>
+                  <span class="urgent-title">急诊优先</span>
+                  <span class="urgent-badge">5</span>
+                </div>
+                <div class="urgent-item">
+                  <div class="urgent-info">
+                    <span class="urgent-patient">王五</span>
+                    <span class="urgent-project">血培养</span>
+                  </div>
+                  <div class="urgent-meta">
+                    <span class="urgent-tag">急诊</span>
+                    <span class="urgent-time" style="color: var(--state-error);">已30min</span>
+                  </div>
+                  <button class="btn-urgent">立即处理</button>
+                </div>
+                <div class="urgent-item">
+                  <div class="urgent-info">
+                    <span class="urgent-patient">赵六</span>
+                    <span class="urgent-project">血气分析</span>
+                  </div>
+                  <div class="urgent-meta">
+                    <span class="urgent-tag">急诊</span>
+                    <span class="urgent-time" style="color: var(--state-warning);">已15min</span>
+                  </div>
+                  <button class="btn-urgent">立即处理</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right column: Scan receipt -->
+            <div class="right-column">
+              <!-- Scan receipt area -->
+              <div class="scan-receipt-card">
+                <div class="scan-header">
+                  <span class="scan-title">扫码签收</span>
+                  <span class="scan-hint">扫码即签收，支持连续扫描</span>
+                </div>
+                <input type="text" class="scan-input" placeholder="将光标置于此处，使用扫码枪扫描标本条码..." autofocus />
+
+                <!-- Feedback area (shows last scan result) -->
+                <div class="feedback-area">
+                  <div class="feedback-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    张三 血常规 签收成功 10:25
+                  </div>
+                  <div class="feedback-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    李四 尿常规 签收成功 10:26
+                  </div>
+                  <div class="feedback-error">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                    赵六 溶血拒收 10:24
+                  </div>
+                  <div class="feedback-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    钱七 生化 签收成功 10:28
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent receipt list -->
+              <div class="recent-card">
+                <div class="section-label">最近签收</div>
+                <div class="receipt-list">
+                  <div class="receipt-row success">
+                    <span class="receipt-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </span>
+                    <span class="receipt-patient">张三</span>
+                    <span class="receipt-project">血常规</span>
+                    <span class="receipt-time">10:25</span>
+                  </div>
+                  <div class="receipt-row success">
+                    <span class="receipt-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </span>
+                    <span class="receipt-patient">李四</span>
+                    <span class="receipt-project">尿常规</span>
+                    <span class="receipt-time">10:26</span>
+                  </div>
+                  <div class="receipt-row error">
+                    <span class="receipt-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                    </span>
+                    <span class="receipt-patient">赵六</span>
+                    <span class="receipt-project">生化全套</span>
+                    <span class="receipt-time">10:24</span>
+                    <span class="receipt-reason">溶血</span>
+                  </div>
+                  <div class="receipt-row success">
+                    <span class="receipt-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </span>
+                    <span class="receipt-patient">钱七</span>
+                    <span class="receipt-project">免疫五项</span>
+                    <span class="receipt-time">10:28</span>
+                  </div>
+                  <div class="receipt-row success">
+                    <span class="receipt-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </span>
+                    <span class="receipt-patient">孙八</span>
+                    <span class="receipt-project">凝血四项</span>
+                    <span class="receipt-time">10:30</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick reject panel -->
+              <div class="reject-card">
+                <div class="section-label">快捷拒收</div>
+                <div class="reject-grid">
+                  <button class="reject-btn">溶血</button>
+                  <button class="reject-btn">标本量不足</button>
+                  <button class="reject-btn">容器错误</button>
+                  <button class="reject-btn">标本凝固</button>
+                  <button class="reject-btn">标签错误</button>
+                  <button class="reject-btn">其他原因</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

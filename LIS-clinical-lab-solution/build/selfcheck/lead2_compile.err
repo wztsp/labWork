@@ -1,0 +1,383 @@
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\CostController.java:3: 错误: 程序包com.lis.common.core.result不存在
+import com.lis.common.core.result.R;
+                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\CostController.java:5: 错误: 程序包lombok不存在
+import lombok.RequiredArgsConstructor;
+             ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\CostController.java:6: 错误: 程序包org.springframework.format.annotation不存在
+import org.springframework.format.annotation.DateTimeFormat;
+                                            ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\CostController.java:17: 错误: 找不到符号
+@RestController
+ ^
+  符号: 类 RestController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\CostController.java:18: 错误: 找不到符号
+@RequestMapping("/api/reagent/cost")
+ ^
+  符号: 类 RequestMapping
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\CostController.java:19: 错误: 找不到符号
+@RequiredArgsConstructor
+ ^
+  符号: 类 RequiredArgsConstructor
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\mapper\ReagentCostMapper.java:3: 错误: 程序包org.apache.ibatis.annotations不存在
+import org.apache.ibatis.annotations.Mapper;
+                                    ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\mapper\ReagentCostMapper.java:4: 错误: 程序包org.apache.ibatis.annotations不存在
+import org.apache.ibatis.annotations.Param;
+                                    ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\mapper\ReagentCostMapper.java:5: 错误: 程序包org.apache.ibatis.annotations不存在
+import org.apache.ibatis.annotations.Select;
+                                    ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\mapper\ReagentCostMapper.java:15: 错误: 找不到符号
+@Mapper
+ ^
+  符号: 类 Mapper
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\CostController.java:29: 错误: 找不到符号
+    public R<List<Map<String, Object>>> summary(
+           ^
+  符号:   类 R
+  位置: 类 CostController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\CostController.java:44: 错误: 找不到符号
+    public R<List<Map<String, Object>>> detail(
+           ^
+  符号:   类 R
+  位置: 类 CostController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\CostController.java:7: 错误: 程序包org.springframework.web.bind.annotation不存在
+import org.springframework.web.bind.annotation.*;
+^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:3: 错误: 程序包com.baomidou.mybatisplus.extension.plugins.pagination不存在
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+                                                            ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:4: 错误: 程序包com.lis.common.core.result不存在
+import com.lis.common.core.result.PageResult;
+                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:5: 错误: 程序包com.lis.common.core.result不存在
+import com.lis.common.core.result.R;
+                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:8: 错误: 程序包lombok不存在
+import lombok.RequiredArgsConstructor;
+             ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:14: 错误: 找不到符号
+@RestController
+ ^
+  符号: 类 RestController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:15: 错误: 找不到符号
+@RequestMapping("/api/reagent/consumption")
+ ^
+  符号: 类 RequestMapping
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:16: 错误: 找不到符号
+@RequiredArgsConstructor
+ ^
+  符号: 类 RequiredArgsConstructor
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentConsumptionService.java:3: 错误: 程序包com.baomidou.mybatisplus.extension.service不存在
+import com.baomidou.mybatisplus.extension.service.IService;
+                                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentConsumptionService.java:4: 错误: 程序包com.baomidou.mybatisplus.extension.plugins.pagination不存在
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+                                                            ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentConsumptionService.java:7: 错误: 找不到符号
+public interface ReagentConsumptionService extends IService<ReagentConsumption> {
+                                                   ^
+  符号: 类 IService
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentConsumption.java:3: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.IdType;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentConsumption.java:4: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableId;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentConsumption.java:5: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableName;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentConsumption.java:13: 错误: 找不到符号
+@TableName("lis_reagent_consumption")
+ ^
+  符号: 类 TableName
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:22: 错误: 找不到符号
+    public R<PageResult<ReagentConsumption>> page(@RequestParam(defaultValue = "1") long current,
+           ^
+  符号:   类 R
+  位置: 类 ReagentConsumptionController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:22: 错误: 找不到符号
+    public R<PageResult<ReagentConsumption>> page(@RequestParam(defaultValue = "1") long current,
+             ^
+  符号:   类 PageResult
+  位置: 类 ReagentConsumptionController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:32: 错误: 找不到符号
+    public R<ReagentConsumption> create(@RequestBody ReagentConsumption consumption) {
+           ^
+  符号:   类 R
+  位置: 类 ReagentConsumptionController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:37: 错误: 找不到符号
+    public R<Void> autoConsume(@RequestParam Long testItemId,
+           ^
+  符号:   类 R
+  位置: 类 ReagentConsumptionController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentConsumptionService.java:16: 错误: 找不到符号
+    Page<ReagentConsumption> queryPage(long current, long size, Long reagentId, Integer consumeType, String relatedNo);
+    ^
+  符号:   类 Page
+  位置: 接口 ReagentConsumptionService
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentConsumptionController.java:9: 错误: 程序包org.springframework.web.bind.annotation不存在
+import org.springframework.web.bind.annotation.*;
+^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:3: 错误: 程序包com.baomidou.mybatisplus.extension.plugins.pagination不存在
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+                                                            ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:4: 错误: 程序包com.lis.common.core.result不存在
+import com.lis.common.core.result.PageResult;
+                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:5: 错误: 程序包com.lis.common.core.result不存在
+import com.lis.common.core.result.R;
+                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:8: 错误: 程序包lombok不存在
+import lombok.RequiredArgsConstructor;
+             ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:14: 错误: 找不到符号
+@RestController
+ ^
+  符号: 类 RestController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:15: 错误: 找不到符号
+@RequestMapping("/api/reagent/dict")
+ ^
+  符号: 类 RequestMapping
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:16: 错误: 找不到符号
+@RequiredArgsConstructor
+ ^
+  符号: 类 RequiredArgsConstructor
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentService.java:3: 错误: 程序包com.baomidou.mybatisplus.extension.plugins.pagination不存在
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+                                                            ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentService.java:4: 错误: 程序包com.baomidou.mybatisplus.extension.service不存在
+import com.baomidou.mybatisplus.extension.service.IService;
+                                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentService.java:10: 错误: 找不到符号
+public interface ReagentService extends IService<Reagent> {
+                                        ^
+  符号: 类 IService
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\Reagent.java:3: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.IdType;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\Reagent.java:4: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableId;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\Reagent.java:5: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableName;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\Reagent.java:13: 错误: 找不到符号
+@TableName("lis_reagent")
+ ^
+  符号: 类 TableName
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:22: 错误: 找不到符号
+    public R<PageResult<Reagent>> page(@RequestParam(defaultValue = "1") long current,
+           ^
+  符号:   类 R
+  位置: 类 ReagentController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:22: 错误: 找不到符号
+    public R<PageResult<Reagent>> page(@RequestParam(defaultValue = "1") long current,
+             ^
+  符号:   类 PageResult
+  位置: 类 ReagentController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:38: 错误: 找不到符号
+    public R<Reagent> getById(@PathVariable Long id) {
+           ^
+  符号:   类 R
+  位置: 类 ReagentController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:43: 错误: 找不到符号
+    public R<Reagent> getByCode(@PathVariable String code) {
+           ^
+  符号:   类 R
+  位置: 类 ReagentController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:48: 错误: 找不到符号
+    public R<Reagent> create(@RequestBody Reagent reagent) {
+           ^
+  符号:   类 R
+  位置: 类 ReagentController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:54: 错误: 找不到符号
+    public R<Reagent> update(@RequestBody Reagent reagent) {
+           ^
+  符号:   类 R
+  位置: 类 ReagentController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:60: 错误: 找不到符号
+    public R<Void> delete(@PathVariable Long id) {
+           ^
+  符号:   类 R
+  位置: 类 ReagentController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentService.java:12: 错误: 找不到符号
+    Page<Reagent> queryPage(long current, long size, String keyword, Long instrumentId, Long testItemId);
+    ^
+  符号:   类 Page
+  位置: 接口 ReagentService
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentService.java:30: 错误: 找不到符号
+    Page<Reagent> queryPage(long current, long size, String keyword, String reagentCode,
+    ^
+  符号:   类 Page
+  位置: 接口 ReagentService
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentController.java:9: 错误: 程序包org.springframework.web.bind.annotation不存在
+import org.springframework.web.bind.annotation.*;
+^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentDashboardController.java:3: 错误: 程序包com.lis.common.core.result不存在
+import com.lis.common.core.result.R;
+                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentDashboardController.java:7: 错误: 程序包lombok不存在
+import lombok.RequiredArgsConstructor;
+             ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentDashboardController.java:16: 错误: 找不到符号
+@RestController
+ ^
+  符号: 类 RestController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentDashboardController.java:17: 错误: 找不到符号
+@RequestMapping("/api/reagent/dashboard")
+ ^
+  符号: 类 RequestMapping
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentDashboardController.java:18: 错误: 找不到符号
+@RequiredArgsConstructor
+ ^
+  符号: 类 RequiredArgsConstructor
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentDashboardController.java:24: 错误: 找不到符号
+    public R<Map<String, Object>> overview() {
+           ^
+  符号:   类 R
+  位置: 类 ReagentDashboardController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentDashboardController.java:29: 错误: 找不到符号
+    public R<List<ReagentStock>> nearExpiry(@RequestParam(defaultValue = "30") int days) {
+           ^
+  符号:   类 R
+  位置: 类 ReagentDashboardController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentStock.java:3: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.IdType;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentStock.java:4: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableId;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentStock.java:5: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableName;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentStock.java:14: 错误: 找不到符号
+@TableName("lis_reagent_stock")
+ ^
+  符号: 类 TableName
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentDashboardController.java:34: 错误: 找不到符号
+    public R<List<Map<String, Object>>> lowStock() {
+           ^
+  符号:   类 R
+  位置: 类 ReagentDashboardController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentDashboardController.java:39: 错误: 找不到符号
+    public R<List<ReagentOpening>> openedExpiry() {
+           ^
+  符号:   类 R
+  位置: 类 ReagentDashboardController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentOpening.java:3: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.IdType;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentOpening.java:4: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableId;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentOpening.java:5: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableName;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentOpening.java:13: 错误: 找不到符号
+@TableName("lis_reagent_opening")
+ ^
+  符号: 类 TableName
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentDashboardController.java:8: 错误: 程序包org.springframework.web.bind.annotation不存在
+import org.springframework.web.bind.annotation.*;
+^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:3: 错误: 程序包com.baomidou.mybatisplus.extension.plugins.pagination不存在
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+                                                            ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:4: 错误: 程序包com.lis.common.core.result不存在
+import com.lis.common.core.result.PageResult;
+                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:5: 错误: 程序包com.lis.common.core.result不存在
+import com.lis.common.core.result.R;
+                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:8: 错误: 程序包lombok不存在
+import lombok.RequiredArgsConstructor;
+             ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:14: 错误: 找不到符号
+@RestController
+ ^
+  符号: 类 RestController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:15: 错误: 找不到符号
+@RequestMapping("/api/reagent/inbound")
+ ^
+  符号: 类 RequestMapping
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:16: 错误: 找不到符号
+@RequiredArgsConstructor
+ ^
+  符号: 类 RequiredArgsConstructor
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentInboundService.java:3: 错误: 程序包com.baomidou.mybatisplus.extension.service不存在
+import com.baomidou.mybatisplus.extension.service.IService;
+                                                 ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentInboundService.java:4: 错误: 程序包com.baomidou.mybatisplus.extension.plugins.pagination不存在
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+                                                            ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentInboundService.java:7: 错误: 找不到符号
+public interface ReagentInboundService extends IService<ReagentInbound> {
+                                               ^
+  符号: 类 IService
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentInbound.java:3: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.IdType;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentInbound.java:4: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableId;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentInbound.java:5: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableName;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentInbound.java:14: 错误: 找不到符号
+@TableName("lis_reagent_inbound")
+ ^
+  符号: 类 TableName
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:22: 错误: 找不到符号
+    public R<PageResult<ReagentInbound>> page(@RequestParam(defaultValue = "1") long current,
+           ^
+  符号:   类 R
+  位置: 类 ReagentInboundController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:22: 错误: 找不到符号
+    public R<PageResult<ReagentInbound>> page(@RequestParam(defaultValue = "1") long current,
+             ^
+  符号:   类 PageResult
+  位置: 类 ReagentInboundController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:31: 错误: 找不到符号
+    public R<ReagentInbound> getDetail(@PathVariable Long id) {
+           ^
+  符号:   类 R
+  位置: 类 ReagentInboundController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:36: 错误: 找不到符号
+    public R<ReagentInbound> create(@RequestBody ReagentInbound inbound) {
+           ^
+  符号:   类 R
+  位置: 类 ReagentInboundController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:41: 错误: 找不到符号
+    public R<ReagentInbound> verify(@PathVariable Long id,
+           ^
+  符号:   类 R
+  位置: 类 ReagentInboundController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\controller\ReagentInboundController.java:48: 错误: 找不到符号
+    public R<ReagentInbound> reject(@PathVariable Long id,
+           ^
+  符号:   类 R
+  位置: 类 ReagentInboundController
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\service\ReagentInboundService.java:22: 错误: 找不到符号
+    Page<ReagentInbound> queryPage(long current, long size, String inboundNo, Integer verifyStatus);
+    ^
+  符号:   类 Page
+  位置: 接口 ReagentInboundService
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentInboundItem.java:3: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.IdType;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentInboundItem.java:4: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableId;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentInboundItem.java:5: 错误: 程序包com.baomidou.mybatisplus.annotation不存在
+import com.baomidou.mybatisplus.annotation.TableName;
+                                          ^
+lis-system\lis-service\lis-service-reagent\src\main\java\com\lis\reagent\entity\ReagentInboundItem.java:14: 错误: 找不到符号
+@TableName("lis_reagent_inbound_item")
+ ^
+  符号: 类 TableName
+注: 某些输入文件使用或覆盖了已过时的 API。
+注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+100 个错误
+仅显示前 100 个错误（共 1791 个）；若要查看更多错误，请使用 -Xmaxerrs

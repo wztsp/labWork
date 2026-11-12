@@ -1,0 +1,17 @@
+{
+  "applyDeptId": 2,
+  "applyDeptName": "\u751f\u5316\u7ec4",
+  "applyUserId": 1,
+  "applyUserName": "QAOperator",
+  "budgetYear": 2026,
+  "urgentFlag": 0,
+  "remark": "QA验证:2节点审批链(WARN场景)",
+  "items": [
+    {
+      "reagentId": 3,
+      "quantity": 1000,
+      "unit": "mL",
+      "estimatedPrice": 80
+    }
+  ]
+}

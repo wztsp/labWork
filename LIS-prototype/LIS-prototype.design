@@ -1,0 +1,130 @@
+{
+  "data": [
+    {
+      "id": "page-specimen-collection",
+      "title": "标本采集",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786781000000,
+      "canvasData": {
+        "x": 0,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 100,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-5eab2d64",
+          "measuredAt": 1786782001102
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/specimen-collection.html",
+        "interactions": []
+      }
+    },
+    {
+      "id": "page-specimen-transport",
+      "title": "标本送检",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786781000000,
+      "canvasData": {
+        "x": 480,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 100,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-ed8c9342",
+          "measuredAt": 1786782001102
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/specimen-transport.html",
+        "interactions": []
+      }
+    },
+    {
+      "id": "page-specimen-receipt",
+      "title": "标本签收",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786781000000,
+      "canvasData": {
+        "x": 960,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 100,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-abe59461",
+          "measuredAt": 1786782001102
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 1440,
+          "height": 3
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/specimen-receipt.html",
+        "interactions": []
+      }
+    },
+    {
+      "id": "page-technician-workstation",
+      "title": "技师工作站",
+      "type": "page",
+      "version": 2,
+      "createdAt": 1786781000000,
+      "canvasData": {
+        "x": 1440,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-3f8253c7",
+          "measuredAt": 1786855782514
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/technician-workstation.html",
+        "interactions": []
+      }
+    },
+    {
+      "id": "page-report-query",
+      "title": "报告查询",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1786781000000,
+      "canvasData": {
+        "x": 1920,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 100,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-51c97c3f",
+          "measuredAt": 1786782001102
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/report-query.html",
+        "interactions": []
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": false,
+    "deviceType": "desktop",
+    "projectName": "LIS 临床实验室系统原型",
+    "designLibrary": null
+  }
+}

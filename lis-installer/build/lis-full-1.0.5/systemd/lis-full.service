@@ -1,0 +1,19 @@
+[Unit]
+Description=LIS Clinical Laboratory System (backend + embedded web)
+Documentation=file://__INSTALL_DIR__/README.md
+After=network-online.target postgresql.service redis.service rabbitmq-server.service
+Wants=network-online.target postgresql.service redis.service rabbitmq-server.service
+
+[Service]
+Type=simple
+WorkingDirectory=__INSTALL_DIR__
+Environment="JAVA_HOME=__INSTALL_DIR__/jdk"
+Environment="LANG=en_US.UTF-8"
+ExecStart=__INSTALL_DIR__/jdk/bin/java -Xms512m -Xmx2g -Dfile.encoding=UTF-8 -jar __INSTALL_DIR__/app/lis-monolith.jar --spring.config.additional-location=file:__INSTALL_DIR__/config/application.yml
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=10
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

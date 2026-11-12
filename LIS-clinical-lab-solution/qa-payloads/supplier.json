@@ -1,0 +1,14 @@
+{
+  "supplierCode": "SUP-QA-001",
+  "supplierName": "QA试剂供应有限公司",
+  "shortName": "QA试剂",
+  "contactPerson": "张三",
+  "phone": "13800000001",
+  "email": "qa@example.com",
+  "address": "测试市测试路1号",
+  "licenseNo": "LIC-QA-001",
+  "licenseExpiry": "2030-12-31",
+  "medicalCertNo": "MED-QA-001",
+  "medicalCertExpiry": "2030-12-31",
+  "status": 1
+}

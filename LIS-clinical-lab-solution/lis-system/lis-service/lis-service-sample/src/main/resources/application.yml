@@ -1,0 +1,62 @@
+﻿server:
+  port: 8081
+
+spring:
+  application:
+    name: lis-service-sample
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lis_db?characterEncoding=utf8
+    username: lis_user
+    password: ${DB_PASSWORD:lis_dev_2026}
+    driver-class-name: org.postgresql.Driver
+  redis:
+    host: localhost
+    port: 6379
+    database: 1
+    timeout: 5000
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: lis
+    password: ${MQ_PASSWORD:lis_dev_2026}
+    virtual-host: /
+    connection-timeout: 3000
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 10
+        # 当 RabbitMQ 不可用时, 不阻止服务启动, 仅记录错误日志
+        auto-startup: false
+        missing-queues-fatal: false
+        missing-exchange-fatal: false
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+        server-addr: localhost:8848
+        namespace: public
+      config:
+        enabled: false
+
+mybatis-plus:
+  configuration:
+    # 关闭SQL stdout日志 (生产环境, 避免大量IO拖慢性能)
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+# RabbitMQ 队列定义
+lis:
+  mq:
+    sample-created-queue: sample.created
+    sample-received-queue: sample.received
+    sample-exchange: sample.exchange
+
+logging:
+  level:
+    com.lis.sample: debug

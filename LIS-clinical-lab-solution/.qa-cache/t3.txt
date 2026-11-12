@@ -1,0 +1,9 @@
+=== ③ expression unique index uk_lis_supplier_name_norm must REJECT normalized duplicates ===
+BEGIN
+SAVEPOINT
+INSERT 0 1
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/.qa-cache/t3_unique.sql:5: 错误:  重复键违反唯一约束"uk_lis_supplier_name_norm"
+DETAIL:  键值"(fn_supplier_name_norm(supplier_name::text))=(安捷伦科技)" 已经存在
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/.qa-cache/t3_unique.sql:6: 错误:  当前事务被终止, 事务块结束之前的查询被忽略
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/.qa-cache/t3_unique.sql:7: 错误:  当前事务被终止, 事务块结束之前的查询被忽略
+ROLLBACK

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.lis</groupId>
+        <artifactId>lis-system</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>lis-auth</artifactId>
+    <name>lis-auth</name>
+    <description>认证服务 - 登录、注销、用户信息</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lis</groupId>
+            <artifactId>lis-common</artifactId>
+        </dependency>
+        <!-- lis-api 中的 LoginDTO/LoginVO -->
+        <dependency>
+            <groupId>com.lis</groupId>
+            <artifactId>lis-api</artifactId>
+        </dependency>
+        <!-- BCrypt 密码校验 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- lis-auth 作为纯库模块被并入 lis-monolith, 不生成可执行 fat jar,
+                     否则类位于 BOOT-INF/classes 内无法被单体扫描。 -->
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

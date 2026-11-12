@@ -1,0 +1,54 @@
+﻿server:
+  port: 8091
+
+spring:
+  application:
+    name: lis-service-instrument-mgmt
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lis_db
+    username: lis_user
+    password: ${DB_PASSWORD:lis_dev_2026}
+    driver-class-name: org.postgresql.Driver
+  redis:
+    host: localhost
+    port: 6379
+    database: 7
+    timeout: 5000
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: lis
+    password: ${MQ_PASSWORD:lis_dev_2026}
+    virtual-host: /lis
+    listener:
+      simple:
+        # 当 RabbitMQ 不可用时, 不阻止服务启动, 仅记录错误日志
+        auto-startup: false
+        missing-queues-fatal: false
+        missing-exchange-fatal: false
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: public
+
+# MQ 配置
+mq:
+  exchange: lis.exchange
+  reminder:
+    calibration-routing-key: reminder.calibration
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+logging:
+  level:
+    com.lis.instrumentmgmt: debug

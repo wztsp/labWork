@@ -1,0 +1,443 @@
+﻿[
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "用户登录",
+        "SubModule":  "登录",
+        "Module":  "认证与权限",
+        "Expected":  "返回200成功",
+        "Actual":  "创建/操作成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "获取用户信息",
+        "SubModule":  "登录",
+        "Module":  "认证与权限",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "用户列表查询",
+        "SubModule":  "用户管理",
+        "Module":  "认证与权限",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (401) 未经授权。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "获取当前用户",
+        "SubModule":  "用户管理",
+        "Module":  "认证与权限",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "角色列表查询",
+        "SubModule":  "角色管理",
+        "Module":  "认证与权限",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (401) 未经授权。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "权限列表查询",
+        "SubModule":  "权限管理",
+        "Module":  "认证与权限",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (401) 未经授权。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "权限树查询",
+        "SubModule":  "权限管理",
+        "Module":  "认证与权限",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (401) 未经授权。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "系统配置列表",
+        "SubModule":  "系统参数",
+        "Module":  "系统管理",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (401) 未经授权。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "操作日志列表",
+        "SubModule":  "操作日志",
+        "Module":  "系统管理",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (401) 未经授权。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "科室列表查询",
+        "SubModule":  "科室管理",
+        "Module":  "系统管理",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (401) 未经授权。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "备份列表查询",
+        "SubModule":  "数据备份",
+        "Module":  "系统管理",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (401) 未经授权。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "标本分页查询",
+        "SubModule":  "标本列表",
+        "Module":  "标本管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "样本条码生成",
+        "SubModule":  "条码生成",
+        "Module":  "标本管理",
+        "Expected":  "返回200成功",
+        "Actual":  "创建/操作成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "患者编号生成",
+        "SubModule":  "条码生成",
+        "Module":  "标本管理",
+        "Expected":  "返回200成功",
+        "Actual":  "创建/操作成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "就诊号生成",
+        "SubModule":  "条码生成",
+        "Module":  "标本管理",
+        "Expected":  "返回200成功",
+        "Actual":  "创建/操作成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "申请单号生成",
+        "SubModule":  "条码生成",
+        "Module":  "标本管理",
+        "Expected":  "返回200成功",
+        "Actual":  "创建/操作成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "新建检验申请",
+        "SubModule":  "检验申请",
+        "Module":  "标本管理",
+        "Expected":  "返回200成功",
+        "Actual":  "创建/操作成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "报告分页查询",
+        "SubModule":  "报告列表",
+        "Module":  "报告管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "报告模板列表",
+        "SubModule":  "报告模板",
+        "Module":  "报告管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "默认报告模板",
+        "SubModule":  "报告模板",
+        "Module":  "报告管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "微生物报告模板",
+        "SubModule":  "报告模板",
+        "Module":  "报告管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "仪器对应模板",
+        "SubModule":  "报告模板",
+        "Module":  "报告管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "检验项目分页",
+        "SubModule":  "检验项目",
+        "Module":  "基础数据",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (500) 内部服务器错误。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "检验指标分页",
+        "SubModule":  "检验指标",
+        "Module":  "基础数据",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (500) 内部服务器错误。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "仪器字典分页",
+        "SubModule":  "仪器字典",
+        "Module":  "基础数据",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (500) 内部服务器错误。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "标本类型分页",
+        "SubModule":  "标本类型",
+        "Module":  "基础数据",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (500) 内部服务器错误。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "条码规则分页",
+        "SubModule":  "条码规则",
+        "Module":  "基础数据",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (500) 内部服务器错误。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "采集方式分页",
+        "SubModule":  "采集方式",
+        "Module":  "基础数据",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (500) 内部服务器错误。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "参考范围分页",
+        "SubModule":  "参考范围",
+        "Module":  "基础数据",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (500) 内部服务器错误。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "检验试管分页",
+        "SubModule":  "检验试管",
+        "Module":  "基础数据",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (500) 内部服务器错误。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "质控记录分页",
+        "SubModule":  "质控记录",
+        "Module":  "质控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "质控批号列表",
+        "SubModule":  "质控批号",
+        "Module":  "质控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "质控规则列表",
+        "SubModule":  "规则配置",
+        "Module":  "质控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "质控月报查询",
+        "SubModule":  "质控月报",
+        "Module":  "质控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (400) 错误的请求。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "质控预警分页",
+        "SubModule":  "质控预警",
+        "Module":  "质控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "室间质控分页",
+        "SubModule":  "室间质控",
+        "Module":  "质控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "LJ质控图",
+        "SubModule":  "质控图",
+        "Module":  "质控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (400) 错误的请求。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "工作量统计查询",
+        "SubModule":  "工作量统计",
+        "Module":  "统计分析",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "按天工作量统计",
+        "SubModule":  "工作量统计",
+        "Module":  "统计分析",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "趋势分析查询",
+        "SubModule":  "趋势分析",
+        "Module":  "统计分析",
+        "Expected":  "返回200成功",
+        "Actual":  "500错误: 远程服务器返回错误: (400) 错误的请求。",
+        "Status":  "FAIL"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "危急值统计查询",
+        "SubModule":  "危急值统计",
+        "Module":  "统计分析",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "阳性率统计查询",
+        "SubModule":  "阳性率统计",
+        "Module":  "统计分析",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "收费统计查询",
+        "SubModule":  "收费统计",
+        "Module":  "统计分析",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "TAT规则列表",
+        "SubModule":  "TAT规则",
+        "Module":  "监控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "TAT监控分页",
+        "SubModule":  "TAT监控",
+        "Module":  "监控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "消息中心分页",
+        "SubModule":  "消息中心",
+        "Module":  "监控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "未读消息数",
+        "SubModule":  "消息中心",
+        "Module":  "监控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "传染病项目分页",
+        "SubModule":  "传染病项目",
+        "Module":  "监控管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    },
+    {
+        "Timestamp":  "2026-08-22 14:28:57",
+        "TestName":  "员工列表查询",
+        "SubModule":  "员工档案",
+        "Module":  "HR管理",
+        "Expected":  "返回200成功",
+        "Actual":  "返回数据成功",
+        "Status":  "PASS"
+    }
+]

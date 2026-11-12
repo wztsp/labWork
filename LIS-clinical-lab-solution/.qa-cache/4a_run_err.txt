@@ -1,0 +1,81 @@
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:69: 注意:  关系 "lis_reagent_category" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:71: 注意:  关系 "uk_lis_reagent_category_code" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:72: 注意:  关系 "idx_lis_reagent_category_parent" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:73: 注意:  关系 "idx_lis_reagent_category_path" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:98: 注意:  关系 "lis_supplier" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:100: 注意:  关系 "uk_lis_supplier_code" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:101: 注意:  关系 "idx_lis_supplier_name" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:102: 注意:  关系 "idx_lis_supplier_qual" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:103: 注意:  关系 "idx_lis_supplier_expiry" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:124: 注意:  关系 "lis_reagent_warehouse" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:126: 注意:  关系 "uk_lis_reagent_warehouse_code" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:127: 注意:  关系 "idx_lis_reagent_warehouse_parent" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:128: 注意:  关系 "idx_lis_reagent_warehouse_path" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:166: 注意:  关系 "lis_reagent_budget" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:173: 注意:  关系 "uk_lis_reagent_budget_dim" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:174: 注意:  关系 "idx_lis_reagent_budget_dept" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:194: 注意:  关系 "lis_reagent_budget_record" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:196: 注意:  关系 "idx_lis_reagent_budget_record_budget" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:197: 注意:  关系 "idx_lis_reagent_budget_record_source" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:202: 注意:  关系 "uk_lis_reagent_budget_record_src" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:223: 注意:  关系 "lis_reagent_approval_node" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:226: 注意:  关系 "uk_lis_reagent_approval_node" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:267: 注意:  关系 "lis_reagent_purchase_apply" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:269: 注意:  关系 "uk_lis_reagent_purchase_apply_no" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:270: 注意:  关系 "idx_lis_reagent_purchase_apply_dept" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:271: 注意:  关系 "idx_lis_reagent_purchase_apply_budget" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:272: 注意:  关系 "idx_lis_reagent_purchase_apply_time" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:291: 注意:  关系 "lis_reagent_purchase_apply_item" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:293: 注意:  关系 "idx_lis_reagent_purchase_apply_item_apply" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:294: 注意:  关系 "idx_lis_reagent_purchase_apply_item_reagent" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:311: 注意:  关系 "lis_reagent_purchase_approval" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:313: 注意:  关系 "idx_lis_reagent_purchase_approval_apply" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:335: 注意:  关系 "lis_reagent_purchase_order" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:337: 注意:  关系 "uk_lis_reagent_purchase_order_no" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:338: 注意:  关系 "idx_lis_reagent_purchase_order_apply" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:339: 注意:  关系 "idx_lis_reagent_purchase_order_supplier" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:340: 注意:  关系 "idx_lis_reagent_purchase_order_status" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:361: 注意:  关系 "lis_reagent_purchase_order_item" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:363: 注意:  关系 "idx_lis_reagent_purchase_order_item_order" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:364: 注意:  关系 "idx_lis_reagent_purchase_order_item_reagent" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:398: 注意:  关系 "lis_reagent_requisition" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:400: 注意:  关系 "uk_lis_reagent_requisition_no" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:401: 注意:  关系 "idx_lis_reagent_requisition_type_status" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:402: 注意:  关系 "idx_lis_reagent_requisition_dept" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:403: 注意:  关系 "idx_lis_reagent_requisition_source" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:424: 注意:  关系 "lis_reagent_requisition_item" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:426: 注意:  关系 "idx_lis_reagent_requisition_item_req" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:427: 注意:  关系 "idx_lis_reagent_requisition_item_reagent" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:428: 注意:  关系 "idx_lis_reagent_requisition_item_stock" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:447: 注意:  关系 "lis_reagent_scrap_disposal" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:449: 注意:  关系 "uk_lis_reagent_scrap_disposal_req" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:458: 注意:  关系 "lis_reagent" 的列 "supplier_id" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:459: 注意:  关系 "lis_reagent" 的列 "hazard_flag" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:460: 注意:  关系 "lis_reagent" 的列 "hazard_class" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:461: 注意:  关系 "lis_reagent" 的列 "msds_summary" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:462: 注意:  关系 "lis_reagent" 的列 "msds_url" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:463: 注意:  关系 "lis_reagent" 的列 "storage_temp_min" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:464: 注意:  关系 "lis_reagent" 的列 "storage_temp_max" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:466: 注意:  关系 "idx_lis_reagent_category" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:467: 注意:  关系 "idx_lis_reagent_hazard" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:468: 注意:  关系 "idx_lis_reagent_supplier" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:469: 注意:  关系 "idx_lis_reagent_status" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:479: 注意:  关系 "lis_reagent_stock" 的列 "warehouse_id" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:512: 注意:  索引 "uk_lis_reagent_stock_lot" 不存在
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:514: 注意:  关系 "uk_lis_reagent_stock_lot_wh" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:515: 注意:  关系 "idx_lis_reagent_stock_warehouse" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:519: 注意:  关系 "lis_reagent_inbound" 的列 "order_id" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:520: 注意:  关系 "lis_reagent_inbound" 的列 "order_no" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:521: 注意:  关系 "lis_reagent_inbound" 的列 "supplier_id" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:522: 注意:  关系 "idx_lis_reagent_inbound_order" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:523: 注意:  关系 "idx_lis_reagent_inbound_supplier" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:530: 注意:  关系 "lis_reagent_inbound_item" 的列 "order_item_id" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:531: 注意:  关系 "lis_reagent_inbound_item" 的列 "warehouse_id" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:532: 注意:  关系 "idx_lis_reagent_inbound_item_order_item" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:551: 注意:  关系 "lis_reagent_stock_record" 的列 "dept_id" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:552: 注意:  关系 "lis_reagent_stock_record" 的列 "dept_name" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:553: 注意:  关系 "idx_lis_reagent_stock_record_dept" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:554: 注意:  关系 "idx_lis_reagent_stock_record_related" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:555: 注意:  关系 "idx_lis_reagent_stock_record_type" 已经存在, 跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:564: 注意:  关系 "lis_reagent_stock_check" 的列 "warehouse_id" 已经存在，跳过
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/lis-system/docs/database/add-reagent-enhance.sql:566: 注意:  关系 "idx_lis_reagent_stock_check_wh" 已经存在, 跳过

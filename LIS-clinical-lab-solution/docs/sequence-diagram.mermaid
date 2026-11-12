@@ -1,0 +1,29 @@
+sequenceDiagram
+    participant C as AntibioticBreakpointController
+    participant S as SusceptibilityInterpretServiceImpl
+    participant BS as AntibioticBreakpointService
+    participant E as ClsiSusceptibilityInterpreter
+    participant X as BreakpointExpr
+
+    C->>S: interpretBatch(reqs)
+    loop 每个 (bacteriaId, antibioticId) 去重后
+        S->>BS: listByAntibioticAndBacteria(abId, bacId)
+        BS-->>S: List<AntibioticBreakpoint>
+    end
+    S->>E: interpretBatch(reqs, candidateMap)
+    loop 每条 req
+        E->>E: selectBreakpoint(standard/method/version 降序)
+        alt 无折点
+            E-->>E: degrade("未配置CLSI折点")
+        else 有折点
+            E->>X: parse(rawValue) / parse(sBreakpoint) / parse(rBreakpoint)
+            X-->>E: op + value
+            alt method = MIC
+                E->>E: interpretMic → S / I / R
+            else method = K-B
+                E->>E: interpretDiskDiffusion → S / I / R
+            end
+        end
+    end
+    E-->>S: List<InterpretResult>
+    S-->>C: List<InterpretResult> (含 basis / degraded)

@@ -1,0 +1,8 @@
+{
+  "budgetYear": 2026,
+  "deptId": 2,
+  "deptName": "生化组",
+  "totalAmount": 100000,
+  "warnRatio": 0.8,
+  "status": 1
+}

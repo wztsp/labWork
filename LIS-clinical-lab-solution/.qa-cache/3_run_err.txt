@@ -1,0 +1,2 @@
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/.qa-cache/qa_3_insert.sql:4: 错误:  重复键违反唯一约束"uk_lis_supplier_name_norm"
+DETAIL:  键值"(fn_supplier_name_norm(supplier_name::text))=(roche diagnostics)" 已经存在

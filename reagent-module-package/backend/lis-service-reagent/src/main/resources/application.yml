@@ -1,0 +1,43 @@
+﻿server:
+  port: 8092
+
+spring:
+  application:
+    name: lis-service-reagent
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lis_db
+    username: lis_user
+    password: ${DB_PASSWORD:lis_dev_2026}
+    driver-class-name: org.postgresql.Driver
+  redis:
+    host: localhost
+    port: 6379
+    database: 8
+    timeout: 5000
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: public
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+# 试剂服务业务配置
+reagent:
+  expiry:
+    # 近效期预警天数
+    near-expiry-days: 30
+    long-term-expiry-days: 90
+
+logging:
+  level:
+    com.lis.reagent: debug

@@ -1,0 +1,26 @@
+{
+  "applyId": 3,
+  "supplierId": 62,
+  "supplierName": "QA\u8bd5\u5242\u4f9b\u5e94\u6709\u9650\u516c\u53f8",
+  "deptId": 2,
+  "deptName": "\u751f\u5316\u7ec4",
+  "operatorId": 1,
+  "operatorName": "QAOperator",
+  "remark": "QA采购闭环-订单",
+  "items": [
+    {
+      "applyItemId": 2,
+      "reagentId": 1,
+      "quantity": 10,
+      "unit": "mL",
+      "unitPrice": 50
+    },
+    {
+      "applyItemId": 3,
+      "reagentId": 2,
+      "quantity": 5,
+      "unit": "mL",
+      "unitPrice": 80
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+$env:JAVA_HOME = 'C:\Program Files\BellSoft\LibericaJDK-17'
+$env:Path = "$env:JAVA_HOME\bin;$env:Path"
+$jar = 'd:\traeitem\labWork\LIS-clinical-lab-solution\lis-system\lis-gateway\target\lis-gateway-1.0.0.jar'
+$logs = 'd:\traeitem\labWork\LIS-clinical-lab-solution\lis-system\logs'
+New-Item -ItemType Directory -Force -Path $logs | Out-Null
+Start-Process -FilePath 'java' -ArgumentList '-jar', $jar -RedirectStandardOutput "$logs\lis-gateway.out.log" -RedirectStandardError "$logs\lis-gateway.err.log" -WindowStyle Hidden
+Write-Host "Started lis-gateway on port 8080. Waiting 25s for it to register with Nacos..."
+Start-Sleep -Seconds 25
+Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $_.LocalPort -eq 8080 } | Select-Object LocalPort, OwningProcess

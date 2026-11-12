@@ -1,0 +1,92 @@
+﻿server:
+  port: 8086
+
+spring:
+  application:
+    name: lis-service-integration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lis_db
+    username: lis_user
+    password: ${DB_PASSWORD:lis_dev_2026}
+    driver-class-name: org.postgresql.Driver
+  redis:
+    host: localhost
+    port: 6379
+    database: 6
+    timeout: 5000
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: lis
+    password: ${MQ_PASSWORD:lis_dev_2026}
+    virtual-host: /lis
+    listener:
+      simple:
+        # 当 RabbitMQ 不可用时, 不阻止服务启动, 仅记录错误日志
+        auto-startup: false
+        missing-queues-fatal: false
+        missing-exchange-fatal: false
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: public
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+# HIS 对接服务业务配置
+integration:
+  his:
+    # 默认 HIS 厂商编码
+    default-vendor: UNIVERSAL_REST
+    # 厂商对应的连接配置 (生产环境应从数据库或配置中心加载)
+    vendors:
+      UNIVERSAL_REST:
+        base-url: http://his.example.com/api
+        auth-token: ${HIS_TOKEN:dev-token}
+      HL7V2:
+        host: his.example.com
+        port: 2575
+      FHIR:
+        base-url: http://his.example.com/fhir
+        auth-token: ${HIS_FHIR_TOKEN:dev-token}
+      # Oracle 数据库直连 (HIS 为 Oracle 时使用)
+      ORACLE_DB:
+        jdbc-url: jdbc:oracle:thin:@//your-his-host:1521/ORCL
+        username: lis_reader
+        password: ${HIS_ORACLE_PWD:change_me}
+        driver: oracle.jdbc.OracleDriver
+        # HIS 检验申请表查询 (按 apply_time 增量, 可自定义表名)
+        order-sql: "SELECT ORDER_NO, PATIENT_ID, PATIENT_NAME, ORDER_TYPE, APPLY_DOCTOR, APPLY_DEPT, CLINICAL_DIAG, APPLY_TIME FROM HIS_ORDER WHERE APPLY_TIME >= ? AND APPLY_TIME < ?"
+        # HIS 申请明细查询
+        item-sql: "SELECT TEST_ITEM_CODE, TEST_ITEM_NAME, FEE FROM HIS_ORDER_ITEM WHERE ORDER_NO = ?"
+  sync:
+    # 申请同步任务 cron (每5分钟)
+    order-cron: "0 */5 * * * ?"
+    # 结果回传任务 cron (每5分钟)
+    result-cron: "0 */5 * * * ?"
+    # 结果回传开关
+    result-enabled: ${HIS_RESULT_SYNC_ENABLED:true}
+    # 单次回传报告数量上限
+    result-batch-size: 50
+
+# HIS 对接配置 (REST 方式, 默认关闭避免无 HIS 环境报错)
+his:
+  url: ${HIS_URL:http://localhost:8099}        # HIS 服务地址
+  enabled: ${HIS_ENABLED:false}                # 默认关闭, 无 HIS 环境不会触发同步
+  sync-interval: 300000                        # 同步间隔(毫秒), 默认 5 分钟
+  # 标本服务地址 (用于 receiveOrders 后调用 /api/sample/orders/receive)
+  sample-service-url: ${SAMPLE_SERVICE_URL:http://localhost:8081}
+
+logging:
+  level:
+    com.lis.integration: debug

@@ -1,0 +1,42 @@
+﻿server:
+  port: 8088
+
+spring:
+  application:
+    name: lis-service-stats
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lis_db
+    username: lis_user
+    password: ${DB_PASSWORD:lis_dev_2026}
+    driver-class-name: org.postgresql.Driver
+  redis:
+    host: localhost
+    port: 6379
+    database: 5
+    timeout: 5000
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: public
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+# 统计分析服务业务配置
+stats:
+  # 默认统计时间范围 (天)
+  default-range-days: 30
+  # 趋势分析默认返回点数
+  trend-default-points: 100
+
+logging:
+  level:
+    com.lis.stats: debug

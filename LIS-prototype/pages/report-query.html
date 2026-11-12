@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>报告查询</title>
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <style id="critical-layout">
+    /* ============================================================
+       LIS Shell — Critical Layout
+       All colors reference CSS variables from colors_and_type.css
+       ============================================================ */
+
+    /* ---------- Reset & Base ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--lis-foreground);
+      background: var(--lis-background);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ---------- App Container ---------- */
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* ---------- App Header ---------- */
+    .app-header {
+      height: 56px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: var(--lis-background);
+      border-bottom: 1px solid var(--lis-border);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      background: var(--lis-primary);
+      color: var(--lis-primary-foreground);
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.02em;
+    }
+    .system-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--lis-foreground);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-datetime {
+      font-size: 13px;
+      color: var(--lis-muted-foreground);
+    }
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .user-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--lis-foreground);
+    }
+    .user-role {
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+    }
+
+    /* ---------- App Body ---------- */
+    .app-body {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* ---------- App Sidebar ---------- */
+    .app-sidebar {
+      width: 200px;
+      flex-shrink: 0;
+      background: var(--lis-background);
+      border-right: 1px solid var(--lis-border);
+      padding: 8px 0;
+      overflow-y: auto;
+    }
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      margin: 0 8px;
+      font-size: 14px;
+      color: var(--lis-muted-foreground);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      user-select: none;
+    }
+    .nav-item:hover {
+      background: var(--color-neutral-50);
+      color: var(--lis-foreground);
+    }
+    .nav-item.active {
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      font-weight: 600;
+    }
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ---------- App Main ---------- */
+    .app-main {
+      flex: 1;
+      min-width: 0;
+      padding: 24px;
+      overflow-y: auto;
+      background: var(--color-neutral-50);
+    }
+
+    /* ---------- Page Header Slot ---------- */
+    .page-header {
+      margin-bottom: 20px;
+    }
+    .page-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--lis-foreground);
+      line-height: 32px;
+    }
+    .page-content {
+      /* Slot container for page body content */
+    }
+  </style>
+  <style id="page-styles">
+    /* ============================================================
+       报告查询 (Report Query) — Page Styles
+       All colors reference CSS variables from colors_and_type.css
+       ============================================================ */
+
+    /* ---------- Query Tabs ---------- */
+    .query-tabs {
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--lis-border);
+      padding-bottom: 0;
+    }
+    .query-tab {
+      padding: 10px 16px;
+      font-size: 14px;
+      color: var(--lis-muted-foreground);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      user-select: none;
+    }
+    .query-tab.active {
+      color: var(--lis-primary);
+      border-bottom-color: var(--lis-primary);
+      font-weight: 600;
+    }
+
+    /* ---------- Search Card ---------- */
+    .search-card {
+      background: var(--lis-card);
+      border: 1px solid var(--lis-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .search-row {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .search-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 200px;
+    }
+    .search-label {
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+    }
+    .search-input {
+      height: 36px;
+      border: 1px solid var(--lis-border);
+      border-radius: 6px;
+      padding: 0 12px;
+      font-size: 14px;
+      color: var(--lis-foreground);
+      background: var(--lis-background);
+      outline: none;
+    }
+    .search-input::placeholder {
+      color: var(--lis-muted-foreground);
+    }
+    .search-select {
+      height: 36px;
+      border: 1px solid var(--lis-border);
+      border-radius: 6px;
+      padding: 0 12px;
+      font-size: 14px;
+      color: var(--lis-foreground);
+      background: var(--lis-background);
+      min-width: 140px;
+      outline: none;
+    }
+    .btn-search {
+      display: flex;
+      flex-direction: row;
+      gap: 6px;
+      align-items: center;
+      height: 36px;
+      padding: 0 16px;
+      background: var(--lis-primary);
+      color: var(--lis-primary-foreground);
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-search svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--lis-primary-foreground);
+    }
+
+    /* ---------- Critical Value Banner ---------- */
+    .critical-banner {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--state-error-bg);
+      border: 1px solid var(--state-error);
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    .banner-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--state-error);
+      flex-shrink: 0;
+      display: inline-flex;
+    }
+    .banner-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--state-error);
+    }
+    .banner-text {
+      font-size: 14px;
+      color: var(--state-error);
+      font-weight: 500;
+      flex: 1;
+    }
+    .banner-action {
+      padding: 6px 16px;
+      background: var(--state-error);
+      color: var(--lis-primary-foreground);
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      flex-shrink: 0;
+    }
+
+    /* ---------- Patient Header Card ---------- */
+    .patient-header-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+      background: var(--lis-card);
+      border: 1px solid var(--lis-border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .patient-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .patient-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .patient-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--lis-foreground);
+    }
+    .patient-meta {
+      font-size: 13px;
+      color: var(--lis-muted-foreground);
+    }
+    .patient-stats {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+    .stat-pill {
+      font-size: 12px;
+      padding: 4px 10px;
+      background: var(--color-neutral-100);
+      border-radius: 6px;
+      color: var(--lis-foreground);
+    }
+
+    /* ---------- Report List ---------- */
+    .report-list {
+      margin-bottom: 16px;
+    }
+    .section-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--lis-foreground);
+      margin-bottom: 12px;
+    }
+    .report-card {
+      background: var(--lis-card);
+      border: 1px solid var(--lis-border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .report-card.critical {
+      border-color: var(--state-error);
+      border-width: 1px;
+      border-left: 4px solid var(--state-error);
+    }
+    .report-card-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .report-title-area {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+    .report-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--lis-muted-foreground);
+      display: inline-flex;
+    }
+    .report-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--lis-muted-foreground);
+    }
+    .report-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--lis-foreground);
+    }
+    .report-time {
+      font-size: 13px;
+      color: var(--lis-muted-foreground);
+      font-family: var(--font-mono);
+    }
+    .critical-badge {
+      font-size: 11px;
+      background: var(--state-error);
+      color: var(--lis-primary-foreground);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .report-status {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    .report-status.published {
+      background: var(--state-success-bg);
+      color: var(--state-success);
+    }
+    .report-status.reviewing {
+      background: var(--state-info-bg);
+      color: var(--state-info);
+    }
+    .report-card-body {
+      margin-bottom: 12px;
+    }
+    .result-summary {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .summary-item {
+      font-size: 13px;
+      color: var(--lis-muted-foreground);
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+      align-items: center;
+    }
+    .summary-item strong {
+      font-size: 14px;
+      color: var(--lis-foreground);
+      font-family: var(--font-mono);
+    }
+    .arrow-up {
+      color: var(--state-warning);
+      font-weight: 700;
+    }
+    .critical-tag {
+      font-size: 10px;
+      background: var(--state-error);
+      color: var(--lis-primary-foreground);
+      padding: 1px 4px;
+      border-radius: 2px;
+    }
+    .review-hint {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .review-text {
+      font-size: 13px;
+      color: var(--lis-muted-foreground);
+    }
+    .review-progress {
+      height: 6px;
+      background: var(--color-neutral-100);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--state-info);
+      border-radius: 3px;
+    }
+    .report-card-footer {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-neutral-100);
+    }
+    .btn-link {
+      font-size: 13px;
+      color: var(--lis-primary);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: inherit;
+    }
+    .btn-link:disabled,
+    .btn-link[disabled] {
+      color: var(--lis-muted-foreground);
+      cursor: not-allowed;
+    }
+
+    /* ---------- Trend Comparison Section ---------- */
+    .trend-section {
+      background: var(--lis-card);
+      border: 1px solid var(--lis-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .trend-container {
+      margin-top: 16px;
+    }
+    .trend-chart-area {
+      position: relative;
+      padding: 20px 0 0 0;
+    }
+    .trend-bars {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      gap: 20px;
+      height: 180px;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--lis-border);
+    }
+    .trend-bar-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+    .trend-bar {
+      width: 100%;
+      max-width: 40px;
+      background: var(--color-primary-100);
+      border-radius: 4px 4px 0 0;
+      min-height: 4px;
+    }
+    .trend-bar.critical {
+      background: var(--state-error);
+    }
+    .bar-label {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      color: var(--lis-foreground);
+    }
+    .bar-date {
+      font-size: 11px;
+      color: var(--lis-muted-foreground);
+    }
+    .trend-ref-line {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 4px 20px 0;
+    }
+    .ref-label {
+      font-size: 11px;
+      color: var(--lis-muted-foreground);
+    }
+    .trend-legend {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      margin-top: 12px;
+      padding-left: 20px;
+    }
+    .legend-item {
+      display: flex;
+      flex-direction: row;
+      gap: 6px;
+      align-items: center;
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+    .legend-dot.normal {
+      background: var(--color-primary-100);
+    }
+    .legend-dot.critical {
+      background: var(--state-error);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo">LIS</div>
+        <span class="system-title">临床实验室信息系统</span>
+      </div>
+      <div class="header-right">
+        <span class="header-datetime">2026-08-15 10:30:00</span>
+        <div class="header-user">
+          <span class="user-avatar">张</span>
+          <div class="user-meta">
+            <span class="user-name">张三</span>
+            <span class="user-role">检验技师</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-body">
+      <!-- Sidebar -->
+      <aside class="app-sidebar">
+        <nav class="sidebar-nav">
+          <a class="nav-item" data-nav-key="collection">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6L4.5 18a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7.5 14h9"/></svg>
+            <span>标本采集</span>
+          </a>
+          <a class="nav-item" data-nav-key="transport">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7.5" cy="18.5" r="2.5"/><path d="M15 18.5h-4"/><circle cx="17.5" cy="18.5" r="2.5"/></svg>
+            <span>标本送检</span>
+          </a>
+          <a class="nav-item" data-nav-key="receipt">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>标本签收</span>
+          </a>
+          <a class="nav-item" data-nav-key="workstation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg>
+            <span>技师工作站</span>
+          </a>
+          <a class="nav-item active" data-nav-key="report" data-dom-id="nav-report">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+            <span>报告查询</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <main class="app-main">
+        <div class="page-header">
+          <h1 class="page-title">报告查询</h1>
+        </div>
+        <div class="page-content">
+          <!-- Query tabs -->
+          <div class="query-tabs">
+            <span class="query-tab active">按患者查</span>
+            <span class="query-tab">按条码查</span>
+            <span class="query-tab">按日期查</span>
+            <span class="query-tab">按科室查</span>
+          </div>
+
+          <!-- Search card -->
+          <div class="search-card">
+            <div class="search-row">
+              <div class="search-input-group">
+                <label class="search-label">姓名/住院号/门诊号</label>
+                <input type="text" class="search-input" placeholder="输入患者姓名或编号..." value="张三" />
+              </div>
+              <div class="search-input-group">
+                <label class="search-label">日期范围</label>
+                <select class="search-select"><option>最近7天</option><option>最近30天</option><option>最近3个月</option></select>
+              </div>
+              <button class="btn-search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                搜索
+              </button>
+            </div>
+          </div>
+
+          <!-- Critical value alert banner -->
+          <div class="critical-banner">
+            <span class="banner-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </span>
+            <span class="banner-text">检出危急值报告 1 份: 张三 - 生化全套 (GLU 18.5 mmol/L)</span>
+            <button class="banner-action">立即查看</button>
+          </div>
+
+          <!-- Patient header -->
+          <div class="patient-header-card">
+            <div class="patient-avatar">张</div>
+            <div class="patient-info">
+              <span class="patient-name">张三</span>
+              <span class="patient-meta">男 35岁 | 门诊号 M20260815001</span>
+            </div>
+            <div class="patient-stats">
+              <span class="stat-pill">报告总数: 3</span>
+              <span class="stat-pill" style="color: var(--state-error);">危急值: 1</span>
+              <span class="stat-pill" style="color: var(--state-warning);">异常项: 4</span>
+            </div>
+          </div>
+
+          <!-- Report list -->
+          <div class="report-list">
+            <div class="section-label">检验报告</div>
+
+            <!-- Report card - normal -->
+            <div class="report-card">
+              <div class="report-card-header">
+                <div class="report-title-area">
+                  <span class="report-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  </span>
+                  <span class="report-name">血常规</span>
+                  <span class="report-time">08-15 10:30</span>
+                </div>
+                <span class="report-status published">已发布</span>
+              </div>
+              <div class="report-card-body">
+                <div class="result-summary">
+                  <span class="summary-item">WBC <strong>6.5</strong></span>
+                  <span class="summary-item">RBC <strong>4.5</strong></span>
+                  <span class="summary-item">HGB <strong>135</strong></span>
+                  <span class="summary-item">PLT <strong>220</strong></span>
+                </div>
+              </div>
+              <div class="report-card-footer">
+                <button class="btn-link">查看详情</button>
+                <button class="btn-link">打印</button>
+                <button class="btn-link">历史对比</button>
+              </div>
+            </div>
+
+            <!-- Report card - with critical value -->
+            <div class="report-card critical">
+              <div class="report-card-header">
+                <div class="report-title-area">
+                  <span class="report-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  </span>
+                  <span class="report-name">生化全套</span>
+                  <span class="report-time">08-15 11:00</span>
+                  <span class="critical-badge">含危急值</span>
+                </div>
+                <span class="report-status published">已发布</span>
+              </div>
+              <div class="report-card-body">
+                <div class="result-summary">
+                  <span class="summary-item">GLU <strong style="color: var(--state-error);">18.5</strong> <span class="arrow-up">↑</span> <span class="critical-tag">危急</span></span>
+                  <span class="summary-item">ALT <strong style="color: var(--state-warning);">45</strong> <span class="arrow-up">↑</span></span>
+                  <span class="summary-item">AST <strong>38</strong></span>
+                  <span class="summary-item">TP <strong>72</strong></span>
+                </div>
+              </div>
+              <div class="report-card-footer">
+                <button class="btn-link">查看详情</button>
+                <button class="btn-link">打印</button>
+                <button class="btn-link">历史对比</button>
+              </div>
+            </div>
+
+            <!-- Report card - in review -->
+            <div class="report-card">
+              <div class="report-card-header">
+                <div class="report-title-area">
+                  <span class="report-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </span>
+                  <span class="report-name">凝血四项</span>
+                  <span class="report-time">08-15 11:30</span>
+                </div>
+                <span class="report-status reviewing">审核中</span>
+              </div>
+              <div class="report-card-body">
+                <div class="review-hint">
+                  <span class="review-text">报告审核中，预计 12:00 发布</span>
+                  <div class="review-progress">
+                    <div class="progress-bar" style="width: 60%;"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="report-card-footer">
+                <button class="btn-link" disabled>查看详情</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trend comparison section -->
+          <div class="trend-section">
+            <div class="section-label">历史趋势对比 - GLU 葡萄糖 (近5次)</div>
+            <div class="trend-container">
+              <div class="trend-chart-area">
+                <div class="trend-bars">
+                  <div class="trend-bar-group">
+                    <div class="trend-bar" style="height: 30%;"></div>
+                    <span class="bar-label">5.2</span>
+                    <span class="bar-date">08-01</span>
+                  </div>
+                  <div class="trend-bar-group">
+                    <div class="trend-bar" style="height: 35%;"></div>
+                    <span class="bar-label">5.8</span>
+                    <span class="bar-date">08-05</span>
+                  </div>
+                  <div class="trend-bar-group">
+                    <div class="trend-bar" style="height: 28%;"></div>
+                    <span class="bar-label">4.9</span>
+                    <span class="bar-date">08-08</span>
+                  </div>
+                  <div class="trend-bar-group">
+                    <div class="trend-bar" style="height: 40%;"></div>
+                    <span class="bar-label">6.5</span>
+                    <span class="bar-date">08-12</span>
+                  </div>
+                  <div class="trend-bar-group">
+                    <div class="trend-bar critical" style="height: 95%;"></div>
+                    <span class="bar-label" style="color: var(--state-error); font-weight: 700;">18.5</span>
+                    <span class="bar-date" style="color: var(--state-error);">08-15</span>
+                  </div>
+                </div>
+                <div class="trend-ref-line">
+                  <span class="ref-label">参考上限 6.1</span>
+                  <span class="ref-label">参考下限 3.9</span>
+                </div>
+              </div>
+              <div class="trend-legend">
+                <span class="legend-item"><span class="legend-dot normal"></span> 正常范围</span>
+                <span class="legend-item"><span class="legend-dot critical"></span> 危急值</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

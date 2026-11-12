@@ -1,0 +1,1 @@
+psql:.qa-cache/m2_extra.sql:68: 注意:  关系 "t_legacy_stock" 的列 "warehouse_id" 已经存在，跳过

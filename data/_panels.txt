@@ -1,0 +1,48 @@
+﻿GLU_T	?????	Glucose, Total	?????	??
+URINE_CULTURE	???	Urine Culture	?????	??
+BLOOD_CULTURE	???	Blood Culture	?????	??
+URINE_ROUTINE	???	Urinalysis, Routine	????	??
+HBV	??????	Hepatitis B Virus (HBV) Panel	?????	??
+CBC	???	Complete Blood Count (CBC)	?????	EDTA???
+LIPID_PANEL	????	Lipid Panel	?????	??
+KID_PANEL	?????	Kidney Function Panel	?????	??
+LIV_PANEL	?????	Liver Function Panel	?????	??
+STOOL_ROUTINE	å¤§ä¾¿å¸¸è§	Stool Routine	å¶ä»	ç²ªä¾¿
+MIC_SENS	è¯æè¯éª		å¾®çç©	è¡æ¶²
+MIC_ACID	æé¸æèæ¶ç		å¾®çç©	ç°æ¶²
+MIC_GRAM	é©å°æ°æè²		å¾®çç©	åæ³ç©
+MIC_ANA	åæ°§èå¹å»		å¾®çç©	åæ³ç©
+MIC_FUNGUS	çèå¹å»		å¾®çç©	åæ³ç©
+MIC_FLUID	è¸è¹æ°´å¹å»		å¾®çç©	è¸è¹æ°´
+MIC_CSF	èèæ¶²å¹å»		å¾®çç©	èèæ¶²
+MIC_SECR	åæ³ç©å¹å»		å¾®çç©	åæ³ç©
+MIC_STOOL	ç²ªä¾¿å¹å»		å¾®çç©	ç²ªä¾¿
+MIC_SPUTUM	ç°æ¶²å¹å»		å¾®çç©	ç°æ¶²
+MIC_URINE	å°¿æ¶²å¹å»		å¾®çç©	å°¿æ¶²
+MIC_BLD	è¡å¹å»		å¾®çç©	è¡æ¶²
+MIC_GEN	ä¸è¬ç»èå¹å»		å¾®çç©	è¡æ¶²
+ENDO	ååæ³æ¿ç´ 	Endocrine Hormone Panel	åç«	è¡æ¸
+REPRO	çæ®æ¿ç´ å­é¡¹	Reproductive Hormone Panel	åç«	è¡æ¸
+TP_T2	æ»èçº¢ç´ æµå®	Total Bilirubin Test	çå	è¡æ¸
+LFT_FULL	èåè½å¨å¥	Liver Function Test Full	çå	è¡æ¸
+UA_PANEL	å°¿å¸¸è§	Urine Routine	å°¿æ¶²	å°¿æ¶²
+HGB_ELEC	è¡çº¢èç½çµæ³³	Hemoglobin Electrophoresis	çå	å¨è¡
+LIVER_FIB	èçº¤ç»´åææ 	Liver Fibrosis Markers	åç«	è¡æ¸
+AUTO_IMM	èªèº«åç«æä½	Autoimmune Antibodies	åç«	è¡æ¸
+IRON_META	éä»£è°¢	Iron Metabolism	çå	è¡æ¸
+BONE_META	éª¨ä»£è°¢æ å¿ç©	Bone Metabolism Markers	çå	è¡æ¸
+BLOOD_GAS	è¡æ°åæ	Blood Gas Analysis	çå	å¨è¡
+IG_PANEL	åç«çèç½	Immunoglobulin Panel	åç«	è¡æ¸
+INFLAM	ççæ å¿ç©	Inflammation Markers	åç«	è¡æ¸
+GLU_META	ç³ä»£è°¢	Glucose Metabolism	çå	è¡æ¸
+TUMOR	è¿ç¤æ å¿ç©	Tumor Markers	åç«	è¡æ¸
+THYROID	ç²ç¶èºåè½	Thyroid Function	åç«	è¡æ¸
+COAG	åè¡åè½	Coagulation Panel	åè¡	è¡æµ
+PANC	è°èºåè½	Pancreatic Function	çå	è¡æ¸
+ELECTRO	çµè§£è´¨	Electrolytes	çå	è¡æ¸
+CK_PANEL	å¿èé¶è°±	Cardiac Enzyme Panel	çå	è¡æ¸
+LIPID	è¡èå¨å¥	Lipid Profile	çå	è¡æ¸
+RFT	è¾åè½	Renal Function Test	çå	è¡æ¸
+TP_T	æ»èç½æµå®	Total Protein Test	çå	è¡æ¸
+LFT	èåè½	Liver Function Test	çå	è¡æ¸
+CBP	è¡å¸¸è§	Complete Blood Count	è¡å¸¸è§	å¨è¡

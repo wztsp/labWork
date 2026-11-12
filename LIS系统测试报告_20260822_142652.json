@@ -1,0 +1,205 @@
+﻿[
+    {
+        "Module":  "认证与权限",
+        "Status":  "PASS",
+        "Detail":  "登录成功，返回token",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "用户登录"
+    },
+    {
+        "Module":  "认证与权限",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "获取用户信息"
+    },
+    {
+        "Module":  "认证与权限",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "用户列表查询"
+    },
+    {
+        "Module":  "认证与权限",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "角色列表查询"
+    },
+    {
+        "Module":  "标本管理",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "标本列表查询"
+    },
+    {
+        "Module":  "标本管理",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "待采集申请查询"
+    },
+    {
+        "Module":  "标本管理",
+        "Status":  "PASS",
+        "Detail":  "条码生成成功: 260822000031",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "条码生成"
+    },
+    {
+        "Module":  "标本管理",
+        "Status":  "PASS",
+        "Detail":  "患者编号生成成功: P0000000034",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "患者编号生成"
+    },
+    {
+        "Module":  "标本管理",
+        "Status":  "PASS",
+        "Detail":  "就诊号生成成功: V260822000033",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "就诊号生成"
+    },
+    {
+        "Module":  "检验申请",
+        "Status":  "PASS",
+        "Detail":  "检验申请创建成功",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "新建检验申请"
+    },
+    {
+        "Module":  "报告管理",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "报告列表查询"
+    },
+    {
+        "Module":  "报告管理",
+        "Status":  "PASS",
+        "Detail":  "报告模板列表查询成功",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "报告模板列表"
+    },
+    {
+        "Module":  "报告管理",
+        "Status":  "PASS",
+        "Detail":  "默认报告模板查询成功",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "默认报告模板"
+    },
+    {
+        "Module":  "报告管理",
+        "Status":  "PASS",
+        "Detail":  "微生物报告模板查询成功",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "微生物报告模板"
+    },
+    {
+        "Module":  "基础数据",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "检验项目列表"
+    },
+    {
+        "Module":  "基础数据",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "检验指标列表"
+    },
+    {
+        "Module":  "基础数据",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "仪器字典列表"
+    },
+    {
+        "Module":  "基础数据",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "标本类型列表"
+    },
+    {
+        "Module":  "基础数据",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "条码规则列表"
+    },
+    {
+        "Module":  "质控管理",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "质控记录查询"
+    },
+    {
+        "Module":  "系统管理",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "操作日志查询"
+    },
+    {
+        "Module":  "系统管理",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "系统参数查询"
+    },
+    {
+        "Module":  "系统管理",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "科室列表查询"
+    },
+    {
+        "Module":  "HR管理",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "员工列表查询"
+    },
+    {
+        "Module":  "试剂管理",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "试剂列表查询"
+    },
+    {
+        "Module":  "微生物",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "细菌字典查询"
+    },
+    {
+        "Module":  "微生物",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "抗生素字典查询"
+    },
+    {
+        "Module":  "统计分析",
+        "Status":  "PASS",
+        "Detail":  "工作量统计查询成功",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "工作量统计"
+    },
+    {
+        "Module":  "监控管理",
+        "Status":  "FAIL",
+        "Detail":  "远程服务器返回错误: (500) 内部服务器错误。",
+        "Timestamp":  "2026-08-22 14:26:51",
+        "TestName":  "消息中心查询"
+    }
+]

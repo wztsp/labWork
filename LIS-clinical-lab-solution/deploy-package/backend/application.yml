@@ -1,0 +1,106 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+      force-request: true
+      force-response: true
+
+spring:
+  application:
+    name: lis-monolith
+  main:
+    # 允许 Bean 定义覆盖 (解决不同模块间的同名 Bean 冲突)
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lis_db?characterEncoding=utf8
+    username: lis_user
+    password: ${DB_PASSWORD:lis_dev_2026}
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: never
+      schema-locations: classpath:schema.sql
+      continue-on-error: true
+  redis:
+    host: localhost
+    port: 6379
+    database: 3
+    timeout: 5000
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: lis
+    password: ${MQ_PASSWORD:lis_dev_2026}
+    virtual-host: /lis
+    listener:
+      simple:
+        # 开发环境无RabbitMQ → 禁用监听器自动启动, 彻底避免消费者线程爆炸挤爆Tomcat导致容器级空500
+        auto-startup: false
+        missing-queues-fatal: false
+        missing-exchange-fatal: false
+        # 防止 RabbitMQ 连不上时无限重启消费者线程 -> 线程爆炸挤爆 Tomcat -> 容器级空500
+        max-concurrent-consumers: 1
+        prefetch: 1
+        recovery-interval: 15000
+        retry:
+          enabled: true
+          initial-interval: 3000
+          max-attempts: 3
+          multiplier: 2.0
+          max-interval: 30000
+
+# MyBatis Plus 配置 (统一)
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+# === 业务配置 ===
+report:
+  pdf:
+    storage-path: /data/lis/pdf
+  audit:
+    auto-enabled: true
+  critical:
+    alert-queue: critical.alert
+    confirm-timeout-seconds: 1800
+
+# === MQ 配置 ===
+mq:
+  exchange: lis.exchange
+  report:
+    published-queue: report.published
+    published-routing-key: report.published
+    instrument-result-queue: lis.report.instrument-result
+    instrument-result-routing-key: instrument.result.received
+  result:
+    routing-key: instrument.result.received
+    unmatched-routing-key: result.unmatched
+  critical:
+    alert-queue: critical.alert
+    alert-routing-key: critical.alert
+
+# === 日志配置 ===
+logging:
+  level:
+    com.lis: debug
+    org.springframework.web: info
+
+# === TCP 仪器通信配置 (TcpServer 组件) ===
+tcp:
+  server:
+    enabled: true
+    port: 9100
+
+# === CORS 配置 ===
+# 允许所有跨域请求 (开发环境)
+# 生产环境应该限制具体域名

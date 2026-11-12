@@ -1,0 +1,33 @@
+{
+  "orderId": 1,
+  "orderNo": "PUR202608040001",
+  "supplierId": 62,
+  "supplier": "QA\u8bd5\u5242\u4f9b\u5e94\u6709\u9650\u516c\u53f8",
+  "remark": "QA采购闭环-入库",
+  "items": [
+    {
+      "reagentId": 1,
+      "orderItemId": 2,
+      "warehouseId": 0,
+      "lotNo": "QA-LOT-001",
+      "barcode": "QA-BC-001",
+      "quantity": 10,
+      "unit": "mL",
+      "purchasePrice": 50,
+      "expiryDate": "2027-12-31",
+      "location": "A\u533a"
+    },
+    {
+      "reagentId": 2,
+      "orderItemId": 3,
+      "warehouseId": 0,
+      "lotNo": "QA-LOT-002",
+      "barcode": "QA-BC-002",
+      "quantity": 5,
+      "unit": "mL",
+      "purchasePrice": 80,
+      "expiryDate": "2027-12-31",
+      "location": "A\u533a"
+    }
+  ]
+}

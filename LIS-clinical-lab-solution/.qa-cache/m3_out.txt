@@ -1,0 +1,20 @@
+ tables | reagents | inbounds | suppliers | stock | warehouses | categories | nodes 
+--------+----------+----------+-----------+-------+------------+------------+-------
+     88 |        4 |        0 |         0 |     4 |          1 |          5 |     4
+(1 row)
+
+ qa_reagents | qa_inbounds | qa_suppliers | reagents_with_supplier_str | reagents_with_supplier_id 
+-------------+-------------+--------------+----------------------------+---------------------------
+           0 |           0 |            0 |                          0 |                         0
+(1 row)
+
+ column_name  | is_nullable | column_default 
+--------------+-------------+----------------
+ warehouse_id | NO          | 0
+(1 row)
+
+          indexname          |                                                          indexdef                                                          
+-----------------------------+----------------------------------------------------------------------------------------------------------------------------
+ uk_lis_reagent_stock_lot_wh | CREATE UNIQUE INDEX uk_lis_reagent_stock_lot_wh ON public.lis_reagent_stock USING btree (reagent_id, lot_no, warehouse_id)
+(1 row)
+

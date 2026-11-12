@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preflight</title>
+    <style id="theme-vars">
+/* ============================================================
+   LIS Clinical Laboratory System — Brand Design Tokens
+   Primary hue: Medical Blue (#1890FF)
+   Free-explore mode: single primary scale + state colors only
+   ============================================================ */
+
+/* ---------- Light Mode ---------- */
+:root {
+  /* Primary scale (Medical Blue) */
+  --color-primary-50:  #E6F4FF;
+  --color-primary-100: #BAE0FF;
+  --color-primary-200: #91CAFF;
+  --color-primary-300: #69B1FF;
+  --color-primary-400: #4096FF;
+  --color-primary-500: #1890FF;
+  --color-primary-600: #0958D9;
+  --color-primary-700: #003EB3;
+  --color-primary-800: #002C8C;
+  --color-primary-900: #001D66;
+  --color-primary-950: #001141;
+
+  /* Neutral scale */
+  --color-neutral-0:   #FFFFFF;
+  --color-neutral-50:  #F7F9FC;
+  --color-neutral-100: #F0F2F5;
+  --color-neutral-200: #E5E8EC;
+  --color-neutral-300: #D1D6DD;
+  --color-neutral-400: #9CA3AF;
+  --color-neutral-500: #6B7280;
+  --color-neutral-600: #4B5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1F2937;
+  --color-neutral-900: #111827;
+  --color-neutral-950: #030712;
+
+  /* State colors */
+  --state-success: #52C41A;
+  --state-success-bg: #F6FFED;
+  --state-success-border: #B7EB8F;
+  --state-warning: #FAAD14;
+  --state-warning-bg: #FFFBE6;
+  --state-warning-border: #FFE58F;
+  --state-error: #F5222D;
+  --state-error-bg: #FFF1F0;
+  --state-error-border: #FFA39E;
+  --state-info: #1890FF;
+  --state-info-bg: #E6F4FF;
+  --state-info-border: #91CAFF;
+
+  /* Radius scale */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Semantic aliases — Lis prefix */
+  --lis-background: #FFFFFF;
+  --lis-foreground: #111827;
+  --lis-card: #FFFFFF;
+  --lis-card-foreground: #1F2937;
+  --lis-popover: #FFFFFF;
+  --lis-popover-foreground: #1F2937;
+  --lis-primary: #1890FF;
+  --lis-primary-foreground: #FFFFFF;
+  --lis-muted: #F0F2F5;
+  --lis-muted-foreground: #6B7280;
+  --lis-border: #E5E8EC;
+  --lis-input: #D1D6DD;
+  --lis-ring: #1890FF;
+  --lis-radius-small: 4px;
+  --lis-radius-medium: 8px;
+  --lis-radius-large: 12px;
+
+  /* Typography */
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+}
+
+/* ---------- Dark Mode ---------- */
+.dark {
+  --color-primary-50:  #001D66;
+  --color-primary-100: #002C8C;
+  --color-primary-200: #003EB3;
+  --color-primary-300: #0958D9;
+  --color-primary-400: #1890FF;
+  --color-primary-500: #4096FF;
+  --color-primary-600: #69B1FF;
+  --color-primary-700: #91CAFF;
+  --color-primary-800: #BAE0FF;
+  --color-primary-900: #E6F4FF;
+  --color-primary-950: #F0F7FF;
+
+  --color-neutral-0:   #030712;
+  --color-neutral-50:  #111827;
+  --color-neutral-100: #1F2937;
+  --color-neutral-200: #374151;
+  --color-neutral-300: #4B5563;
+  --color-neutral-400: #6B7280;
+  --color-neutral-500: #9CA3AF;
+  --color-neutral-600: #D1D6DD;
+  --color-neutral-700: #E5E8EC;
+  --color-neutral-800: #F0F2F5;
+  --color-neutral-900: #F7F9FC;
+  --color-neutral-950: #FFFFFF;
+
+  --state-success: #73D13D;
+  --state-success-bg: #162312;
+  --state-success-border: #274916;
+  --state-warning: #FFD43B;
+  --state-warning-bg: #2B2111;
+  --state-warning-border: #594214;
+  --state-error: #FF7875;
+  --state-error-bg: #2A1215;
+  --state-error-border: #58181C;
+  --state-info: #4096FF;
+  --state-info-bg: #111D2C;
+  --state-info-border: #15395B;
+
+  --lis-background: #0F172A;
+  --lis-foreground: #F0F2F5;
+  --lis-card: #1E293B;
+  --lis-card-foreground: #E2E8F0;
+  --lis-popover: #1E293B;
+  --lis-popover-foreground: #E2E8F0;
+  --lis-primary: #4096FF;
+  --lis-primary-foreground: #0F172A;
+  --lis-muted: #334155;
+  --lis-muted-foreground: #94A3B8;
+  --lis-border: #334155;
+  --lis-input: #475569;
+  --lis-ring: #4096FF;
+}
+
+/* ---------- Typography Classes ---------- */
+.font-display { font-family: var(--font-sans); font-weight: 700; letter-spacing: -0.02em; }
+.font-body { font-family: var(--font-sans); font-weight: 400; }
+.font-mono { font-family: var(--font-mono); font-weight: 400; }
+
+.text-xs { font-size: 12px; line-height: 16px; }
+.text-sm { font-size: 14px; line-height: 20px; }
+.text-base { font-size: 16px; line-height: 24px; }
+.text-lg { font-size: 18px; line-height: 28px; }
+.text-xl { font-size: 20px; line-height: 28px; }
+.text-2xl { font-size: 24px; line-height: 32px; }
+.text-3xl { font-size: 30px; line-height: 38px; }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--lis-background);
+    --color-foreground: var(--lis-foreground);
+    --color-card: var(--lis-card);
+    --color-card-foreground: var(--lis-card-foreground);
+    --color-popover: var(--lis-popover);
+    --color-popover-foreground: var(--lis-popover-foreground);
+    --color-primary: var(--lis-primary);
+    --color-primary-foreground: var(--lis-primary-foreground);
+    --color-muted: var(--lis-muted);
+    --color-muted-foreground: var(--lis-muted-foreground);
+    --color-border: var(--lis-border);
+    --color-input: var(--lis-input);
+    --color-ring: var(--lis-ring);
+    --radius-sm: var(--lis-radius-small);
+    --radius-md: var(--lis-radius-medium);
+    --radius-lg: var(--lis-radius-large);
+  }
+  @layer base {
+    body { background: var(--lis-background); color: var(--lis-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--lis-background); }
+      .text-background { color: var(--lis-background); }
+      .border-background { border-color: var(--lis-background); }
+      .ring-background { --tw-ring-color: var(--lis-background); }
+      .bg-foreground { background-color: var(--lis-foreground); }
+      .text-foreground { color: var(--lis-foreground); }
+      .border-foreground { border-color: var(--lis-foreground); }
+      .ring-foreground { --tw-ring-color: var(--lis-foreground); }
+      .bg-card { background-color: var(--lis-card); }
+      .text-card { color: var(--lis-card); }
+      .border-card { border-color: var(--lis-card); }
+      .ring-card { --tw-ring-color: var(--lis-card); }
+      .bg-card-foreground { background-color: var(--lis-card-foreground); }
+      .text-card-foreground { color: var(--lis-card-foreground); }
+      .border-card-foreground { border-color: var(--lis-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--lis-card-foreground); }
+      .bg-popover { background-color: var(--lis-popover); }
+      .text-popover { color: var(--lis-popover); }
+      .border-popover { border-color: var(--lis-popover); }
+      .ring-popover { --tw-ring-color: var(--lis-popover); }
+      .bg-popover-foreground { background-color: var(--lis-popover-foreground); }
+      .text-popover-foreground { color: var(--lis-popover-foreground); }
+      .border-popover-foreground { border-color: var(--lis-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--lis-popover-foreground); }
+      .bg-primary { background-color: var(--lis-primary); }
+      .text-primary { color: var(--lis-primary); }
+      .border-primary { border-color: var(--lis-primary); }
+      .ring-primary { --tw-ring-color: var(--lis-primary); }
+      .bg-primary-foreground { background-color: var(--lis-primary-foreground); }
+      .text-primary-foreground { color: var(--lis-primary-foreground); }
+      .border-primary-foreground { border-color: var(--lis-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--lis-primary-foreground); }
+      .bg-muted { background-color: var(--lis-muted); }
+      .text-muted { color: var(--lis-muted); }
+      .border-muted { border-color: var(--lis-muted); }
+      .ring-muted { --tw-ring-color: var(--lis-muted); }
+      .bg-muted-foreground { background-color: var(--lis-muted-foreground); }
+      .text-muted-foreground { color: var(--lis-muted-foreground); }
+      .border-muted-foreground { border-color: var(--lis-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--lis-muted-foreground); }
+      .bg-border { background-color: var(--lis-border); }
+      .text-border { color: var(--lis-border); }
+      .border-border { border-color: var(--lis-border); }
+      .ring-border { --tw-ring-color: var(--lis-border); }
+      .bg-input { background-color: var(--lis-input); }
+      .text-input { color: var(--lis-input); }
+      .border-input { border-color: var(--lis-input); }
+      .ring-input { --tw-ring-color: var(--lis-input); }
+      .bg-ring { background-color: var(--lis-ring); }
+      .text-ring { color: var(--lis-ring); }
+      .border-ring { border-color: var(--lis-ring); }
+      .ring-ring { --tw-ring-color: var(--lis-ring); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

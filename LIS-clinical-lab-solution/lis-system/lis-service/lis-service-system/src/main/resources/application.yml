@@ -1,0 +1,56 @@
+﻿server:
+  port: 8087
+
+spring:
+  application:
+    name: lis-service-system
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lis_db
+    username: lis_user
+    password: ${DB_PASSWORD:lis_dev_2026}
+    driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 1
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: lis
+    password: ${MQ_PASSWORD:lis_dev_2026}
+    listener:
+      simple:
+        # 当 RabbitMQ 不可用时, 不阻止服务启动, 仅记录错误日志
+        auto-startup: false
+        missing-queues-fatal: false
+        missing-exchange-fatal: false
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+logging:
+  level:
+    com.lis.system: info
+
+# 数据库备份配置
+backup:
+  dir: ${BACKUP_DIR:./backups}
+  retention-days: 90
+  pg-dump-path: ${PG_DUMP_PATH:pg_dump}
+  db-name: lis_db
+  db-host: localhost
+  db-port: 5432
+  daily-cron: "0 0 2 * * ?"
+  weekly-cron: "0 0 3 ? * SUN"
+  cleanup-cron: "0 30 2 * * ?"

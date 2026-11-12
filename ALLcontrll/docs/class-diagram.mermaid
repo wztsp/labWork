@@ -1,0 +1,107 @@
+%% LIS 运维后台 — 后端核心模块类图
+%% 见 architecture.md 第 3.2 节
+
+classDiagram
+    class App {
+        +Express express
+        +configureMiddleware() void
+        +registerRoutes() void
+        +serveStatic() void
+        +start(port: number) void
+    }
+
+    class HealthChecker {
+        +checkService(service: Service): CheckResult
+        -tcpProbe(host: string, port: number, timeoutMs: number): Promise~ProbeResult~
+        -httpProbe(url: string, timeoutMs: number): Promise~ProbeResult~
+        +checkAll(services: Service[]): Promise~CheckResult[]~
+    }
+
+    class LogParser {
+        -LINE_REGEX: RegExp
+        -STACK_REGEX: RegExp
+        +parse(content: string, filename: string): ParseResult
+        -parseLine(line: string, lineNo: number): LogEntry|null
+        -isStackLine(line: string): boolean
+        -groupStackTrace(lines: string[]): LogEntry[]
+    }
+
+    class ServiceRepository {
+        +findAll(): Service[]
+        +findById(id: number): Service|null
+        +create(data: ServiceInput): Service
+        +update(id: number, data: ServiceInput): Service
+        +delete(id: number): void
+        +findHistory(serviceId: number, limit: number): CheckHistory[]
+        +saveHistory(record: CheckHistory): void
+    }
+
+    class LogRepository {
+        +saveFile(file: LogFileInput): LogFile
+        +saveEntries(fileId: number, entries: LogEntry[]): void
+        +findAllFiles(): LogFileSummary[]
+        +findEntries(fileId: number, filter: EntryFilter): PagedEntries
+        +findEntryDetail(fileId: number, entryId: number): LogEntryDetail
+        +deleteFile(id: number): void
+        +countByLevel(fileId: number): LevelCount[]
+    }
+
+    class DashboardService {
+        +getSummary(): DashboardSummary
+        -countServiceStatus(): StatusCount
+        -countLogErrors(): number
+        +getServiceErrorCounts(): ServiceErrorCount[]
+    }
+
+    class ApiResponse {
+        +code: number
+        +message: string
+        +data: T
+        +success(data: T): ApiResponse
+        +error(code: number, message: string): ApiResponse
+    }
+
+    class Service {
+        +id: number
+        +name: string
+        +type: string
+        +host: string
+        +port: number
+        +health_url: string|null
+        +enabled: boolean
+        +status: string
+        +last_checked_at: string
+        +response_ms: number|null
+    }
+
+    class LogEntry {
+        +id: number
+        +file_id: number
+        +line_no: number
+        +timestamp: string|null
+        +level: string|null
+        +message: string
+        +stack_trace: string|null
+        +has_stack: boolean
+    }
+
+    class CheckResult {
+        +service_id: number
+        +status: string
+        +response_ms: number|null
+        +error_message: string|null
+        +checked_at: string
+    }
+
+    App --> HealthChecker : uses
+    App --> LogParser : uses
+    App --> ServiceRepository : uses
+    App --> LogRepository : uses
+    App --> DashboardService : uses
+    HealthChecker ..> Service : reads config
+    HealthChecker ..> CheckResult : produces
+    LogParser ..> LogEntry : produces
+    ServiceRepository ..> Service : manages
+    LogRepository ..> LogEntry : manages
+    DashboardService --> ServiceRepository : queries
+    DashboardService --> LogRepository : queries

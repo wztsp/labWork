@@ -1,0 +1,317 @@
+{
+  "startedAt": "2026-11-10T01:29:44.998Z",
+  "finishedAt": "2026-11-10T01:30:00.369Z",
+  "durationSeconds": 15,
+  "base": "http://127.0.0.1:8080",
+  "instrument": {
+    "id": "3",
+    "name": "迈瑞 BC-6800 血细胞分析仪"
+  },
+  "summary": {
+    "applications": 10,
+    "passed": 10,
+    "failed": 0,
+    "qcCount": 10,
+    "qcOk": true
+  },
+  "cases": [
+    {
+      "idx": 1,
+      "steps": {
+        "申请": true,
+        "查询申请": true,
+        "试管分组": true,
+        "生成条码": true,
+        "采集": true,
+        "送检": true,
+        "签收": true,
+        "上机": true,
+        "仪器回传": true,
+        "审核": true,
+        "最终状态": true
+      },
+      "ok": true,
+      "errors": [],
+      "barcode": "261110000001",
+      "sampleId": "2119965710082265090",
+      "resultCount": 10,
+      "finalStatus": 6,
+      "finalStatusText": "已报告"
+    },
+    {
+      "idx": 2,
+      "steps": {
+        "申请": true,
+        "查询申请": true,
+        "试管分组": true,
+        "生成条码": true,
+        "采集": true,
+        "送检": true,
+        "签收": true,
+        "上机": true,
+        "仪器回传": true,
+        "审核": true,
+        "最终状态": true
+      },
+      "ok": true,
+      "errors": [],
+      "barcode": "261110000002",
+      "sampleId": "2119965720102457345",
+      "resultCount": 10,
+      "finalStatus": 6,
+      "finalStatusText": "已报告"
+    },
+    {
+      "idx": 3,
+      "steps": {
+        "申请": true,
+        "查询申请": true,
+        "试管分组": true,
+        "生成条码": true,
+        "采集": true,
+        "送检": true,
+        "签收": true,
+        "上机": true,
+        "仪器回传": true,
+        "审核": true,
+        "最终状态": true
+      },
+      "ok": true,
+      "errors": [],
+      "barcode": "261110000003",
+      "sampleId": "2119965725991260162",
+      "resultCount": 10,
+      "finalStatus": 6,
+      "finalStatusText": "已报告"
+    },
+    {
+      "idx": 4,
+      "steps": {
+        "申请": true,
+        "查询申请": true,
+        "试管分组": true,
+        "生成条码": true,
+        "采集": true,
+        "送检": true,
+        "签收": true,
+        "上机": true,
+        "仪器回传": true,
+        "审核": true,
+        "最终状态": true
+      },
+      "ok": true,
+      "errors": [],
+      "barcode": "261110000004",
+      "sampleId": "2119965731196391426",
+      "resultCount": 10,
+      "finalStatus": 6,
+      "finalStatusText": "已报告"
+    },
+    {
+      "idx": 5,
+      "steps": {
+        "申请": true,
+        "查询申请": true,
+        "试管分组": true,
+        "生成条码": true,
+        "采集": true,
+        "送检": true,
+        "签收": true,
+        "上机": true,
+        "仪器回传": true,
+        "审核": true,
+        "最终状态": true
+      },
+      "ok": true,
+      "errors": [],
+      "barcode": "261110000005",
+      "sampleId": "2119965736099532801",
+      "resultCount": 10,
+      "finalStatus": 6,
+      "finalStatusText": "已报告"
+    },
+    {
+      "idx": 6,
+      "steps": {
+        "申请": true,
+        "查询申请": true,
+        "试管分组": true,
+        "生成条码": true,
+        "采集": true,
+        "送检": true,
+        "签收": true,
+        "上机": true,
+        "仪器回传": true,
+        "审核": true,
+        "最终状态": true
+      },
+      "ok": true,
+      "errors": [],
+      "barcode": "261110000006",
+      "sampleId": "2119965741006868481",
+      "resultCount": 10,
+      "finalStatus": 6,
+      "finalStatusText": "已报告"
+    },
+    {
+      "idx": 7,
+      "steps": {
+        "申请": true,
+        "查询申请": true,
+        "试管分组": true,
+        "生成条码": true,
+        "采集": true,
+        "送检": true,
+        "签收": true,
+        "上机": true,
+        "仪器回传": true,
+        "审核": true,
+        "最终状态": true
+      },
+      "ok": true,
+      "errors": [],
+      "barcode": "261110000007",
+      "sampleId": "2119965745800957953",
+      "resultCount": 10,
+      "finalStatus": 6,
+      "finalStatusText": "已报告"
+    },
+    {
+      "idx": 8,
+      "steps": {
+        "申请": true,
+        "查询申请": true,
+        "试管分组": true,
+        "生成条码": true,
+        "采集": true,
+        "送检": true,
+        "签收": true,
+        "上机": true,
+        "仪器回传": true,
+        "审核": true,
+        "最终状态": true
+      },
+      "ok": true,
+      "errors": [],
+      "barcode": "261110000008",
+      "sampleId": "2119965750318223361",
+      "resultCount": 10,
+      "finalStatus": 6,
+      "finalStatusText": "已报告"
+    },
+    {
+      "idx": 9,
+      "steps": {
+        "申请": true,
+        "查询申请": true,
+        "试管分组": true,
+        "生成条码": true,
+        "采集": true,
+        "送检": true,
+        "签收": true,
+        "上机": true,
+        "仪器回传": true,
+        "审核": true,
+        "最终状态": true
+      },
+      "ok": true,
+      "errors": [],
+      "barcode": "261110000009",
+      "sampleId": "2119965756068614145",
+      "resultCount": 10,
+      "finalStatus": 6,
+      "finalStatusText": "已报告"
+    },
+    {
+      "idx": 10,
+      "steps": {
+        "申请": true,
+        "查询申请": true,
+        "试管分组": true,
+        "生成条码": true,
+        "采集": true,
+        "送检": true,
+        "签收": true,
+        "上机": true,
+        "仪器回传": true,
+        "审核": true,
+        "最终状态": true
+      },
+      "ok": true,
+      "errors": [],
+      "barcode": "261110000010",
+      "sampleId": "2119965760363581442",
+      "resultCount": 10,
+      "finalStatus": 6,
+      "finalStatusText": "已报告"
+    }
+  ],
+  "qc": {
+    "ok": true,
+    "lotId": "23",
+    "lotName": "23",
+    "rows": [
+      {
+        "value": 2.09,
+        "ok": true,
+        "level": "ACCEPT",
+        "msg": "success"
+      },
+      {
+        "value": 2.21,
+        "ok": true,
+        "level": "ACCEPT",
+        "msg": "success"
+      },
+      {
+        "value": 2.25,
+        "ok": true,
+        "level": "ACCEPT",
+        "msg": "success"
+      },
+      {
+        "value": 2.28,
+        "ok": true,
+        "level": "ACCEPT",
+        "msg": "success"
+      },
+      {
+        "value": 2.1,
+        "ok": true,
+        "level": "ACCEPT",
+        "msg": "success"
+      },
+      {
+        "value": 2.13,
+        "ok": true,
+        "level": "ACCEPT",
+        "msg": "success"
+      },
+      {
+        "value": 2.24,
+        "ok": true,
+        "level": "ACCEPT",
+        "msg": "success"
+      },
+      {
+        "value": 2.16,
+        "ok": true,
+        "level": "ACCEPT",
+        "msg": "success"
+      },
+      {
+        "value": 2.19,
+        "ok": true,
+        "level": "ACCEPT",
+        "msg": "success"
+      },
+      {
+        "value": 2.27,
+        "ok": true,
+        "level": "ACCEPT",
+        "msg": "success"
+      }
+    ],
+    "count": 10
+  }
+}

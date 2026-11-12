@@ -1,0 +1,17 @@
+{
+  "applyDeptId": 6,
+  "applyDeptName": "\u95e8\u8bca\u90e8",
+  "applyUserId": 9,
+  "applyUserName": "QAOutpatient",
+  "budgetYear": 2026,
+  "urgentFlag": 0,
+  "remark": "T-08红线验证:门诊部无预算",
+  "items": [
+    {
+      "reagentId": 1,
+      "quantity": 2,
+      "unit": "mL",
+      "estimatedPrice": 60
+    }
+  ]
+}

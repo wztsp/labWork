@@ -1,0 +1,55 @@
+### STEP1 plant
+=== 4d PLANT (autocommit, no BEGIN): human dup + draft loser + FK, to test partial application ===
+DROP INDEX
+INSERT 0 3
+INSERT 0 1
+--- planted state ---
+ supplier_code | supplier_name | source_type | id 
+---------------+---------------+-------------+----
+ QA_PH1        | roche         |           1 | 50
+ QA_PH2        | Roche         |           1 | 51
+ QA_PD         | ROCHE         |           2 | 52
+(3 rows)
+
+ reagent_code | supplier_id | supplier_code 
+--------------+-------------+---------------
+ QA_PFK       |          52 | QA_PD
+(1 row)
+
+PLANT_EXIT=0
+### STEP2 run REAL script with ON_ERROR_STOP=1, NO enclosing BEGIN (autocommit)
+SCRIPT_EXIT=3
+UPDATE 0
+UPDATE 0
+DELETE 1
+psql:lis-system/docs/database/add-reagent-enhance.sql:648: 错误:  存在人工录入的重名供应商，需先在页面人工归并后再执行本脚本：roche(2条)
+HINT:  这些记录 source_type <> 2，脚本不会自动删除，避免误删人工维护的证照数据
+CONTEXT:  在RAISE的第12行的PL/pgSQL函数inline_code_block
+### STEP3 check persisted state
+=== 4d CHECK after script aborted at 22.2 guard: did 22.1 destructive work already COMMIT? ===
+--- QA_PD (draft loser) still there? expect GONE if 22.1.4 committed before RAISE ---
+ supplier_code | supplier_name | source_type | id 
+---------------+---------------+-------------+----
+ QA_PH1        | roche         |           1 | 50
+ QA_PH2        | Roche         |           1 | 51
+(2 rows)
+
+--- QA_PFK now points to? expect repointed to QA_PH1 (winner) if 22.1.1 committed ---
+ reagent_code | supplier_id | supplier_code | supplier_name | source_type 
+--------------+-------------+---------------+---------------+-------------
+ QA_PFK       |          50 | QA_PH1        | roche         |           1
+(1 row)
+
+--- unique index rebuilt? expect 0 (script aborted before 22.3) ---
+ idx_present 
+-------------
+           0
+(1 row)
+
+--- human duplicates still present? expect 2 (script refuses to touch them) ---
+ norm  | count 
+-------+-------
+ roche |     2
+(1 row)
+
+CHECK_EXIT=0

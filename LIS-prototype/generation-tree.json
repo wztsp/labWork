@@ -1,0 +1,69 @@
+{
+  "root": {
+    "nodeId": "gen-project-shell",
+    "kind": "project-shell",
+    "pageIds": ["page-specimen-collection", "page-specimen-transport", "page-specimen-receipt", "page-technician-workstation", "page-report-query"],
+    "output": "partials/project-shell.html",
+    "sharedRegions": ["header (logo + system title + user info + date/time)", "sidebar (5-module navigation with active state slot)", "root frame (flex layout: sidebar-left + main-right)"],
+    "privateRegions": [],
+    "mutableSlots": ["<!-- SLOT: activeNavItem -->", "<!-- SLOT: pageTitle -->", "<!-- SLOT: pageContent -->"],
+    "status": "planned",
+    "children": [
+      {
+        "nodeId": "gen-page-specimen-collection",
+        "kind": "page-leaf",
+        "pageIds": ["page-specimen-collection"],
+        "output": "pages/specimen-collection.html",
+        "sharedRegions": [],
+        "privateRegions": ["scan-driven collection workflow card", "patient identity verification", "container auto-match list", "recent collection records with undo"],
+        "mutableSlots": ["<!-- SLOT: activeNavItem -->", "<!-- SLOT: pageTitle -->", "<!-- SLOT: pageContent -->"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-specimen-transport",
+        "kind": "page-leaf",
+        "pageIds": ["page-specimen-transport"],
+        "output": "pages/specimen-transport.html",
+        "sharedRegions": [],
+        "privateRegions": ["batch scan packing mode", "source department selector", "continuous scan specimen list", "in-transit task panel"],
+        "mutableSlots": ["<!-- SLOT: activeNavItem -->", "<!-- SLOT: pageTitle -->", "<!-- SLOT: pageContent -->"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-specimen-receipt",
+        "kind": "page-leaf",
+        "pageIds": ["page-specimen-receipt"],
+        "output": "pages/specimen-receipt.html",
+        "sharedRegions": [],
+        "privateRegions": ["daily statistics card", "scan-receipt area with instant feedback", "recent receipt scrolling list", "urgent priority panel", "reject quick-action panel"],
+        "mutableSlots": ["<!-- SLOT: activeNavItem -->", "<!-- SLOT: pageTitle -->", "<!-- SLOT: pageContent -->"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-technician-workstation",
+        "kind": "page-leaf",
+        "pageIds": ["page-technician-workstation"],
+        "output": "pages/technician-workstation.html",
+        "sharedRegions": [],
+        "privateRegions": ["three-column resizable layout", "specimen list with filter", "result entry grid with keyboard shortcuts", "critical value inline panel", "auxiliary info panel with trend chart"],
+        "mutableSlots": ["<!-- SLOT: activeNavItem -->", "<!-- SLOT: pageTitle -->", "<!-- SLOT: pageContent -->"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-report-query",
+        "kind": "page-leaf",
+        "pageIds": ["page-report-query"],
+        "output": "pages/report-query.html",
+        "sharedRegions": [],
+        "privateRegions": ["role-based query tabs", "patient search card", "report list with abnormal markers", "report detail with trend visualization", "critical value alert banner"],
+        "mutableSlots": ["<!-- SLOT: activeNavItem -->", "<!-- SLOT: pageTitle -->", "<!-- SLOT: pageContent -->"],
+        "status": "planned",
+        "children": []
+      }
+    ]
+  }
+}

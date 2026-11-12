@@ -1,0 +1,107 @@
+%% LIS 运维后台 — 关键流程时序图
+%% 见 architecture.md 第 5 节
+%% 包含三个流程: ① 定时健康检查 ② 日志上传解析 ③ 前端总览页加载
+
+%% ===== 流程 1: 定时健康检查 =====
+sequenceDiagram
+    participant FE as Frontend (OverviewPage)
+    participant API as Express API
+    participant HC as HealthChecker
+    participant SR as ServiceRepository
+    participant DB as SQLite
+
+    Note over FE: 自动刷新开启，定时触发
+    FE->>API: POST /api/services/check
+    API->>SR: findAll()
+    SR->>DB: SELECT * FROM services WHERE enabled=1
+    DB-->>SR: Service[]
+    SR-->>API: services (15条)
+
+    par 并发检测每个服务
+        API->>HC: checkService(service_1)
+        HC->>HC: health_url ? httpProbe : tcpProbe
+        HC-->>API: CheckResult(online, 12ms)
+    and
+        API->>HC: checkService(service_2)
+        HC-->>API: CheckResult(offline, null, ECONNREFUSED)
+    and
+        API->>HC: checkService(service_N)
+        HC-->>API: CheckResult(...)
+    end
+
+    API->>SR: saveHistory(results)
+    SR->>DB: INSERT INTO service_check_history
+    API->>API: 计算汇总 summary
+    API-->>FE: { results, summary, duration_ms }
+
+    FE->>FE: 更新 Zustand store
+    FE->>FE: 重渲染表格（离线置顶高亮）
+    Note over FE: 等待 interval 后再次触发
+
+%% ===== 流程 2: 日志上传解析 =====
+sequenceDiagram
+    participant FE as Frontend (LogsPage)
+    participant API as Express API
+    participant Multer as Multer Middleware
+    participant LP as LogParser
+    participant LR as LogRepository
+    participant DB as SQLite
+
+    FE->>API: POST /api/logs/upload (multipart/form-data)
+    API->>Multer: 接收文件 (内存模式, ≤50MB)
+    Multer-->>API: file buffer + filename
+
+    API->>LP: parse(fileContent, filename)
+    LP->>LP: 按行分割
+    LP->>LP: 逐行匹配 LINE_REGEX
+    LP->>LP: 堆栈行聚合到上一条主日志
+    LP-->>API: { entries[], totalLines, errorCount }
+
+    API->>LR: saveFile({ filename, serviceName, fileSize, rawContent })
+    LR->>DB: INSERT INTO log_files
+    DB-->>LR: fileId
+    LR-->>API: logFile
+
+    API->>LR: saveEntries(fileId, entries)
+    LR->>DB: INSERT INTO log_entries (批量)
+    DB-->>LR: success
+    LR-->>API: done
+
+    API-->>FE: { file, parse_summary }
+    FE->>FE: 更新 store (当前文件 = 新文件)
+    FE->>API: GET /api/logs/files/:id/entries?level=ERROR
+    API-->>FE: entries[]
+    FE->>FE: 渲染日志列表
+
+%% ===== 流程 3: 前端总览页加载 =====
+sequenceDiagram
+    participant User as 用户
+    participant FE as Frontend (OverviewPage)
+    participant Store as Zustand Store
+    participant API as Express API
+    participant DB as SQLite
+
+    User->>FE: 打开应用 (路由 /)
+    FE->>Store: 读取 services (可能为空)
+    FE->>API: GET /api/services
+    API->>DB: SELECT services + 最近检测状态
+    DB-->>API: Service[]
+    API-->>FE: { services, summary }
+
+    FE->>Store: setServices(data)
+    Store-->>FE: 触发重渲染
+    FE->>FE: 渲染概览卡片 (在线/离线/总数/健康率)
+    FE->>FE: 渲染服务表格 (离线置顶)
+
+    alt 自动刷新已开启
+        FE->>FE: setInterval(triggerCheck, interval)
+        FE->>API: POST /api/services/check
+        API-->>FE: { results, summary }
+        FE->>Store: updateServiceStatus(results)
+        Store-->>FE: 表格状态实时更新
+    end
+
+    User->>FE: 点击"详情"
+    FE->>API: GET /api/services/:id/history
+    API-->>FE: { history }
+    FE->>FE: 打开 ServiceDetailDrawer

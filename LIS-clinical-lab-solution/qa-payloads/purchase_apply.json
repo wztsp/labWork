@@ -1,0 +1,25 @@
+{
+  "applyDeptId": 2,
+  "applyDeptName": "生化组",
+  "applyUserId": 1,
+  "applyUserName": "QA测试员",
+  "budgetYear": 2026,
+  "urgentFlag": 0,
+  "remark": "QA真库采购闭环验证-草稿",
+  "items": [
+    {
+      "reagentId": 1,
+      "quantity": 10,
+      "unit": "mL",
+      "estimatedPrice": 50,
+      "remark": "白细胞稀释液"
+    },
+    {
+      "reagentId": 2,
+      "quantity": 5,
+      "unit": "mL",
+      "estimatedPrice": 80,
+      "remark": "葡萄糖试剂"
+    }
+  ]
+}

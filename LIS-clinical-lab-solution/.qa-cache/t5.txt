@@ -1,0 +1,20 @@
+=== ⑤ legacy NULL warehouse_id reproduction (temp table, no touch on real data) ===
+BEGIN
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+UPDATE 2
+ALTER TABLE
+CREATE INDEX
+--- is_nullable after 3-step (expect NO) ---
+ column_name  | is_nullable | column_default 
+--------------+-------------+----------------
+ warehouse_id | NO          | 0
+(1 row)
+
+--- insert 2 rows same (reagent_id,lot_no) with NULL warehouse: expect NOT NULL violation x2 ---
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/.qa-cache/t5_legacy.sql:16: 错误:  null value in column "warehouse_id" of relation "qa_legacy" violates not-null constraint
+DETAIL:  失败, 行包含(null, 3, L3, null).
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/.qa-cache/t5_legacy.sql:17: 错误:  当前事务被终止, 事务块结束之前的查询被忽略
+psql:D:/traeitem/labWork/LIS-clinical-lab-solution/.qa-cache/t5_legacy.sql:18: 错误:  当前事务被终止, 事务块结束之前的查询被忽略
+ROLLBACK

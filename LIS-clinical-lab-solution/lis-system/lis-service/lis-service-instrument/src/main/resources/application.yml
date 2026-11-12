@@ -1,0 +1,76 @@
+﻿server:
+  port: 8084
+
+spring:
+  application:
+    name: lis-service-instrument
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lis_db
+    username: lis_user
+    password: ${DB_PASSWORD:lis_dev_2026}
+    driver-class-name: org.postgresql.Driver
+  redis:
+    host: localhost
+    port: 6379
+    database: 5
+    timeout: 5000
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: lis
+    password: ${MQ_PASSWORD:lis_dev_2026}
+    virtual-host: /lis
+    listener:
+      simple:
+        # 当 RabbitMQ 不可用时, 不阻止服务启动, 仅记录错误日志
+        auto-startup: false
+        missing-queues-fatal: false
+        missing-exchange-fatal: false
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: public
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+# 仪器通讯服务业务配置
+instrument:
+  connection:
+    # 启动自举: 容器就绪后自动连接台账中"启用中"的仪器 (B-6)
+    auto-connect: true
+    # 心跳检测间隔 (秒)
+    heartbeat-interval: 30
+    # 断线重连间隔 (秒)
+    reconnect-interval: 10
+    # 连接超时 (毫秒)
+    connect-timeout: 5000
+  protocol:
+    default: ASTM
+
+# MQ 配置: 仪器接收数据后通过此交换机通知报告服务
+mq:
+  exchange: lis.exchange
+  result:
+    routing-key: instrument.result.received
+    # 未匹配标本的结果通知路由键
+    unmatched-routing-key: result.unmatched
+
+# TCP 数据接收服务配置
+tcp:
+  server:
+    enabled: true
+    port: 9100
+
+logging:
+  level:
+    com.lis.instrument: debug

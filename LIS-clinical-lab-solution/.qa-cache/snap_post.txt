@@ -1,0 +1,37 @@
+=== POST regression cleanliness (must be ZERO QA residue) ===
+ qa_suppliers | qa_reagents | reagents_with_supplier_id | reagents_with_supplier_str 
+--------------+-------------+---------------------------+----------------------------
+            0 |           0 |                         0 |                          0
+(1 row)
+
+ suppliers_total 
+-----------------
+               0
+(1 row)
+
+ reagents_total 
+----------------
+              4
+(1 row)
+
+ stock_total 
+-------------
+           4
+(1 row)
+
+--- fix still present ---
+ fn_exists 
+-----------
+         1
+(1 row)
+
+ idx_exists 
+------------
+          1
+(1 row)
+
+ column_name  | is_nullable 
+--------------+-------------
+ warehouse_id | NO
+(1 row)
+

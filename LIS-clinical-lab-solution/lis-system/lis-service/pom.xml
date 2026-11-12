@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.lis</groupId>
+        <artifactId>lis-system</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>lis-service</artifactId>
+    <packaging>pom</packaging>
+    <name>lis-service</name>
+    <description>业务服务模块聚合</description>
+
+    <modules>
+        <module>lis-service-system</module>
+        <module>lis-service-hr</module>
+        <module>lis-service-instrument</module>
+        <module>lis-service-base</module>
+        <module>lis-service-sample</module>
+        <module>lis-service-report</module>
+        <module>lis-service-qc</module>
+        <module>lis-service-instrument-mgmt</module>
+        <module>lis-service-integration</module>
+        <module>lis-service-stats</module>
+        <module>lis-service-reagent</module>
+        <module>lis-service-micro</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>1.18.30</version>
+                            </path>
+                            <path>
+                                <groupId>com.baomidou</groupId>
+                                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                                <version>3.5.5</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

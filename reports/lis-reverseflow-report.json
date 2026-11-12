@@ -1,0 +1,1626 @@
+{
+  "startedAt": "2026-11-10T02:00:59.006Z",
+  "routine": [
+    {
+      "idx": 1,
+      "patient": "REV059149_1",
+      "barcode": "261110000046",
+      "sampleId": "2119973565732675586",
+      "steps": [
+        {
+          "name": "正向完成(已报告)",
+          "ok": true,
+          "detail": "status=6"
+        },
+        {
+          "name": "拦截:已报告不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已报告, 不可取消采集. 条码: 261110000046"
+        },
+        {
+          "name": "拦截:已报告不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已报告, 无需取消. 条码: 261110000046"
+        },
+        {
+          "name": "拦截:已报告不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已报告, 无需取消签收. 条码: 261110000046"
+        },
+        {
+          "name": "撤销审核",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退4(已核收)",
+          "ok": true,
+          "detail": "status=4"
+        },
+        {
+          "name": "拦截:已核收不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已核收, 无需取消. 条码: 261110000046"
+        },
+        {
+          "name": "撤销核收",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退3(已签收)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "拦截:重复撤销核收",
+          "ok": true,
+          "detail": "success=0"
+        },
+        {
+          "name": "取消签收",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "拦截:已送检不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已送检, 不可取消采集. 条码: 261110000046"
+        },
+        {
+          "name": "取消送检",
+          "ok": true,
+          "detail": "status=1"
+        },
+        {
+          "name": "拦截:未签收不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已采集, 无需取消签收. 条码: 261110000046"
+        },
+        {
+          "name": "取消采集",
+          "ok": true,
+          "detail": "status=0"
+        },
+        {
+          "name": "拦截:未送检不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已申请, 无需取消. 条码: 261110000046"
+        },
+        {
+          "name": "取消条码(删除标本)",
+          "ok": true,
+          "detail": "after=null"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 2,
+      "patient": "REV059149_2",
+      "barcode": "261110000047",
+      "sampleId": "2119973573538275330",
+      "steps": [
+        {
+          "name": "正向完成(已报告)",
+          "ok": true,
+          "detail": "status=6"
+        },
+        {
+          "name": "拦截:已报告不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已报告, 不可取消采集. 条码: 261110000047"
+        },
+        {
+          "name": "拦截:已报告不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已报告, 无需取消. 条码: 261110000047"
+        },
+        {
+          "name": "拦截:已报告不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已报告, 无需取消签收. 条码: 261110000047"
+        },
+        {
+          "name": "撤销审核",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退4(已核收)",
+          "ok": true,
+          "detail": "status=4"
+        },
+        {
+          "name": "拦截:已核收不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已核收, 无需取消. 条码: 261110000047"
+        },
+        {
+          "name": "撤销核收",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退3(已签收)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "拦截:重复撤销核收",
+          "ok": true,
+          "detail": "success=0"
+        },
+        {
+          "name": "取消签收",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "拦截:已送检不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已送检, 不可取消采集. 条码: 261110000047"
+        },
+        {
+          "name": "取消送检",
+          "ok": true,
+          "detail": "status=1"
+        },
+        {
+          "name": "拦截:未签收不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已采集, 无需取消签收. 条码: 261110000047"
+        },
+        {
+          "name": "取消采集",
+          "ok": true,
+          "detail": "status=0"
+        },
+        {
+          "name": "拦截:未送检不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已申请, 无需取消. 条码: 261110000047"
+        },
+        {
+          "name": "取消条码(删除标本)",
+          "ok": true,
+          "detail": "after=null"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 3,
+      "patient": "REV059149_3",
+      "barcode": "261110000048",
+      "sampleId": "2119973580844752898",
+      "steps": [
+        {
+          "name": "正向完成(已报告)",
+          "ok": true,
+          "detail": "status=6"
+        },
+        {
+          "name": "拦截:已报告不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已报告, 不可取消采集. 条码: 261110000048"
+        },
+        {
+          "name": "拦截:已报告不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已报告, 无需取消. 条码: 261110000048"
+        },
+        {
+          "name": "拦截:已报告不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已报告, 无需取消签收. 条码: 261110000048"
+        },
+        {
+          "name": "撤销审核",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退4(已核收)",
+          "ok": true,
+          "detail": "status=4"
+        },
+        {
+          "name": "拦截:已核收不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已核收, 无需取消. 条码: 261110000048"
+        },
+        {
+          "name": "撤销核收",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退3(已签收)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "拦截:重复撤销核收",
+          "ok": true,
+          "detail": "success=0"
+        },
+        {
+          "name": "取消签收",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "拦截:已送检不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已送检, 不可取消采集. 条码: 261110000048"
+        },
+        {
+          "name": "取消送检",
+          "ok": true,
+          "detail": "status=1"
+        },
+        {
+          "name": "拦截:未签收不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已采集, 无需取消签收. 条码: 261110000048"
+        },
+        {
+          "name": "取消采集",
+          "ok": true,
+          "detail": "status=0"
+        },
+        {
+          "name": "拦截:未送检不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已申请, 无需取消. 条码: 261110000048"
+        },
+        {
+          "name": "取消条码(删除标本)",
+          "ok": true,
+          "detail": "after=null"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 4,
+      "patient": "REV059149_4",
+      "barcode": "261110000049",
+      "sampleId": "2119973586393817089",
+      "steps": [
+        {
+          "name": "正向完成(已报告)",
+          "ok": true,
+          "detail": "status=6"
+        },
+        {
+          "name": "拦截:已报告不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已报告, 不可取消采集. 条码: 261110000049"
+        },
+        {
+          "name": "拦截:已报告不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已报告, 无需取消. 条码: 261110000049"
+        },
+        {
+          "name": "拦截:已报告不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已报告, 无需取消签收. 条码: 261110000049"
+        },
+        {
+          "name": "撤销审核",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退4(已核收)",
+          "ok": true,
+          "detail": "status=4"
+        },
+        {
+          "name": "拦截:已核收不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已核收, 无需取消. 条码: 261110000049"
+        },
+        {
+          "name": "撤销核收",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退3(已签收)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "拦截:重复撤销核收",
+          "ok": true,
+          "detail": "success=0"
+        },
+        {
+          "name": "取消签收",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "拦截:已送检不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已送检, 不可取消采集. 条码: 261110000049"
+        },
+        {
+          "name": "取消送检",
+          "ok": true,
+          "detail": "status=1"
+        },
+        {
+          "name": "拦截:未签收不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已采集, 无需取消签收. 条码: 261110000049"
+        },
+        {
+          "name": "取消采集",
+          "ok": true,
+          "detail": "status=0"
+        },
+        {
+          "name": "拦截:未送检不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已申请, 无需取消. 条码: 261110000049"
+        },
+        {
+          "name": "取消条码(删除标本)",
+          "ok": true,
+          "detail": "after=null"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 5,
+      "patient": "REV059149_5",
+      "barcode": "261110000050",
+      "sampleId": "2119973591255015426",
+      "steps": [
+        {
+          "name": "正向完成(已报告)",
+          "ok": true,
+          "detail": "status=6"
+        },
+        {
+          "name": "拦截:已报告不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已报告, 不可取消采集. 条码: 261110000050"
+        },
+        {
+          "name": "拦截:已报告不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已报告, 无需取消. 条码: 261110000050"
+        },
+        {
+          "name": "拦截:已报告不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已报告, 无需取消签收. 条码: 261110000050"
+        },
+        {
+          "name": "撤销审核",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退4(已核收)",
+          "ok": true,
+          "detail": "status=4"
+        },
+        {
+          "name": "拦截:已核收不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已核收, 无需取消. 条码: 261110000050"
+        },
+        {
+          "name": "撤销核收",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退3(已签收)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "拦截:重复撤销核收",
+          "ok": true,
+          "detail": "success=0"
+        },
+        {
+          "name": "取消签收",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "拦截:已送检不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已送检, 不可取消采集. 条码: 261110000050"
+        },
+        {
+          "name": "取消送检",
+          "ok": true,
+          "detail": "status=1"
+        },
+        {
+          "name": "拦截:未签收不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已采集, 无需取消签收. 条码: 261110000050"
+        },
+        {
+          "name": "取消采集",
+          "ok": true,
+          "detail": "status=0"
+        },
+        {
+          "name": "拦截:未送检不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已申请, 无需取消. 条码: 261110000050"
+        },
+        {
+          "name": "取消条码(删除标本)",
+          "ok": true,
+          "detail": "after=null"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 6,
+      "patient": "REV059149_6",
+      "barcode": "261110000051",
+      "sampleId": "2119973596200099841",
+      "steps": [
+        {
+          "name": "正向完成(已报告)",
+          "ok": true,
+          "detail": "status=6"
+        },
+        {
+          "name": "拦截:已报告不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已报告, 不可取消采集. 条码: 261110000051"
+        },
+        {
+          "name": "拦截:已报告不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已报告, 无需取消. 条码: 261110000051"
+        },
+        {
+          "name": "拦截:已报告不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已报告, 无需取消签收. 条码: 261110000051"
+        },
+        {
+          "name": "撤销审核",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退4(已核收)",
+          "ok": true,
+          "detail": "status=4"
+        },
+        {
+          "name": "拦截:已核收不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已核收, 无需取消. 条码: 261110000051"
+        },
+        {
+          "name": "撤销核收",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退3(已签收)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "拦截:重复撤销核收",
+          "ok": true,
+          "detail": "success=0"
+        },
+        {
+          "name": "取消签收",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "拦截:已送检不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已送检, 不可取消采集. 条码: 261110000051"
+        },
+        {
+          "name": "取消送检",
+          "ok": true,
+          "detail": "status=1"
+        },
+        {
+          "name": "拦截:未签收不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已采集, 无需取消签收. 条码: 261110000051"
+        },
+        {
+          "name": "取消采集",
+          "ok": true,
+          "detail": "status=0"
+        },
+        {
+          "name": "拦截:未送检不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已申请, 无需取消. 条码: 261110000051"
+        },
+        {
+          "name": "取消条码(删除标本)",
+          "ok": true,
+          "detail": "after=null"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 7,
+      "patient": "REV059149_7",
+      "barcode": "261110000052",
+      "sampleId": "2119973600985800705",
+      "steps": [
+        {
+          "name": "正向完成(已报告)",
+          "ok": true,
+          "detail": "status=6"
+        },
+        {
+          "name": "拦截:已报告不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已报告, 不可取消采集. 条码: 261110000052"
+        },
+        {
+          "name": "拦截:已报告不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已报告, 无需取消. 条码: 261110000052"
+        },
+        {
+          "name": "拦截:已报告不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已报告, 无需取消签收. 条码: 261110000052"
+        },
+        {
+          "name": "撤销审核",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退4(已核收)",
+          "ok": true,
+          "detail": "status=4"
+        },
+        {
+          "name": "拦截:已核收不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已核收, 无需取消. 条码: 261110000052"
+        },
+        {
+          "name": "撤销核收",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退3(已签收)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "拦截:重复撤销核收",
+          "ok": true,
+          "detail": "success=0"
+        },
+        {
+          "name": "取消签收",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "拦截:已送检不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已送检, 不可取消采集. 条码: 261110000052"
+        },
+        {
+          "name": "取消送检",
+          "ok": true,
+          "detail": "status=1"
+        },
+        {
+          "name": "拦截:未签收不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已采集, 无需取消签收. 条码: 261110000052"
+        },
+        {
+          "name": "取消采集",
+          "ok": true,
+          "detail": "status=0"
+        },
+        {
+          "name": "拦截:未送检不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已申请, 无需取消. 条码: 261110000052"
+        },
+        {
+          "name": "取消条码(删除标本)",
+          "ok": true,
+          "detail": "after=null"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 8,
+      "patient": "REV059149_8",
+      "barcode": "261110000053",
+      "sampleId": "2119973605255602177",
+      "steps": [
+        {
+          "name": "正向完成(已报告)",
+          "ok": true,
+          "detail": "status=6"
+        },
+        {
+          "name": "拦截:已报告不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已报告, 不可取消采集. 条码: 261110000053"
+        },
+        {
+          "name": "拦截:已报告不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已报告, 无需取消. 条码: 261110000053"
+        },
+        {
+          "name": "拦截:已报告不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已报告, 无需取消签收. 条码: 261110000053"
+        },
+        {
+          "name": "撤销审核",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退4(已核收)",
+          "ok": true,
+          "detail": "status=4"
+        },
+        {
+          "name": "拦截:已核收不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已核收, 无需取消. 条码: 261110000053"
+        },
+        {
+          "name": "撤销核收",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退3(已签收)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "拦截:重复撤销核收",
+          "ok": true,
+          "detail": "success=0"
+        },
+        {
+          "name": "取消签收",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "拦截:已送检不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已送检, 不可取消采集. 条码: 261110000053"
+        },
+        {
+          "name": "取消送检",
+          "ok": true,
+          "detail": "status=1"
+        },
+        {
+          "name": "拦截:未签收不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已采集, 无需取消签收. 条码: 261110000053"
+        },
+        {
+          "name": "取消采集",
+          "ok": true,
+          "detail": "status=0"
+        },
+        {
+          "name": "拦截:未送检不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已申请, 无需取消. 条码: 261110000053"
+        },
+        {
+          "name": "取消条码(删除标本)",
+          "ok": true,
+          "detail": "after=null"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 9,
+      "patient": "REV059149_9",
+      "barcode": "261110000054",
+      "sampleId": "2119973610284572673",
+      "steps": [
+        {
+          "name": "正向完成(已报告)",
+          "ok": true,
+          "detail": "status=6"
+        },
+        {
+          "name": "拦截:已报告不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已报告, 不可取消采集. 条码: 261110000054"
+        },
+        {
+          "name": "拦截:已报告不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已报告, 无需取消. 条码: 261110000054"
+        },
+        {
+          "name": "拦截:已报告不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已报告, 无需取消签收. 条码: 261110000054"
+        },
+        {
+          "name": "撤销审核",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退4(已核收)",
+          "ok": true,
+          "detail": "status=4"
+        },
+        {
+          "name": "拦截:已核收不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已核收, 无需取消. 条码: 261110000054"
+        },
+        {
+          "name": "撤销核收",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退3(已签收)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "拦截:重复撤销核收",
+          "ok": true,
+          "detail": "success=0"
+        },
+        {
+          "name": "取消签收",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "拦截:已送检不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已送检, 不可取消采集. 条码: 261110000054"
+        },
+        {
+          "name": "取消送检",
+          "ok": true,
+          "detail": "status=1"
+        },
+        {
+          "name": "拦截:未签收不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已采集, 无需取消签收. 条码: 261110000054"
+        },
+        {
+          "name": "取消采集",
+          "ok": true,
+          "detail": "status=0"
+        },
+        {
+          "name": "拦截:未送检不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已申请, 无需取消. 条码: 261110000054"
+        },
+        {
+          "name": "取消条码(删除标本)",
+          "ok": true,
+          "detail": "after=null"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 10,
+      "patient": "REV059149_10",
+      "barcode": "261110000055",
+      "sampleId": "2119973615275794433",
+      "steps": [
+        {
+          "name": "正向完成(已报告)",
+          "ok": true,
+          "detail": "status=6"
+        },
+        {
+          "name": "拦截:已报告不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已报告, 不可取消采集. 条码: 261110000055"
+        },
+        {
+          "name": "拦截:已报告不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已报告, 无需取消. 条码: 261110000055"
+        },
+        {
+          "name": "拦截:已报告不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已报告, 无需取消签收. 条码: 261110000055"
+        },
+        {
+          "name": "撤销审核",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退4(已核收)",
+          "ok": true,
+          "detail": "status=4"
+        },
+        {
+          "name": "拦截:已核收不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已核收, 无需取消. 条码: 261110000055"
+        },
+        {
+          "name": "撤销核收",
+          "ok": true,
+          "detail": "success=1"
+        },
+        {
+          "name": "状态回退3(已签收)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "拦截:重复撤销核收",
+          "ok": true,
+          "detail": "success=0"
+        },
+        {
+          "name": "取消签收",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "拦截:已送检不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已送检, 不可取消采集. 条码: 261110000055"
+        },
+        {
+          "name": "取消送检",
+          "ok": true,
+          "detail": "status=1"
+        },
+        {
+          "name": "拦截:未签收不可取消签收",
+          "ok": true,
+          "detail": "标本未签收或已已采集, 无需取消签收. 条码: 261110000055"
+        },
+        {
+          "name": "取消采集",
+          "ok": true,
+          "detail": "status=0"
+        },
+        {
+          "name": "拦截:未送检不可取消送检",
+          "ok": true,
+          "detail": "标本未送检或已已申请, 无需取消. 条码: 261110000055"
+        },
+        {
+          "name": "取消条码(删除标本)",
+          "ok": true,
+          "detail": "after=null"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    }
+  ],
+  "branches": [
+    {
+      "kind": "reject",
+      "barcode": "261110000056",
+      "sampleId": "2119973620267016194",
+      "steps": [
+        {
+          "name": "标本拒收",
+          "ok": true,
+          "detail": "status=9"
+        },
+        {
+          "name": "拦截:已拒收不可取消采集",
+          "ok": true,
+          "detail": "标本当前状态为已拒收, 不可取消采集. 条码: 261110000056"
+        }
+      ],
+      "ok": true
+    },
+    {
+      "kind": "refund",
+      "barcode": "261110000057",
+      "sampleId": "2119973621772771329",
+      "steps": [
+        {
+          "name": "标本退费",
+          "ok": true,
+          "detail": "status=7"
+        },
+        {
+          "name": "拦截:重复退费",
+          "ok": true,
+          "detail": "标本已退费或已作废, 不可重复操作"
+        }
+      ],
+      "ok": true
+    },
+    {
+      "kind": "void",
+      "barcode": "261110000058",
+      "sampleId": "2119973622913622017",
+      "steps": [
+        {
+          "name": "标本作废",
+          "ok": true,
+          "detail": "status=8"
+        },
+        {
+          "name": "拦截:重复作废",
+          "ok": true,
+          "detail": "标本已作废, 不可重复操作"
+        }
+      ],
+      "ok": true
+    }
+  ],
+  "micro": [
+    {
+      "idx": 1,
+      "item": "一般细菌培养",
+      "patient": "MREV059149_1",
+      "barcode": "261110000059",
+      "sampleId": "2119973624423571457",
+      "reportId": "2119973625195323393",
+      "plateCount": 3,
+      "steps": [
+        {
+          "name": "正向完成(最终报告)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "取消最终报告",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "发布时间已清空",
+          "ok": true,
+          "detail": "publishTime=null"
+        },
+        {
+          "name": "细菌/药敏保留",
+          "ok": true,
+          "detail": "org=1"
+        },
+        {
+          "name": "拦截:非最终报告不可取消最终",
+          "ok": true,
+          "detail": "当前报告状态为「鉴定报告」，仅允许取消「最终报告」。"
+        },
+        {
+          "name": "删除药敏",
+          "ok": true,
+          "detail": "remaining=2"
+        },
+        {
+          "name": "删除细菌鉴定",
+          "ok": true,
+          "detail": "organisms=0"
+        },
+        {
+          "name": "重新鉴定并发布最终",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "撤销培养基核收",
+          "ok": true,
+          "detail": "plateStatus=0"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 2,
+      "item": "尿液培养",
+      "patient": "MREV059149_2",
+      "barcode": "261110000060",
+      "sampleId": "2119973629762920450",
+      "reportId": "2119973630358511617",
+      "plateCount": 2,
+      "steps": [
+        {
+          "name": "正向完成(最终报告)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "取消最终报告",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "发布时间已清空",
+          "ok": true,
+          "detail": "publishTime=null"
+        },
+        {
+          "name": "细菌/药敏保留",
+          "ok": true,
+          "detail": "org=1"
+        },
+        {
+          "name": "拦截:非最终报告不可取消最终",
+          "ok": true,
+          "detail": "当前报告状态为「鉴定报告」，仅允许取消「最终报告」。"
+        },
+        {
+          "name": "删除药敏",
+          "ok": true,
+          "detail": "remaining=2"
+        },
+        {
+          "name": "删除细菌鉴定",
+          "ok": true,
+          "detail": "organisms=0"
+        },
+        {
+          "name": "重新鉴定并发布最终",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "撤销培养基核收",
+          "ok": true,
+          "detail": "plateStatus=0"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 3,
+      "item": "血液培养",
+      "patient": "MREV059149_3",
+      "barcode": "261110000061",
+      "sampleId": "2119973633697177601",
+      "reportId": "2119973634431180801",
+      "plateCount": 3,
+      "steps": [
+        {
+          "name": "正向完成(最终报告)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "取消最终报告",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "发布时间已清空",
+          "ok": true,
+          "detail": "publishTime=null"
+        },
+        {
+          "name": "细菌/药敏保留",
+          "ok": true,
+          "detail": "org=1"
+        },
+        {
+          "name": "拦截:非最终报告不可取消最终",
+          "ok": true,
+          "detail": "当前报告状态为「鉴定报告」，仅允许取消「最终报告」。"
+        },
+        {
+          "name": "删除药敏",
+          "ok": true,
+          "detail": "remaining=2"
+        },
+        {
+          "name": "删除细菌鉴定",
+          "ok": true,
+          "detail": "organisms=0"
+        },
+        {
+          "name": "重新鉴定并发布最终",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "撤销培养基核收",
+          "ok": true,
+          "detail": "plateStatus=0"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 4,
+      "item": "分泌物培养",
+      "patient": "MREV059149_4",
+      "barcode": "261110000062",
+      "sampleId": "2119973637044232194",
+      "reportId": "2119973637501411330",
+      "plateCount": 3,
+      "steps": [
+        {
+          "name": "正向完成(最终报告)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "取消最终报告",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "发布时间已清空",
+          "ok": true,
+          "detail": "publishTime=null"
+        },
+        {
+          "name": "细菌/药敏保留",
+          "ok": true,
+          "detail": "org=1"
+        },
+        {
+          "name": "拦截:非最终报告不可取消最终",
+          "ok": true,
+          "detail": "当前报告状态为「鉴定报告」，仅允许取消「最终报告」。"
+        },
+        {
+          "name": "删除药敏",
+          "ok": true,
+          "detail": "remaining=2"
+        },
+        {
+          "name": "删除细菌鉴定",
+          "ok": true,
+          "detail": "organisms=0"
+        },
+        {
+          "name": "重新鉴定并发布最终",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "撤销培养基核收",
+          "ok": true,
+          "detail": "plateStatus=0"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 5,
+      "item": "脑脊液培养",
+      "patient": "MREV059149_5",
+      "barcode": "261110000063",
+      "sampleId": "2119973639929913345",
+      "reportId": "2119973640651333634",
+      "plateCount": 3,
+      "steps": [
+        {
+          "name": "正向完成(最终报告)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "取消最终报告",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "发布时间已清空",
+          "ok": true,
+          "detail": "publishTime=null"
+        },
+        {
+          "name": "细菌/药敏保留",
+          "ok": true,
+          "detail": "org=1"
+        },
+        {
+          "name": "拦截:非最终报告不可取消最终",
+          "ok": true,
+          "detail": "当前报告状态为「鉴定报告」，仅允许取消「最终报告」。"
+        },
+        {
+          "name": "删除药敏",
+          "ok": true,
+          "detail": "remaining=2"
+        },
+        {
+          "name": "删除细菌鉴定",
+          "ok": true,
+          "detail": "organisms=0"
+        },
+        {
+          "name": "重新鉴定并发布最终",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "撤销培养基核收",
+          "ok": true,
+          "detail": "plateStatus=0"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 6,
+      "item": "胸腹水培养",
+      "patient": "MREV059149_6",
+      "barcode": "261110000064",
+      "sampleId": "2119973643025309697",
+      "reportId": "2119973643490877441",
+      "plateCount": 3,
+      "steps": [
+        {
+          "name": "正向完成(最终报告)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "取消最终报告",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "发布时间已清空",
+          "ok": true,
+          "detail": "publishTime=null"
+        },
+        {
+          "name": "细菌/药敏保留",
+          "ok": true,
+          "detail": "org=1"
+        },
+        {
+          "name": "拦截:非最终报告不可取消最终",
+          "ok": true,
+          "detail": "当前报告状态为「鉴定报告」，仅允许取消「最终报告」。"
+        },
+        {
+          "name": "删除药敏",
+          "ok": true,
+          "detail": "remaining=2"
+        },
+        {
+          "name": "删除细菌鉴定",
+          "ok": true,
+          "detail": "organisms=0"
+        },
+        {
+          "name": "重新鉴定并发布最终",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "撤销培养基核收",
+          "ok": true,
+          "detail": "plateStatus=0"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 7,
+      "item": "粪便培养",
+      "patient": "MREV059149_7",
+      "barcode": "261110000065",
+      "sampleId": "2119973645537697793",
+      "reportId": "2119973645931962369",
+      "plateCount": 3,
+      "steps": [
+        {
+          "name": "正向完成(最终报告)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "取消最终报告",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "发布时间已清空",
+          "ok": true,
+          "detail": "publishTime=null"
+        },
+        {
+          "name": "细菌/药敏保留",
+          "ok": true,
+          "detail": "org=1"
+        },
+        {
+          "name": "拦截:非最终报告不可取消最终",
+          "ok": true,
+          "detail": "当前报告状态为「鉴定报告」，仅允许取消「最终报告」。"
+        },
+        {
+          "name": "删除药敏",
+          "ok": true,
+          "detail": "remaining=2"
+        },
+        {
+          "name": "删除细菌鉴定",
+          "ok": true,
+          "detail": "organisms=0"
+        },
+        {
+          "name": "重新鉴定并发布最终",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "撤销培养基核收",
+          "ok": true,
+          "detail": "plateStatus=0"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 8,
+      "item": "厌氧菌培养",
+      "patient": "MREV059149_8",
+      "barcode": "261110000066",
+      "sampleId": "2119973648024920065",
+      "reportId": "2119973648482099202",
+      "plateCount": 3,
+      "steps": [
+        {
+          "name": "正向完成(最终报告)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "取消最终报告",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "发布时间已清空",
+          "ok": true,
+          "detail": "publishTime=null"
+        },
+        {
+          "name": "细菌/药敏保留",
+          "ok": true,
+          "detail": "org=1"
+        },
+        {
+          "name": "拦截:非最终报告不可取消最终",
+          "ok": true,
+          "detail": "当前报告状态为「鉴定报告」，仅允许取消「最终报告」。"
+        },
+        {
+          "name": "删除药敏",
+          "ok": true,
+          "detail": "remaining=2"
+        },
+        {
+          "name": "删除细菌鉴定",
+          "ok": true,
+          "detail": "organisms=0"
+        },
+        {
+          "name": "重新鉴定并发布最终",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "撤销培养基核收",
+          "ok": true,
+          "detail": "plateStatus=0"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 9,
+      "item": "一般细菌培养",
+      "patient": "MREV059149_9",
+      "barcode": "261110000067",
+      "sampleId": "2119973652227612673",
+      "reportId": "2119973652881924098",
+      "plateCount": 3,
+      "steps": [
+        {
+          "name": "正向完成(最终报告)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "取消最终报告",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "发布时间已清空",
+          "ok": true,
+          "detail": "publishTime=null"
+        },
+        {
+          "name": "细菌/药敏保留",
+          "ok": true,
+          "detail": "org=1"
+        },
+        {
+          "name": "拦截:非最终报告不可取消最终",
+          "ok": true,
+          "detail": "当前报告状态为「鉴定报告」，仅允许取消「最终报告」。"
+        },
+        {
+          "name": "删除药敏",
+          "ok": true,
+          "detail": "remaining=2"
+        },
+        {
+          "name": "删除细菌鉴定",
+          "ok": true,
+          "detail": "organisms=0"
+        },
+        {
+          "name": "重新鉴定并发布最终",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "撤销培养基核收",
+          "ok": true,
+          "detail": "plateStatus=0"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "idx": 10,
+      "item": "尿液培养",
+      "patient": "MREV059149_10",
+      "barcode": "261110000068",
+      "sampleId": "2119973654769360898",
+      "reportId": "2119973655100710914",
+      "plateCount": 2,
+      "steps": [
+        {
+          "name": "正向完成(最终报告)",
+          "ok": true,
+          "detail": "status=3"
+        },
+        {
+          "name": "阴性报告取消最终",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "重新保存阴性报告",
+          "ok": true,
+          "detail": "status=3"
+        }
+      ],
+      "errors": [],
+      "ok": true
+    }
+  ],
+  "extras": {
+    "plateCancel": {
+      "ok": true,
+      "barcode": "261110000069",
+      "sampleId": "2119973655759216641",
+      "plateCount": 3,
+      "steps": [
+        {
+          "name": "取消单条培养基条码",
+          "ok": true,
+          "detail": "status=2"
+        },
+        {
+          "name": "批量作废标本全部培养基条码",
+          "ok": true,
+          "detail": "count=3,allCancelled=true"
+        }
+      ]
+    },
+    "qcDelete": {
+      "created": [
+        "14",
+        "15"
+      ],
+      "dels": [
+        {
+          "id": "14",
+          "ok": true
+        },
+        {
+          "id": "15",
+          "ok": true
+        }
+      ],
+      "before": 13,
+      "after": 11,
+      "ok": true
+    }
+  },
+  "summary": {
+    "routine": {
+      "total": 10,
+      "passed": 10
+    },
+    "micro": {
+      "total": 10,
+      "passed": 10
+    },
+    "branches": {
+      "total": 3,
+      "passed": 3
+    },
+    "steps": {
+      "total": 254,
+      "failed": 0
+    },
+    "extras": {
+      "plateCancel": true,
+      "qcDelete": true
+    }
+  },
+  "finishedAt": "2026-11-10T02:01:21.567Z",
+  "durationSeconds": 23
+}

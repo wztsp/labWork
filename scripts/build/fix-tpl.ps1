@@ -1,0 +1,55 @@
+$ErrorActionPreference = 'Stop'
+$loginBody = '{"username":"admin","password":"123456"}'
+$login = Invoke-RestMethod -Uri 'http://localhost:8095/api/auth/login' -Method Post -ContentType 'application/json' -Body ([System.Text.Encoding]::UTF8.GetBytes($loginBody))
+$token = $login.data.token
+$h = @{ Authorization = "Bearer $token" }
+
+$elements = @(
+  @{ id='el-hospital'; type='hospital-name'; label='医院名称'; x=40; y=40; width=714; height=50; fontSize=24; fontWeight=700; color='#000000'; backgroundColor='transparent'; textAlign='center'; border=0; visible=$true; text='XX医院检验科' },
+  @{ id='el-title'; type='report-title'; label='报告标题'; x=40; y=95; width=714; height=36; fontSize=18; fontWeight=600; color='#000000'; backgroundColor='transparent'; textAlign='center'; border=0; visible=$true; text='检验报告单' },
+  @{ id='el-barcode'; type='barcode'; label='条码'; x=580; y=140; width=174; height=50; fontSize=14; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='center'; border=1; visible=$true },
+  @{ id='el-patientName'; type='field'; label='姓名'; x=40; y=145; width=180; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='patientName'; fieldLabel='姓名' },
+  @{ id='el-gender'; type='field'; label='性别'; x=225; y=145; width=80; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='gender'; fieldLabel='性别' },
+  @{ id='el-age'; type='field'; label='年龄'; x=310; y=145; width=100; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='age'; fieldLabel='年龄' },
+  @{ id='el-visitNo'; type='field'; label='就诊号'; x=40; y=170; width=200; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='visitNo'; fieldLabel='就诊号' },
+  @{ id='el-department'; type='field'; label='科室'; x=245; y=170; width=150; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='department'; fieldLabel='科室' },
+  @{ id='el-bedNo'; type='field'; label='床号'; x=40; y=195; width=120; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='bedNo'; fieldLabel='床号' },
+  @{ id='el-doctor'; type='field'; label='申请医生'; x=165; y=195; width=150; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='doctor'; fieldLabel='申请医生' },
+  @{ id='el-clinicalDiag'; type='field'; label='临床诊断'; x=380; y=195; width=354; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='clinicalDiag'; fieldLabel='临床诊断' },
+  @{ id='el-sampleBarcode'; type='field'; label='条码号'; x=40; y=225; width=180; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='sampleBarcode'; fieldLabel='条码号' },
+  @{ id='el-sampleType'; type='field'; label='标本类型'; x=225; y=225; width=120; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='sampleType'; fieldLabel='标本类型' },
+  @{ id='el-containerType'; type='field'; label='容器类型'; x=350; y=225; width=120; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='containerType'; fieldLabel='容器类型' },
+  @{ id='el-collectTime'; type='field'; label='采集时间'; x=40; y=250; width=200; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='collectTime'; fieldLabel='采集时间' },
+  @{ id='el-deliverTime'; type='field'; label='送检时间'; x=245; y=250; width=200; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='deliverTime'; fieldLabel='送检时间' },
+  @{ id='el-receiveTime'; type='field'; label='核收时间'; x=450; y=250; width=200; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='receiveTime'; fieldLabel='核收时间' },
+  @{ id='el-results'; type='results-table'; label='检验结果表格'; x=40; y=280; width=714; height=420; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=1; visible=$true; columns=@('testItemName','resultValue','unit','refRange','abnormalFlag','isCritical','testTime') },
+  @{ id='el-remark'; type='custom-text'; label='备注'; x=40; y=710; width=714; height=50; fontSize=12; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=1; visible=$true; text='备注: 此报告仅对本标本负责。如有疑问请于3日内联系检验科。' },
+  @{ id='el-checker'; type='field'; label='检验者'; x=40; y=770; width=200; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='checker'; fieldLabel='检验者' },
+  @{ id='el-auditor'; type='field'; label='审核者'; x=290; y=770; width=200; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='auditor'; fieldLabel='审核者' },
+  @{ id='el-reportDoctor'; type='field'; label='报告医生'; x=540; y=770; width=200; height=24; fontSize=13; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='left'; border=0; visible=$true; fieldKey='reportDoctor'; fieldLabel='报告医生' },
+  @{ id='el-reportTime'; type='field'; label='报告时间'; x=540; y=795; width=254; height=24; fontSize=12; fontWeight=400; color='#000000'; backgroundColor='transparent'; textAlign='right'; border=0; visible=$true; fieldKey='reportTime'; fieldLabel='报告时间' }
+)
+
+$config = @{
+  canvasWidth = 794
+  canvasHeight = 1123
+  backgroundColor = '#ffffff'
+  padding = 40
+  elements = $elements
+} | ConvertTo-Json -Depth 6 -Compress
+
+$body = @{
+  id = 2
+  templateName = 'BC-7500默认模板'
+  instrumentId = 1
+  instrumentName = 'BC-7500'
+  templateConfig = $config
+  dualColumn = 1
+  paperSize = 'A4'
+  orientation = 'portrait'
+  margin = 10
+  isDefault = 0
+} | ConvertTo-Json -Depth 3
+
+$resp = Invoke-RestMethod -Uri 'http://localhost:8095/api/report/templates' -Method Put -ContentType 'application/json; charset=utf-8' -Headers $h -Body ([System.Text.Encoding]::UTF8.GetBytes($body))
+Write-Output ('UPDATE_RESULT code=' + $resp.code + ' msg=' + $resp.message)

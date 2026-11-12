@@ -1,0 +1,91 @@
+ seq_db_collation |    name_db_order     | seq_c_collation 
+------------------+----------------------+-----------------
+                1 | O'Brien 医疗         |               1
+                2 | roche                |               4
+                3 | Roche                |               3
+                4 | ROCHE                |               2
+                5 | 北京生物科技有限公司 |               6
+                6 | 上海医疗器械股份     |               5
+(6 rows)
+
+ seq |          n           
+-----+----------------------
+   1 | O'Brien 医疗
+   2 | ROCHE
+   3 | Roche
+   4 | roche
+   5 | 上海医疗器械股份
+   6 | 北京生物科技有限公司
+(6 rows)
+
+ eq_default | lt_default | lt_c_collation 
+------------+------------+----------------
+ f          | f          | t
+(1 row)
+
+BEGIN
+INSERT 0 1
+INSERT 0 1
+ id | supplier_code | supplier_name | source_type 
+----+---------------+---------------+-------------
+ 16 | QA_MANUAL_01  | 安捷伦科技    |           1
+ 17 | QA_MIG_01     | 安捷伦科技    |           2
+(2 rows)
+
+INSERT 0 1
+UPDATE 1
+ reagent_code | supplier_id |     won      | source_type 
+--------------+-------------+--------------+-------------
+ QA_AMBIG     |          16 | QA_MANUAL_01 |           1
+(1 row)
+
+ROLLBACK
+CREATE TABLE
+ALTER TABLE
+INSERT 0 2
+ column_name  | is_nullable | column_default 
+--------------+-------------+----------------
+ warehouse_id | YES         | 
+(1 row)
+
+ rows_with_null_warehouse 
+--------------------------
+                        2
+(1 row)
+
+ALTER TABLE
+ column_name  | is_nullable | column_default 
+--------------+-------------+----------------
+ warehouse_id | YES         | 
+(1 row)
+
+ rows_still_null 
+-----------------
+               2
+(1 row)
+
+UPDATE 2
+ rows_null_after_l458 
+----------------------
+                    0
+(1 row)
+
+ column_name  | is_nullable | column_default 
+--------------+-------------+----------------
+ warehouse_id | YES         | 
+(1 row)
+
+CREATE INDEX
+INSERT 0 1
+INSERT 0 1
+ dup_rows_admitted 
+-------------------
+                 2
+(1 row)
+
+DROP TABLE
+ supplier_rows | qa_reagents | reagent_rows 
+---------------+-------------+--------------
+             0 |           0 |            4
+(1 row)
+

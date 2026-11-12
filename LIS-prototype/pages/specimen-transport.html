@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>标本送检 - LIS 临床实验室信息系统</title>
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <style id="critical-layout">
+    /* ============================================================
+       LIS Shell — Critical Layout
+       All colors reference CSS variables from colors_and_type.css
+       ============================================================ */
+
+    /* ---------- Reset & Base ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--lis-foreground);
+      background: var(--lis-background);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ---------- App Container ---------- */
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* ---------- App Header ---------- */
+    .app-header {
+      height: 56px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: var(--lis-background);
+      border-bottom: 1px solid var(--lis-border);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      background: var(--lis-primary);
+      color: var(--lis-primary-foreground);
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.02em;
+    }
+    .system-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--lis-foreground);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-datetime {
+      font-size: 13px;
+      color: var(--lis-muted-foreground);
+    }
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .user-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--lis-foreground);
+    }
+    .user-role {
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+    }
+
+    /* ---------- App Body ---------- */
+    .app-body {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* ---------- App Sidebar ---------- */
+    .app-sidebar {
+      width: 200px;
+      flex-shrink: 0;
+      background: var(--lis-background);
+      border-right: 1px solid var(--lis-border);
+      padding: 8px 0;
+      overflow-y: auto;
+    }
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      margin: 0 8px;
+      font-size: 14px;
+      color: var(--lis-muted-foreground);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      user-select: none;
+    }
+    .nav-item:hover {
+      background: var(--color-neutral-50);
+      color: var(--lis-foreground);
+    }
+    .nav-item.active {
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      font-weight: 600;
+    }
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ---------- App Main ---------- */
+    .app-main {
+      flex: 1;
+      min-width: 0;
+      padding: 24px;
+      overflow-y: auto;
+      background: var(--color-neutral-50);
+    }
+
+    /* ---------- Page Header Slot ---------- */
+    .page-header {
+      margin-bottom: 20px;
+    }
+    .page-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--lis-foreground);
+      line-height: 32px;
+    }
+    .page-content {
+      /* Slot container for page body content */
+    }
+  </style>
+  <style id="page-styles">
+    /* ============================================================
+       Page Styles — 标本送检 (Specimen Transport)
+       Batch scan packing mode
+       All colors reference CSS variables
+       ============================================================ */
+
+    /* ---------- Transport packing card ---------- */
+    .transport-card {
+      background: var(--lis-card);
+      border: 1px solid var(--lis-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    /* ---------- Source info row ---------- */
+    .source-row {
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 200px;
+    }
+    .form-label {
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+    }
+    .form-select {
+      height: 36px;
+      border: 1px solid var(--lis-border);
+      border-radius: 6px;
+      padding: 0 12px;
+      font-size: 14px;
+      background: var(--lis-card);
+      color: var(--lis-foreground);
+      min-width: 160px;
+      font-family: inherit;
+    }
+    .form-select:focus {
+      outline: none;
+      border-color: var(--lis-primary);
+    }
+    .form-value {
+      font-size: 14px;
+      color: var(--lis-foreground);
+      padding-top: 8px;
+    }
+
+    /* ---------- Section divider ---------- */
+    .section-divider {
+      height: 1px;
+      background: var(--lis-border);
+      margin: 20px 0;
+    }
+
+    /* ---------- Continuous scan area ---------- */
+    .scan-area {
+      background: var(--color-neutral-50);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .scan-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .scan-title {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      flex-direction: row;
+      gap: 6px;
+      align-items: center;
+      color: var(--lis-foreground);
+    }
+    .scan-title svg {
+      width: 18px;
+      height: 18px;
+      color: var(--lis-primary);
+      flex-shrink: 0;
+    }
+    .scan-badge {
+      font-size: 13px;
+      color: var(--lis-primary);
+      background: var(--color-primary-50);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    .scan-input {
+      width: 100%;
+      height: 40px;
+      border: 1px solid var(--lis-border);
+      border-radius: 8px;
+      padding: 0 12px;
+      font-size: 14px;
+      background: var(--lis-card);
+      color: var(--lis-foreground);
+      font-family: inherit;
+    }
+    .scan-input::placeholder {
+      color: var(--lis-muted-foreground);
+    }
+    .scan-input:focus {
+      outline: none;
+      border-color: var(--lis-primary);
+    }
+
+    /* ---------- Scanned specimen list ---------- */
+    .specimen-list {
+      border: 1px solid var(--lis-border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .specimen-list-header,
+    .specimen-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+    .specimen-list-header {
+      background: var(--color-neutral-50);
+      font-weight: 600;
+      color: var(--lis-muted-foreground);
+      border-bottom: 1px solid var(--lis-border);
+    }
+    .specimen-row {
+      border-bottom: 1px solid var(--color-neutral-100);
+      color: var(--lis-foreground);
+    }
+    .specimen-row:last-child {
+      border-bottom: none;
+    }
+    .col-idx {
+      width: 40px;
+      color: var(--lis-muted-foreground);
+      flex-shrink: 0;
+    }
+    .col-patient {
+      width: 100px;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    .col-project {
+      flex: 1;
+      min-width: 0;
+    }
+    .col-time {
+      width: 80px;
+      font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+      color: var(--lis-muted-foreground);
+      flex-shrink: 0;
+    }
+    .col-status {
+      width: 120px;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ---------- Action buttons ---------- */
+    .action-row {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+    }
+    .btn-primary {
+      padding: 10px 24px;
+      background: var(--lis-primary);
+      color: var(--lis-primary-foreground);
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 500;
+    }
+    .btn-primary:hover {
+      background: var(--color-primary-600);
+    }
+    .btn-ghost {
+      padding: 10px 24px;
+      background: var(--lis-card);
+      color: var(--lis-muted-foreground);
+      border: 1px solid var(--lis-border);
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-ghost:hover {
+      color: var(--lis-foreground);
+      border-color: var(--color-neutral-300);
+    }
+
+    /* ---------- In-transit tasks ---------- */
+    .transit-card {
+      background: var(--lis-card);
+      border: 1px solid var(--lis-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .section-label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--lis-foreground);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-label svg {
+      width: 18px;
+      height: 18px;
+      color: var(--lis-primary);
+      flex-shrink: 0;
+    }
+    .transit-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 16px;
+      background: var(--color-neutral-50);
+      border-radius: 8px;
+    }
+    .transit-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .transit-no {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--lis-foreground);
+    }
+    .transit-detail {
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+    }
+    .transit-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+    .status-badge {
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .transit-time {
+      font-size: 12px;
+      color: var(--lis-muted-foreground);
+      font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+    }
+    .btn-detail {
+      font-size: 13px;
+      color: var(--lis-primary);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 4px 8px;
+    }
+    .btn-detail:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo">LIS</div>
+        <span class="system-title">临床实验室信息系统</span>
+      </div>
+      <div class="header-right">
+        <span class="header-datetime">2026-08-15 10:30:00</span>
+        <div class="header-user">
+          <span class="user-avatar">张</span>
+          <div class="user-meta">
+            <span class="user-name">张三</span>
+            <span class="user-role">检验技师</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-body">
+      <!-- Sidebar -->
+      <aside class="app-sidebar">
+        <nav class="sidebar-nav">
+          <a class="nav-item" data-nav-key="collection">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6L4.5 18a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7.5 14h9"/></svg>
+            <span>标本采集</span>
+          </a>
+          <a class="nav-item active" data-nav-key="transport" data-dom-id="nav-transport">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7.5" cy="18.5" r="2.5"/><path d="M15 18.5h-4"/><circle cx="17.5" cy="18.5" r="2.5"/></svg>
+            <span>标本送检</span>
+          </a>
+          <a class="nav-item" data-nav-key="receipt">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>标本签收</span>
+          </a>
+          <a class="nav-item" data-nav-key="workstation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg>
+            <span>技师工作站</span>
+          </a>
+          <a class="nav-item" data-nav-key="report">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+            <span>报告查询</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <main class="app-main">
+        <div class="page-header">
+          <h1 class="page-title">标本送检</h1>
+        </div>
+        <div class="page-content">
+          <!-- Transport packing card -->
+          <div class="transport-card">
+            <!-- Source info -->
+            <div class="source-row">
+              <div class="form-group">
+                <label class="form-label">来源科室</label>
+                <select class="form-select">
+                  <option>门诊采血中心</option>
+                  <option>急诊科</option>
+                  <option>住院部-内科</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">目的地</label>
+                <select class="form-select">
+                  <option>检验科</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">运送员</label>
+                <span class="form-value">李物流</span>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Continuous scan area -->
+            <div class="scan-area">
+              <div class="scan-header">
+                <span class="scan-title">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M18 5v14"/><path d="M21 5v14"/></svg>
+                  连续扫描标本条码
+                </span>
+                <span class="scan-badge" id="scan-count">已扫描 12 管</span>
+              </div>
+              <input type="text" class="scan-input" placeholder="扫描条码自动添加，重复扫描自动忽略..." />
+            </div>
+
+            <!-- Scanned specimen list -->
+            <div class="specimen-list">
+              <div class="specimen-list-header">
+                <span class="col-idx">#</span>
+                <span class="col-patient">患者</span>
+                <span class="col-project">检验项目</span>
+                <span class="col-time">采集时间</span>
+                <span class="col-status">状态</span>
+              </div>
+
+              <div class="specimen-row">
+                <span class="col-idx">1</span>
+                <span class="col-patient">张三</span>
+                <span class="col-project">血常规</span>
+                <span class="col-time">10:25</span>
+                <span class="col-status" style="color: var(--state-success);">已添加</span>
+              </div>
+              <div class="specimen-row">
+                <span class="col-idx">2</span>
+                <span class="col-patient">李四</span>
+                <span class="col-project">尿常规</span>
+                <span class="col-time">10:26</span>
+                <span class="col-status" style="color: var(--state-success);">已添加</span>
+              </div>
+              <div class="specimen-row">
+                <span class="col-idx">3</span>
+                <span class="col-patient">王五</span>
+                <span class="col-project">生化全套</span>
+                <span class="col-time">10:27</span>
+                <span class="col-status" style="color: var(--state-success);">已添加</span>
+              </div>
+              <div class="specimen-row">
+                <span class="col-idx">4</span>
+                <span class="col-patient">赵六</span>
+                <span class="col-project">凝血四项</span>
+                <span class="col-time">10:28</span>
+                <span class="col-status" style="color: var(--state-warning);">重复扫描已忽略</span>
+              </div>
+              <div class="specimen-row">
+                <span class="col-idx">5</span>
+                <span class="col-patient">钱七</span>
+                <span class="col-project">免疫五项</span>
+                <span class="col-time">10:29</span>
+                <span class="col-status" style="color: var(--state-success);">已添加</span>
+              </div>
+              <div class="specimen-row">
+                <span class="col-idx">...</span>
+                <span class="col-patient" style="color: var(--lis-muted-foreground);">共 12 管</span>
+                <span class="col-project"></span>
+                <span class="col-time"></span>
+                <span class="col-status"></span>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Action buttons -->
+            <div class="action-row">
+              <button class="btn-primary">确认送检 (12管)</button>
+              <button class="btn-ghost">清空列表</button>
+            </div>
+          </div>
+
+          <!-- In-transit tasks -->
+          <div class="transit-card">
+            <div class="section-label">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7.5" cy="18.5" r="2.5"/><path d="M15 18.5h-4"/><circle cx="17.5" cy="18.5" r="2.5"/></svg>
+              送检中任务 (1)
+            </div>
+            <div class="transit-item">
+              <div class="transit-info">
+                <span class="transit-no">送检单 #TF20260815001</span>
+                <span class="transit-detail">12管 | 门诊采血中心 → 检验科</span>
+              </div>
+              <div class="transit-status">
+                <span class="status-badge" style="background: var(--state-info-bg); color: var(--state-info);">运送中</span>
+                <span class="transit-time">10:30 出发</span>
+              </div>
+              <button class="btn-detail">查看详情</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

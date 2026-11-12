@@ -1,0 +1,18 @@
+[Unit]
+Description=LIS Reagent Management Service (Standalone Offline)
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+WorkingDirectory=__INSTALL_DIR__
+Environment="JAVA_OPTS=-Xms256m -Xmx1g -Dfile.encoding=UTF-8"
+ExecStart=__INSTALL_DIR__/jdk/bin/java $JAVA_OPTS -jar __INSTALL_DIR__/app/lis-reagent.jar --spring.config.additional-location=file:__INSTALL_DIR__/config/application.yml
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=10
+StandardOutput=append:__INSTALL_DIR__/logs/stdout.log
+StandardError=append:__INSTALL_DIR__/logs/stderr.log
+
+[Install]
+WantedBy=multi-user.target

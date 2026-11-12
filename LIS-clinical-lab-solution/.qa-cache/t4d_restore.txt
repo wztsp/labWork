@@ -1,0 +1,54 @@
+### CLEANUP
+=== 4d CLEANUP: remove all QA rows, then re-run script to restore uk_lis_supplier_name_norm ===
+DELETE 1
+DELETE 2
+--- residue after delete (expect 0 / 0) ---
+ qa_sup | qa_rea 
+--------+--------
+      0 |      0
+(1 row)
+
+CLEAN_EXIT=0
+### RE-RUN SCRIPT to restore index
+RERUN_EXIT=0
+0
+ERRCOUNT=0
+### FINAL SNAPSHOT
+=== POST regression cleanliness (must be ZERO QA residue) ===
+ qa_suppliers | qa_reagents | reagents_with_supplier_id | reagents_with_supplier_str 
+--------------+-------------+---------------------------+----------------------------
+            0 |           0 |                         0 |                          0
+(1 row)
+
+ suppliers_total 
+-----------------
+               0
+(1 row)
+
+ reagents_total 
+----------------
+              4
+(1 row)
+
+ stock_total 
+-------------
+           4
+(1 row)
+
+--- fix still present ---
+ fn_exists 
+-----------
+         1
+(1 row)
+
+ idx_exists 
+------------
+          1
+(1 row)
+
+ column_name  | is_nullable 
+--------------+-------------
+ warehouse_id | NO
+(1 row)
+
+SNAP_EXIT=0

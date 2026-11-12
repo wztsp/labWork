@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>LIS 系统自动化测试完整报告</title>
+<style>
+  :root{--bg:#fff;--ink:#1f2933;--muted:#6b7785;--line:#e2e8f0;--brand:#1f6feb;--ok:#0f8a4b;--soft:#f6f8fb;}
+  *{box-sizing:border-box}
+  body{margin:0;background:#eef1f5;color:var(--ink);font:14px/1.75 "Microsoft YaHei","PingFang SC",system-ui,sans-serif;}
+  .page{max-width:1080px;margin:28px auto;background:var(--bg);padding:56px 64px 72px;box-shadow:0 8px 32px rgba(16,24,40,.10);border-radius:4px;}
+  h1{font-size:30px;margin:0 0 6px;letter-spacing:.5px}
+  .sub{color:var(--muted);margin:0 0 26px;font-size:14px}
+  h2{font-size:20px;margin:44px 0 14px;padding-left:12px;border-left:4px solid var(--brand)}
+  h3{font-size:16px;margin:26px 0 10px;color:#243b53}
+  p{margin:8px 0}
+  table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:13px}
+  th,td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}
+  th{background:var(--soft);text-align:left;font-weight:600;color:#334e68}
+  tbody tr:nth-child(even){background:#fbfcfe}
+  .meta td:first-child{width:130px;background:var(--soft);font-weight:600}
+  .c{text-align:center}.ok{color:var(--ok);font-weight:600}
+  .mono{font-family:"Cascadia Mono",Consolas,monospace;font-size:12.5px}
+  .small{font-size:11.5px;color:var(--muted)}
+  .badge{display:inline-block;padding:2px 10px;border-radius:999px;background:#e8f1ff;color:#1f6feb;font-size:12px;margin-right:6px}
+  .kv{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 4px}
+  .kv div{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+  .kv b{display:block;font-size:22px;color:var(--brand);line-height:1.3}
+  .kv span{color:var(--muted);font-size:12px}
+  code{background:var(--soft);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-family:Consolas,monospace;font-size:12.5px}
+  .note{background:#fff9e8;border:1px solid #f0d9a8;border-radius:6px;padding:12px 16px;margin:14px 0}
+  .toc{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:14px 20px;margin:22px 0}
+  .toc ol{margin:6px 0;padding-left:22px}
+  .toc a{color:#243b53;text-decoration:none}
+  .toc a:hover{color:var(--brand);text-decoration:underline}
+  ul,ol{padding-left:22px}
+  li{margin:4px 0}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none;padding:0 12mm}h2{page-break-after:avoid}table{page-break-inside:auto}tr{page-break-inside:avoid}}
+</style></head><body><div class="page">
+
+<h1>LIS 检验信息系统 自动化测试完整报告</h1>
+<p class="sub">常规检验与微生物检验全流程 · 正向 + 逆向操作 · 数据与结果明细 · 报告版本 V1.1</p>
+
+<table class="meta">
+  <tr><td>报告编号</td><td>LIS-QA-20261110-01</td><td>报告版本</td><td>V1.1</td></tr>
+  <tr><td>被测系统</td><td>LIS 检验信息系统（lis-monolith 单体聚合版）</td><td>系统版本</td><td>1.0.0（构建于 2026-11-10）</td></tr>
+  <tr><td>测试类型</td><td>接口级全流程自动化测试（含状态机校验）</td><td>测试结论</td><td><b style="color:#0f8a4b">通过</b></td></tr>
+  <tr><td>常规流程执行时间</td><td>2026/11/10 09:29:44 ~ 2026/11/10 09:30:00（15s）</td>
+      <td>微生物流程执行时间</td><td>2026/11/10 09:36:17 ~ 2026/11/10 09:36:25（8s）</td></tr>
+  <tr><td>逆向操作执行时间</td><td colspan="3">2026/11/10 10:00:59 ~ 2026/11/10 10:01:22（23s，含 20 条撤销链与 5 类分支/删除用例）</td></tr>
+  <tr><td>执行人</td><td>自动化测试脚本（admin）</td><td>运行环境</td><td>Windows · JDK 17 · PostgreSQL · Redis</td></tr>
+</table>
+
+<div class="toc"><b>目录</b><ol>
+  <li><a href="#s1">测试概述</a></li>
+  <li><a href="#s2">测试环境与部署架构</a></li>
+  <li><a href="#s3">测试范围、方法与数据构造</a></li>
+  <li><a href="#s4">常规检验全流程测试</a></li>
+  <li><a href="#s5">微生物检验全流程测试</a></li>
+  <li><a href="#s6">质量控制（室内质控）测试</a></li>
+  <li><a href="#s7">逆向（撤销/回退）操作测试</a></li>
+  <li><a href="#s8">缺陷与修复记录</a></li>
+  <li><a href="#s9">测试数据统计与影响范围</a></li>
+  <li><a href="#s10">结论与建议</a></li>
+  <li><a href="#s11">附录 A：接口清单</a></li>
+  <li><a href="#s12">附录 B：复现步骤</a></li>
+  <li><a href="#s13">附录 C：测试数据文件</a></li>
+</ol></div>
+
+<h2 id="s1">1. 测试概述</h2>
+<p>本次测试面向 LIS 系统两条主线业务：<b>常规检验</b>（申请→采集→送检→签收→上机→仪器回传→报告）与<b>微生物检验</b>（申请→接种→培养基核收→鉴定/药敏→规则评估→发布），每条主线各构造 <b>10 条</b>真实业务数据，全流程通过接口驱动执行，并对关键状态流转、分支场景与质控链路进行校验。</p>
+<div class="kv">
+  <div><b>10 / 10</b><span>常规流程通过</span></div>
+  <div><b>10 / 10</b><span>微生物流程通过</span></div>
+  <div><b>20</b><span>质控记录（10+10）</span></div>
+  <div><b>0</b><span>测试失败用例</span></div>
+</div>
+<p>测试覆盖 13 个核心环节、2 条支线分支（血培养、阴性报告）、1 条仪器结果回传分支与 2 类质控体系，累计生成标本 20 份、培养皿 28 个、常规报告 10 份、微生物报告 10 份。</p>
+<p>在正向流程基础上，同步执行<b>逆向（撤销/回退）操作测试</b>：10 条常规撤销链（已报告→已申请→删除条码）、3 条异常逆向分支（拒收/退费/作废）、10 条微生物回退链（最终报告→鉴定报告→重新发布）以及培养基条码作废、微生物质控删除用例，合计 <b>254 项断言全部通过</b>。</p>
+
+<h2 id="s2">2. 测试环境与部署架构</h2>
+<table>
+  <tr><th style="width:170px">项目</th><th>配置</th></tr>
+  <tr><td>操作系统</td><td>Windows（开发验证机），Shell：PowerShell 5</td></tr>
+  <tr><td>运行方式</td><td>单体聚合部署 <code>lis-monolith-fresh.jar</code>，单端口 8080 提供前后端，内嵌仪器 TCP 服务 9100</td></tr>
+  <tr><td>Java</td><td>Liberica JDK 17.0.19（JAVA_HOME 注入，JVM -Xms256m -Xmx1200m）</td></tr>
+  <tr><td>数据库</td><td>PostgreSQL，库 <code>lis_db</code>，用户 <code>lis_user</code></td></tr>
+  <tr><td>缓存</td><td>Redis 6379（本地）</td></tr>
+  <tr><td>前端</td><td>打包进 jar 的 static 资源，访问 <code>http://127.0.0.1:8080/</code> 返回 200</td></tr>
+  <tr><td>登录账号</td><td>admin / 123456（JWT 认证，Authorization: Bearer）</td></tr>
+  <tr><td>仪器</td><td>迈瑞 BC-6800 血细胞分析仪（instrumentId=3），结果通过 ASTM 报文回传</td></tr>
+</table>
+<p>说明：单体聚合模式将 auth、base、sample、report、qc、instrument、micro、reagent 等模块合并于同一进程，便于本地全链路验证；生产环境可采用微服务 + 网关方式部署。</p>
+
+<h2 id="s3">3. 测试范围、方法与数据构造</h2>
+<h3>3.1 测试范围</h3>
+<ul>
+  <li>常规检验：检验申请、试管分组（合管）、条码生成、标本采集、送检、签收、上机（核收）、仪器结果回传、结果落库、审核出报告、报告发布</li>
+  <li>微生物检验：申请与条码、标本前处理、接种（培养皿条码生成）、培养基核收、革兰氏染色、细菌鉴定、药敏试验、耐药/专家规则评估、多级报告发布；分支：血培养接种-报警-终判、阴性报告、仪器鉴定药敏回传</li>
+  <li>质量控制：常规生化质控（Westgard 判定）、微生物室内质控（7 类质控物品）</li>
+  <li>逆向操作：取消采集/送检/签收、撤销核收、撤销审核、取消条码；标本拒收/退费/作废；微生物取消最终报告、删除鉴定/药敏、撤销培养基核收、作废培养基条码、删除质控记录；以及各类非法逆向操作的拦截校验</li>
+</ul>
+<h3>3.2 测试方法</h3>
+<p>采用接口级自动化：脚本登录获取 JWT 后，按真实业务顺序调用 REST 接口，逐步断言返回码、状态字段与落库结果；每步失败记录错误上下文但不中断后续用例，最终汇总通过率。仪器结果采用与后端 <code>ASTMParser</code> 一致的 ASTM E1394 报文构造（H/P/O/R/L 记录）。</p>
+<h3>3.3 数据构造规则</h3>
+<ul>
+  <li>常规：每人 1 条申请，项目为「血常规（CBP，testItemId=9）」，10 例对应 10 份标本</li>
+  <li>微生物：轮转 8 种培养项目（一般细菌培养/尿液培养/血液培养/分泌物培养/脑脊液培养/胸腹水培养/粪便培养/厌氧菌培养），标本类型与培养方案匹配</li>
+  <li>仪器回传：血常规 10 项指标（WBC、RBC、HGB、HCT、MCV、MCH、MCHC、PLT、NEUT%、LYMPH%），带单位与参考区间</li>
+  <li>雪花 ID（如微生物项目 ID）统一以字符串传输，避免 JavaScript 数值精度丢失</li>
+</ul>
+
+<h2 id="s4">4. 常规检验全流程测试</h2>
+<h3>4.1 流程与状态机</h3>
+<p>标本状态流转：<b>0 已申请 → 1 已采集 → 2 已送检 → 3 已签收 → 4 已核收（上机）→ 5 检测中 → 6 已报告</b>。测试中对非法跳转（未采集直接送检/签收/核收、重复采集/送检/签收/核收）进行了拦截校验。</p>
+<h3>4.2 接口时序</h3>
+<ol>
+  <li><code>POST /api/sample/orders/receive</code> 创建检验申请（拆分一申请一项目）</li>
+  <li><code>GET /api/sample/orders/page</code> 查询申请，取 visitId / patientId / 明细</li>
+  <li><code>GET /api/sample/tube-groups?visitId=</code> 计算试管分组（合管）</li>
+  <li><code>POST /api/sample/batch</code> 生成标本条码（初始状态 0）</li>
+  <li><code>PUT /api/sample/collect</code> → 状态 1；<code>PUT /api/sample/deliver</code> → 2；<code>PUT /api/sample/signoff</code> → 3</li>
+  <li><code>GET /api/sample/receive/precheck</code> 核收预检；<code>PUT /api/sample/receive</code> 上机核收 → 4</li>
+  <li><code>POST /api/instrument/data/receive?instrumentId=3&amp;brand=MINDRAY</code> 仪器 ASTH 结果回传</li>
+  <li><code>GET /api/report/technician/{sampleId}</code> 校验结果落库（10 项）</li>
+  <li><code>PUT /api/report/technician/{sampleId}/audit</code> 审核 → 标本状态 6，报告发布</li>
+</ol>
+<h3>4.3 用例结果矩阵</h3>
+<table>
+  <tr><th style="width:230px">测试环节</th><th class="c" style="width:90px">执行次数</th><th class="c" style="width:90px">通过</th><th>关键断言</th></tr>
+  <tr><td>检验申请 / 查询</td><td class="c">10</td><td class="c ok">10</td><td>返回 code=200，申请记录可检索，含项目明细</td></tr>
+  <tr><td>试管分组（合管）</td><td class="c">10</td><td class="c ok">10</td><td>分组非空且含检验项目</td></tr>
+  <tr><td>生成标本条码</td><td class="c">10</td><td class="c ok">10</td><td>初始状态=0，条码唯一</td></tr>
+  <tr><td>标本采集</td><td class="c">10</td><td class="c ok">10</td><td>状态=1；重复采集被拒绝</td></tr>
+  <tr><td>标本送检</td><td class="c">10</td><td class="c ok">10</td><td>状态=2；未采集送检被拒绝</td></tr>
+  <tr><td>标本签收</td><td class="c">10</td><td class="c ok">10</td><td>状态=3；未送检签收被拒绝</td></tr>
+  <tr><td>上机（核收）</td><td class="c">10</td><td class="c ok">10</td><td>分配仪器 BC-6800，状态=4；重复核收被拒绝</td></tr>
+  <tr><td>仪器结果回传</td><td class="c">10</td><td class="c ok">10</td><td>每例落库 10 项结果，含单位/参考区间/异常标志</td></tr>
+  <tr><td>技师审核出报告</td><td class="c">10</td><td class="c ok">10</td><td>审核通过，标本状态=6，报告 status=2（已发布）</td></tr>
+</table>
+<h3>4.4 测试数据明细（10 条申请）</h3>
+<table>
+  <tr><th class="c" style="width:48px">序号</th><th>患者姓名</th><th>标本条码</th><th>标本ID</th><th class="c" style="width:70px">结果项</th><th>报告号</th><th class="c" style="width:70px">报告状态</th><th class="c" style="width:110px">标本终态</th><th class="c" style="width:56px">结果</th></tr>
+  <tr>
+    <td class="c">1</td><td>AUTO185644_1</td><td class="mono">261110000001</td>
+    <td class="mono small">2119965710082265090</td><td class="c">10</td>
+    <td class="mono">RPT202611100929480082265090</td><td class="c">已发布</td>
+    <td class="c">已报告(6)</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">2</td><td>AUTO185644_2</td><td class="mono">261110000002</td>
+    <td class="mono small">2119965720102457345</td><td class="c">10</td>
+    <td class="mono">RPT202611100929500102457345</td><td class="c">已发布</td>
+    <td class="c">已报告(6)</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">3</td><td>AUTO185644_3</td><td class="mono">261110000003</td>
+    <td class="mono small">2119965725991260162</td><td class="c">10</td>
+    <td class="mono">RPT202611100929515991260162</td><td class="c">已发布</td>
+    <td class="c">已报告(6)</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">4</td><td>AUTO185644_4</td><td class="mono">261110000004</td>
+    <td class="mono small">2119965731196391426</td><td class="c">10</td>
+    <td class="mono">RPT202611100929521196391426</td><td class="c">已发布</td>
+    <td class="c">已报告(6)</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">5</td><td>AUTO185644_5</td><td class="mono">261110000005</td>
+    <td class="mono small">2119965736099532801</td><td class="c">10</td>
+    <td class="mono">RPT202611100929546099532801</td><td class="c">已发布</td>
+    <td class="c">已报告(6)</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">6</td><td>AUTO185644_6</td><td class="mono">261110000006</td>
+    <td class="mono small">2119965741006868481</td><td class="c">10</td>
+    <td class="mono">RPT202611100929551006868481</td><td class="c">已发布</td>
+    <td class="c">已报告(6)</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">7</td><td>AUTO185644_7</td><td class="mono">261110000007</td>
+    <td class="mono small">2119965745800957953</td><td class="c">10</td>
+    <td class="mono">RPT202611100929565800957953</td><td class="c">已发布</td>
+    <td class="c">已报告(6)</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">8</td><td>AUTO185644_8</td><td class="mono">261110000008</td>
+    <td class="mono small">2119965750318223361</td><td class="c">10</td>
+    <td class="mono">RPT202611100929570318223361</td><td class="c">已发布</td>
+    <td class="c">已报告(6)</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">9</td><td>AUTO185644_9</td><td class="mono">261110000009</td>
+    <td class="mono small">2119965756068614145</td><td class="c">10</td>
+    <td class="mono">RPT202611100929586068614145</td><td class="c">已发布</td>
+    <td class="c">已报告(6)</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">10</td><td>AUTO185644_10</td><td class="mono">261110000010</td>
+    <td class="mono small">2119965760363581442</td><td class="c">10</td>
+    <td class="mono">RPT202611100929590363581442</td><td class="c">已发布</td>
+    <td class="c">已报告(6)</td><td class="c ok">通过</td></tr>
+</table>
+<p class="small">说明：患者姓名格式 AUTO&lt;批次&gt;_&lt;序号&gt;，由脚本自动生成；标本 ID 为雪花算法长整型，报告中以字符串呈现。仪器回传结果范围为：2.09 ~ 2.28（质控另见第 6 章）。</p>
+
+<h2 id="s5">5. 微生物检验全流程测试</h2>
+<h3>5.1 流程与状态机</h3>
+<p><b>标本流</b>：申请 → 采集条码 → 采集 → 送检 → 签收 → 接种（按培养方案生成培养皿条码）→ 培养基条码核收。<br>
+<b>培养皿状态</b>：0 未核收 → 1 已核收；2 已作废。<br>
+<b>报告状态</b>：1 初步报告（核收自动创建）→ 2 鉴定报告 → 3 最终报告；阴性报告保存后直接进入最终报告。</p>
+<h3>5.2 接口时序</h3>
+<ol>
+  <li>申请与条码：同常规流程（<code>/api/sample/orders/receive</code> → <code>/tube-groups</code> → <code>/batch</code> → <code>/collect</code> → <code>/deliver</code> → <code>/signoff</code>）</li>
+  <li><code>POST /api/micro/sample-plate/generate</code> 按检验项目 + 标本类型匹配培养方案，生成 2~3 个培养皿条码</li>
+  <li><code>POST /api/report/micro/receive-by-plate?plateBarcode=</code> 培养基条码核收，自动创建初步报告（status=1）</li>
+  <li><code>PUT /api/report/micro/{id}/gram-stain</code> 革兰氏染色结果</li>
+  <li><code>POST /api/report/micro/{id}/organisms</code> 细菌鉴定（大肠埃希菌 EC）</li>
+  <li><code>POST /api/report/micro/{id}/sensitivities</code> 药敏结果（氨苄西林 R / 头孢曲松 S / 左氧氟沙星 I）</li>
+  <li><code>POST /api/report/micro/{id}/evaluate-rules</code> 与 <code>GET /rule-hits</code> 耐药规则评估</li>
+  <li><code>PUT /api/report/micro/{id}/publish?targetStatus=2</code> → 鉴定报告；<code>targetStatus=3</code> → 最终报告</li>
+  <li>分支接口：<code>/api/micro/blood-culture/inoculate|{id}/alarm|{id}/final</code>、<code>PUT /{id}/negative</code>、<code>POST /api/report/micro/instrument-results/by-barcode</code></li>
+</ol>
+<h3>5.3 用例结果矩阵</h3>
+<table>
+  <tr><th style="width:230px">测试环节</th><th class="c" style="width:90px">执行次数</th><th class="c" style="width:90px">通过</th><th>关键断言</th></tr>
+  <tr><td>申请 / 合管 / 条码 / 采集 / 送检 / 签收</td><td class="c">10</td><td class="c ok">10</td><td>标本状态依次 0→1→2→3</td></tr>
+  <tr><td>接种（培养皿条码）</td><td class="c">10</td><td class="c ok">10</td><td>按方案生成 2~3 管，共 28 个培养皿条码</td></tr>
+  <tr><td>培养基核收</td><td class="c">10</td><td class="c ok">10</td><td>自动创建初步报告（status=1），培养皿状态置 1</td></tr>
+  <tr><td>革兰氏染色</td><td class="c">5</td><td class="c ok">5</td><td>革兰阴性杆菌结果写入报告</td></tr>
+  <tr><td>细菌鉴定</td><td class="c">9</td><td class="c ok">9</td><td>鉴定结果与药敏关联正确</td></tr>
+  <tr><td>药敏试验</td><td class="c">9</td><td class="c ok">9</td><td>每株 3 项 MIC，S/I/R 判定写入</td></tr>
+  <tr><td>耐药规则评估 / 命中查询</td><td class="c">10</td><td class="c ok">10</td><td>评估接口无异常，命中列表可查询</td></tr>
+  <tr><td>报告发布（鉴定→最终）</td><td class="c">9</td><td class="c ok">9</td><td>状态必须递增，发布后 status=3 并记录发布时间</td></tr>
+  <tr><td>血培养（接种→报警→终判）</td><td class="c">1</td><td class="c ok">1</td><td>状态 0→1→终判，报告字段 bloodCultureResult=POSITIVE</td></tr>
+  <tr><td>阴性报告</td><td class="c">1</td><td class="c ok">1</td><td>isNegative=1，报告直接进入最终状态</td></tr>
+  <tr><td>微生物仪器结果回传</td><td class="c">1</td><td class="c ok">1</td><td>按培养条码匹配报告，追加 1 株菌 + 2 条药敏（去重）</td></tr>
+</table>
+<h3>5.4 测试数据明细（10 条申请）</h3>
+<table>
+  <tr><th class="c" style="width:44px">序号</th><th>检验项目</th><th class="c" style="width:72px">标本类型</th><th>采集条码</th><th class="c" style="width:56px">培养皿</th><th>微生物报告号</th><th>鉴定结果</th><th class="c" style="width:50px">药敏</th><th class="c" style="width:96px">报告终态</th><th class="c" style="width:52px">结果</th></tr>
+  <tr>
+    <td class="c">1</td><td>一般细菌培养</td><td class="c">痰</td>
+    <td class="mono">261110000012</td><td class="c">3</td>
+    <td class="mono small">MIC202611100936176705</td>
+    <td>大肠埃希菌(+)</td>
+    <td class="c">3</td>
+    <td class="c">最终报告(3)</td>
+    <td class="c ok">通过</td></tr><tr>
+    <td class="c">2</td><td>尿液培养</td><td class="c">尿液</td>
+    <td class="mono">261110000013</td><td class="c">2</td>
+    <td class="mono small">MIC202611100936182445</td>
+    <td>大肠埃希菌(+)</td>
+    <td class="c">3</td>
+    <td class="c">最终报告(3)</td>
+    <td class="c ok">通过</td></tr><tr>
+    <td class="c">3</td><td>血液培养</td><td class="c">血液</td>
+    <td class="mono">261110000014</td><td class="c">3</td>
+    <td class="mono small">MIC202611100936191356</td>
+    <td>大肠埃希菌(+)</td>
+    <td class="c">3</td>
+    <td class="c">最终报告(3)</td>
+    <td class="c ok">通过</td></tr><tr>
+    <td class="c">4</td><td>分泌物培养</td><td class="c">分泌物</td>
+    <td class="mono">261110000015</td><td class="c">3</td>
+    <td class="mono small">MIC202611100936204149</td>
+    <td>大肠埃希菌(+)</td>
+    <td class="c">3</td>
+    <td class="c">最终报告(3)</td>
+    <td class="c ok">通过</td></tr><tr>
+    <td class="c">5</td><td>脑脊液培养</td><td class="c">脑脊液</td>
+    <td class="mono">261110000016</td><td class="c">3</td>
+    <td class="mono small">MIC202611100936215280</td>
+    <td>大肠埃希菌(+)</td>
+    <td class="c">3</td>
+    <td class="c">最终报告(3)</td>
+    <td class="c ok">通过</td></tr><tr>
+    <td class="c">6</td><td>胸腹水培养</td><td class="c">胸腹水</td>
+    <td class="mono">261110000017</td><td class="c">3</td>
+    <td class="mono small">MIC202611100936224443</td>
+    <td>大肠埃希菌(+)</td>
+    <td class="c">3</td>
+    <td class="c">最终报告(3)</td>
+    <td class="c ok">通过</td></tr><tr>
+    <td class="c">7</td><td>粪便培养</td><td class="c">粪便</td>
+    <td class="mono">261110000018</td><td class="c">3</td>
+    <td class="mono small">MIC202611100936228056</td>
+    <td>大肠埃希菌(+)</td>
+    <td class="c">3</td>
+    <td class="c">最终报告(3)</td>
+    <td class="c ok">通过</td></tr><tr>
+    <td class="c">8</td><td>厌氧菌培养</td><td class="c">分泌物</td>
+    <td class="mono">261110000019</td><td class="c">3</td>
+    <td class="mono small">MIC202611100936231209</td>
+    <td>大肠埃希菌(+)</td>
+    <td class="c">3</td>
+    <td class="c">最终报告(3)</td>
+    <td class="c ok">通过</td></tr><tr>
+    <td class="c">9</td><td>一般细菌培养</td><td class="c">痰</td>
+    <td class="mono">261110000020</td><td class="c">3</td>
+    <td class="mono small">MIC202611100936236296</td>
+    <td>大肠埃希菌(+)、金黄色葡萄球菌(++)</td>
+    <td class="c">3</td>
+    <td class="c">最终报告(3)</td>
+    <td class="c ok">通过</td></tr><tr>
+    <td class="c">10</td><td>尿液培养</td><td class="c">尿液</td>
+    <td class="mono">261110000021</td><td class="c">2</td>
+    <td class="mono small">MIC202611100936245450</td>
+    <td>阴性（无细菌生长）</td>
+    <td class="c">0</td>
+    <td class="c">最终报告(3)</td>
+    <td class="c ok">通过</td></tr>
+</table>
+<h3>5.5 培养皿条码明细（共 28 个）</h3>
+<table>
+  <tr><th class="c" style="width:44px">序号</th><th>检验项目</th><th>采集条码</th><th class="c" style="width:56px">管序</th><th>培养基</th><th>培养皿条码</th><th class="c" style="width:80px">状态</th></tr>
+  <tr>
+    <td class="c">1</td><td>一般细菌培养</td><td class="mono">261110000012</td>
+    <td class="c">1</td><td>厌氧血平板</td><td class="mono">L20261110093617875452</td>
+    <td class="c">已核收</td></tr><tr>
+    <td class="c">2</td><td>一般细菌培养</td><td class="mono">261110000012</td>
+    <td class="c">2</td><td>麦康凯平板</td><td class="mono">L20261110093617879615</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">3</td><td>一般细菌培养</td><td class="mono">261110000012</td>
+    <td class="c">3</td><td>巧克力平板</td><td class="mono">L20261110093617881546</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">4</td><td>尿液培养</td><td class="mono">261110000013</td>
+    <td class="c">1</td><td>厌氧血平板</td><td class="mono">L20261110093618784865</td>
+    <td class="c">已核收</td></tr><tr>
+    <td class="c">5</td><td>尿液培养</td><td class="mono">261110000013</td>
+    <td class="c">2</td><td>麦康凯平板</td><td class="mono">L20261110093618786945</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">6</td><td>血液培养</td><td class="mono">261110000014</td>
+    <td class="c">1</td><td>厌氧血平板</td><td class="mono">L20261110093619540935</td>
+    <td class="c">已核收</td></tr><tr>
+    <td class="c">7</td><td>血液培养</td><td class="mono">261110000014</td>
+    <td class="c">2</td><td>厌氧血平板</td><td class="mono">L20261110093619541769</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">8</td><td>血液培养</td><td class="mono">261110000014</td>
+    <td class="c">3</td><td>巧克力平板</td><td class="mono">L20261110093619544238</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">9</td><td>分泌物培养</td><td class="mono">261110000015</td>
+    <td class="c">1</td><td>厌氧血平板</td><td class="mono">L20261110093620529397</td>
+    <td class="c">已核收</td></tr><tr>
+    <td class="c">10</td><td>分泌物培养</td><td class="mono">261110000015</td>
+    <td class="c">2</td><td>麦康凯平板</td><td class="mono">L20261110093620531737</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">11</td><td>分泌物培养</td><td class="mono">261110000015</td>
+    <td class="c">3</td><td>巧克力平板</td><td class="mono">L20261110093620532615</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">12</td><td>脑脊液培养</td><td class="mono">261110000016</td>
+    <td class="c">1</td><td>厌氧血平板</td><td class="mono">L20261110093621298832</td>
+    <td class="c">已核收</td></tr><tr>
+    <td class="c">13</td><td>脑脊液培养</td><td class="mono">261110000016</td>
+    <td class="c">2</td><td>巧克力平板</td><td class="mono">L20261110093621300423</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">14</td><td>脑脊液培养</td><td class="mono">261110000016</td>
+    <td class="c">3</td><td>沙保弱葡萄糖琼脂</td><td class="mono">L20261110093621303155</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">15</td><td>胸腹水培养</td><td class="mono">261110000017</td>
+    <td class="c">1</td><td>厌氧血平板</td><td class="mono">L20261110093622027664</td>
+    <td class="c">已核收</td></tr><tr>
+    <td class="c">16</td><td>胸腹水培养</td><td class="mono">261110000017</td>
+    <td class="c">2</td><td>麦康凯平板</td><td class="mono">L20261110093622029605</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">17</td><td>胸腹水培养</td><td class="mono">261110000017</td>
+    <td class="c">3</td><td>巧克力平板</td><td class="mono">L20261110093622030465</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">18</td><td>粪便培养</td><td class="mono">261110000018</td>
+    <td class="c">1</td><td>SS平板</td><td class="mono">L20261110093622600765</td>
+    <td class="c">已核收</td></tr><tr>
+    <td class="c">19</td><td>粪便培养</td><td class="mono">261110000018</td>
+    <td class="c">2</td><td>麦康凯平板</td><td class="mono">L20261110093622601930</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">20</td><td>粪便培养</td><td class="mono">261110000018</td>
+    <td class="c">3</td><td>木糖赖氨酸脱氧胆盐平板</td><td class="mono">L20261110093622605628</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">21</td><td>厌氧菌培养</td><td class="mono">261110000019</td>
+    <td class="c">1</td><td>厌氧血平板</td><td class="mono">L20261110093623141940</td>
+    <td class="c">已核收</td></tr><tr>
+    <td class="c">22</td><td>厌氧菌培养</td><td class="mono">261110000019</td>
+    <td class="c">2</td><td>卡那霉素万古霉素平板</td><td class="mono">L20261110093623142942</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">23</td><td>厌氧菌培养</td><td class="mono">261110000019</td>
+    <td class="c">3</td><td>苯乙基乙醇平板</td><td class="mono">L20261110093623145706</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">24</td><td>一般细菌培养</td><td class="mono">261110000020</td>
+    <td class="c">1</td><td>厌氧血平板</td><td class="mono">L20261110093623650726</td>
+    <td class="c">已核收</td></tr><tr>
+    <td class="c">25</td><td>一般细菌培养</td><td class="mono">261110000020</td>
+    <td class="c">2</td><td>麦康凯平板</td><td class="mono">L20261110093623658080</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">26</td><td>一般细菌培养</td><td class="mono">261110000020</td>
+    <td class="c">3</td><td>巧克力平板</td><td class="mono">L20261110093623662384</td>
+    <td class="c">未核收</td></tr><tr>
+    <td class="c">27</td><td>尿液培养</td><td class="mono">261110000021</td>
+    <td class="c">1</td><td>厌氧血平板</td><td class="mono">L20261110093624466215</td>
+    <td class="c">已核收</td></tr><tr>
+    <td class="c">28</td><td>尿液培养</td><td class="mono">261110000021</td>
+    <td class="c">2</td><td>麦康凯平板</td><td class="mono">L20261110093624469449</td>
+    <td class="c">未核收</td></tr>
+</table>
+<p class="small">说明：本次每例仅核收首管培养基以驱动报告链路，其余同标本培养皿保持「未核收」状态，符合“一培养皿一报告、可分别核收”的设计。</p>
+<h3>5.6 分支场景说明</h3>
+<ul>
+  <li><b>血培养分支（第 3 例，血液培养）</b>：接种需氧瓶 → 阳性报警 → 终判「阳性」；报告写入瓶号/瓶型/血量/结果 POSITIVE，革兰氏染色为革兰阴性杆菌</li>
+  <li><b>仪器回传分支（第 9 例）</b>：按培养皿条码回传仪器鉴定结果（金黄色葡萄球菌 SA）与 2 条药敏，与手工录入的大肠埃希菌并存，最终报告含 2 菌 5 药敏</li>
+  <li><b>阴性报告分支（第 10 例，尿液培养）</b>：培养 48 小时无细菌生长，保存阴性报告后直接为最终报告，无细菌/药敏记录</li>
+</ul>
+
+<h2 id="s6">6. 质量控制（室内质控）测试</h2>
+<h3>6.1 常规生化质控（10 次）</h3>
+<p>质控品批号 <code>23</code>，通过 <code>POST /api/qc/auto-collect</code> 模拟仪器回传质控测量值，系统按 Westgard 规则判定。</p>
+<table>
+  <tr><th class="c" style="width:56px">序号</th><th class="c" style="width:100px">质控批号</th><th class="c" style="width:100px">测量值</th><th class="c" style="width:110px">判定</th><th class="c">结果</th></tr>
+  <tr><td class="c">1</td><td class="mono">23</td>
+    <td class="c">2.09</td><td class="c">ACCEPT</td><td class="c ok">合格</td></tr><tr><td class="c">2</td><td class="mono">23</td>
+    <td class="c">2.21</td><td class="c">ACCEPT</td><td class="c ok">合格</td></tr><tr><td class="c">3</td><td class="mono">23</td>
+    <td class="c">2.25</td><td class="c">ACCEPT</td><td class="c ok">合格</td></tr><tr><td class="c">4</td><td class="mono">23</td>
+    <td class="c">2.28</td><td class="c">ACCEPT</td><td class="c ok">合格</td></tr><tr><td class="c">5</td><td class="mono">23</td>
+    <td class="c">2.1</td><td class="c">ACCEPT</td><td class="c ok">合格</td></tr><tr><td class="c">6</td><td class="mono">23</td>
+    <td class="c">2.13</td><td class="c">ACCEPT</td><td class="c ok">合格</td></tr><tr><td class="c">7</td><td class="mono">23</td>
+    <td class="c">2.24</td><td class="c">ACCEPT</td><td class="c ok">合格</td></tr><tr><td class="c">8</td><td class="mono">23</td>
+    <td class="c">2.16</td><td class="c">ACCEPT</td><td class="c ok">合格</td></tr><tr><td class="c">9</td><td class="mono">23</td>
+    <td class="c">2.19</td><td class="c">ACCEPT</td><td class="c ok">合格</td></tr><tr><td class="c">10</td><td class="mono">23</td>
+    <td class="c">2.27</td><td class="c">ACCEPT</td><td class="c ok">合格</td></tr>
+</table>
+<p>10 次测量值均落在受控范围，判定均为 ACCEPT（在控），质控图与规则链路正常。</p>
+<h3>6.2 微生物室内质控（10 次）</h3>
+<p>通过 <code>POST /api/micro/qc</code> 录入 7 类质控物品（轮转 10 条），预期结果与实际结果一致，判定 PASS。</p>
+<table>
+  <tr><th class="c" style="width:56px">序号</th><th class="c" style="width:80px">类别</th><th>质控物品</th><th class="c" style="width:90px">系统判定</th><th class="c" style="width:80px">结果</th></tr>
+  <tr><td class="c">1</td><td class="c">1</td>
+    <td>生化反应试剂</td><td class="c">PASS</td><td class="c ok">通过</td></tr><tr><td class="c">2</td><td class="c">2</td>
+    <td>抗菌药物</td><td class="c">PASS</td><td class="c ok">通过</td></tr><tr><td class="c">3</td><td class="c">3</td>
+    <td>纸片法药敏</td><td class="c">PASS</td><td class="c ok">通过</td></tr><tr><td class="c">4</td><td class="c">4</td>
+    <td>诊断血清</td><td class="c">PASS</td><td class="c ok">通过</td></tr><tr><td class="c">5</td><td class="c">5</td>
+    <td>血培养瓶</td><td class="c">PASS</td><td class="c ok">通过</td></tr><tr><td class="c">6</td><td class="c">6</td>
+    <td>染色液</td><td class="c">PASS</td><td class="c ok">通过</td></tr><tr><td class="c">7</td><td class="c">7</td>
+    <td>标准菌株</td><td class="c">PASS</td><td class="c ok">通过</td></tr><tr><td class="c">8</td><td class="c">1</td>
+    <td>生化反应试剂</td><td class="c">PASS</td><td class="c ok">通过</td></tr><tr><td class="c">9</td><td class="c">2</td>
+    <td>抗菌药物</td><td class="c">PASS</td><td class="c ok">通过</td></tr><tr><td class="c">10</td><td class="c">3</td>
+    <td>纸片法药敏</td><td class="c">PASS</td><td class="c ok">通过</td></tr>
+</table>
+<p class="small">类别说明：1 生化反应试剂、2 抗菌药物、3 纸片法药敏、4 诊断血清、5 血培养瓶、6 染色液、7 标准菌株。</p>
+
+<h2 id="s7">7. 逆向（撤销/回退）操作测试</h2>
+<p>为验证业务可逆性与数据回滚正确性，在正向流程基础上执行完整的逆向链路：常规检验从「已报告」逐级撤销至「已申请」并删除条码；微生物从「最终报告」回退为「鉴定报告」，并验证删除药敏/细菌、重新发布、撤销培养基核收与作废培养基条码。每步均校验接口返回与数据库状态字段，同时验证非法逆向操作必须被拦截。</p>
+
+<h3>7.1 常规逆向链（10 条，每例 17 项断言）</h3>
+<p>链路：<b>已报告(6) → 撤销审核 → 已核收(4) → 撤销核收 → 已签收(3) → 取消签收 → 已送检(2) → 取消送检 → 已采集(1) → 取消采集 → 已申请(0) → 取消条码（标本删除）</b>。每例包含 6 项非法逆向拦截：已报告不可取消采集/送检/签收、已核收不可取消送检、已送检不可取消采集、未签收不可取消签收。</p>
+<table>
+  <tr><th class="c" style="width:48px">序号</th><th>标本条码</th><th>标本ID</th><th class="c" style="width:90px">断言步骤</th><th class="c" style="width:170px">最终状态</th><th class="c" style="width:56px">结果</th></tr>
+  <tr>
+    <td class="c">1</td><td class="mono">261110000046</td>
+    <td class="mono small">2119973565732675586</td><td class="c">17</td>
+    <td class="c">已删除（条码释放）</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">2</td><td class="mono">261110000047</td>
+    <td class="mono small">2119973573538275330</td><td class="c">17</td>
+    <td class="c">已删除（条码释放）</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">3</td><td class="mono">261110000048</td>
+    <td class="mono small">2119973580844752898</td><td class="c">17</td>
+    <td class="c">已删除（条码释放）</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">4</td><td class="mono">261110000049</td>
+    <td class="mono small">2119973586393817089</td><td class="c">17</td>
+    <td class="c">已删除（条码释放）</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">5</td><td class="mono">261110000050</td>
+    <td class="mono small">2119973591255015426</td><td class="c">17</td>
+    <td class="c">已删除（条码释放）</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">6</td><td class="mono">261110000051</td>
+    <td class="mono small">2119973596200099841</td><td class="c">17</td>
+    <td class="c">已删除（条码释放）</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">7</td><td class="mono">261110000052</td>
+    <td class="mono small">2119973600985800705</td><td class="c">17</td>
+    <td class="c">已删除（条码释放）</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">8</td><td class="mono">261110000053</td>
+    <td class="mono small">2119973605255602177</td><td class="c">17</td>
+    <td class="c">已删除（条码释放）</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">9</td><td class="mono">261110000054</td>
+    <td class="mono small">2119973610284572673</td><td class="c">17</td>
+    <td class="c">已删除（条码释放）</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">10</td><td class="mono">261110000055</td>
+    <td class="mono small">2119973615275794433</td><td class="c">17</td>
+    <td class="c">已删除（条码释放）</td><td class="c ok">通过</td></tr>
+</table>
+
+<h3>7.2 常规异常逆向分支（拒收 / 退费 / 作废）</h3>
+<table>
+  <tr><th style="width:120px">分支</th><th>标本条码</th><th class="c" style="width:110px">结果状态</th><th>拦截校验</th><th class="c" style="width:56px">结果</th></tr>
+  <tr><td>标本拒收</td><td class="mono">261110000056</td><td class="c">已拒收(9)</td>
+    <td>已拒收不可取消采集</td><td class="c ok">通过</td></tr><tr><td>标本退费</td><td class="mono">261110000057</td><td class="c">已退费(7)</td>
+    <td>重复退费被拦截</td><td class="c ok">通过</td></tr><tr><td>标本作废</td><td class="mono">261110000058</td><td class="c">已作废(8)</td>
+    <td>重复作废被拦截</td><td class="c ok">通过</td></tr>
+</table>
+
+<h3>7.3 微生物逆向链（10 条，每例 9 项断言）</h3>
+<p>链路：<b>最终报告(3) → 取消最终 → 鉴定报告(2) → 删除药敏 / 删除细菌 → 重新鉴定并发布 → 最终报告(3)</b>；并对同标本第 2 管培养基执行「核收 → 撤销核收」，验证报告物理删除与培养皿状态回退为 0（未核收）。第 10 例为阴性报告：取消最终(3→2) 后重新保存阴性报告(→3)。</p>
+<table>
+  <tr><th class="c" style="width:48px">序号</th><th>检验项目</th><th>采集条码</th><th>微生物报告ID</th><th class="c" style="width:64px">培养皿</th><th class="c" style="width:70px">断言步骤</th><th class="c" style="width:56px">结果</th></tr>
+  <tr>
+    <td class="c">1</td><td>一般细菌培养</td><td class="mono">261110000059</td>
+    <td class="mono small">2119973625195323393</td><td class="c">3</td>
+    <td class="c">9</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">2</td><td>尿液培养</td><td class="mono">261110000060</td>
+    <td class="mono small">2119973630358511617</td><td class="c">2</td>
+    <td class="c">9</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">3</td><td>血液培养</td><td class="mono">261110000061</td>
+    <td class="mono small">2119973634431180801</td><td class="c">3</td>
+    <td class="c">9</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">4</td><td>分泌物培养</td><td class="mono">261110000062</td>
+    <td class="mono small">2119973637501411330</td><td class="c">3</td>
+    <td class="c">9</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">5</td><td>脑脊液培养</td><td class="mono">261110000063</td>
+    <td class="mono small">2119973640651333634</td><td class="c">3</td>
+    <td class="c">9</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">6</td><td>胸腹水培养</td><td class="mono">261110000064</td>
+    <td class="mono small">2119973643490877441</td><td class="c">3</td>
+    <td class="c">9</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">7</td><td>粪便培养</td><td class="mono">261110000065</td>
+    <td class="mono small">2119973645931962369</td><td class="c">3</td>
+    <td class="c">9</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">8</td><td>厌氧菌培养</td><td class="mono">261110000066</td>
+    <td class="mono small">2119973648482099202</td><td class="c">3</td>
+    <td class="c">9</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">9</td><td>一般细菌培养</td><td class="mono">261110000067</td>
+    <td class="mono small">2119973652881924098</td><td class="c">3</td>
+    <td class="c">9</td><td class="c ok">通过</td></tr><tr>
+    <td class="c">10</td><td>尿液培养</td><td class="mono">261110000068</td>
+    <td class="mono small">2119973655100710914</td><td class="c">2</td>
+    <td class="c">3</td><td class="c ok">通过</td></tr>
+</table>
+
+<h3>7.4 培养基条码作废与微生物质控删除</h3>
+<table>
+  <tr><th style="width:280px">用例</th><th>验证内容</th><th class="c" style="width:56px">结果</th></tr>
+  <tr><td>取消单条培养基条码</td><td>DELETE /api/micro/sample-plate/{id}，培养皿状态置 2（已作废）</td><td class="c ok">通过</td></tr>
+  <tr><td>批量作废标本全部培养基条码</td><td>DELETE /api/micro/sample-plate/cancel-by-sample，该标本 3 个培养皿全部作废</td><td class="c ok">通过</td></tr>
+  <tr><td>删除微生物质控记录</td><td>DELETE /api/micro/qc/{id}，删除 2 条临时记录，总数 13 → 11</td><td class="c ok">通过</td></tr>
+</table>
+
+<h3>7.5 逆向测试汇总</h3>
+<table>
+  <tr><th>测试组</th><th class="c" style="width:90px">用例数</th><th class="c" style="width:90px">通过</th><th class="c" style="width:120px">断言步骤</th><th>说明</th></tr>
+  <tr><td>常规逆向链</td><td class="c">10</td><td class="c ok">10</td><td class="c">170</td><td>逐级撤销至已申请并删除条码</td></tr>
+  <tr><td>常规异常逆向分支</td><td class="c">3</td><td class="c ok">3</td><td class="c">6</td><td>拒收 / 退费 / 作废及重复操作拦截</td></tr>
+  <tr><td>微生物逆向链</td><td class="c">10</td><td class="c ok">10</td><td class="c">90</td><td>取消最终、删除明细、重新发布、撤销培养基核收</td></tr>
+  <tr><td>培养基条码作废</td><td class="c">1</td><td class="c ok">1</td><td class="c">2</td><td>单条作废 + 批量作废</td></tr>
+  <tr><td>微生物质控删除</td><td class="c">1</td><td class="c ok">1</td><td class="c">1</td><td>删除 2 条记录并校验总数</td></tr>
+  <tr><td><b>合计</b></td><td class="c"><b>25</b></td><td class="c ok"><b>25</b></td><td class="c"><b>254</b></td><td>254/254 断言通过</td></tr>
+</table>
+<p>逆向测试过程中发现 1 项业务逻辑缺陷（取消最终报告后发布时间残留）与 1 项数据一致性风险（取消条码后报告残留），详见第 8 章 #5、#6。</p>
+
+<h2 id="s8">8. 缺陷与修复记录</h2>
+<table>
+  <tr><th class="c" style="width:48px">序号</th><th style="width:150px">问题</th><th>现象与影响</th><th>修复内容</th></tr>
+  <tr><td class="c">1</td><td>启动脚本 Java 路径失效</td><td><code>start-all-services.ps1</code> 硬编码旧版工具链 JRE 路径，服务无法启动</td><td>改为读取 <code>JAVA_HOME</code>，缺省回退至本机 JDK 17</td></tr>
+  <tr><td class="c">2</td><td>微服务 jar 不可执行</td><td>各服务 target 下为普通 jar（无 Main-Manifest），单独启动报「没有主清单属性」</td><td>改用单体聚合包 <code>lis-monolith-fresh.jar</code> 统一启动（内置全部模块）</td></tr>
+  <tr><td class="c">3</td><td>单体 Bean 同名冲突</td><td>reagent 与 system 模块均存在 <code>SysConfigController / SysConfigServiceImpl / SysConfigMapper</code>，聚合启动抛出 ConflictingBeanDefinitionException</td><td>为 reagent 侧指定独立 Bean 名（<code>reagentSysConfigController</code>、<code>reagentSysConfigService</code>），Mapper 重命名为 <code>ReagentSysConfigMapper</code>（对应表 lis_sys_config）</td></tr>
+  <tr><td class="c">4</td><td>8090 端口被占用</td><td>优酷客户端占用 8090（认证服务端口）且自动重启</td><td>停止优酷进程释放端口；生产部署建议改用独立服务器或调整端口规划</td></tr>
+  <tr><td class="c">5</td><td>取消最终报告后发布时间残留</td><td>微生物「取消最终报告」将状态回退为 2（鉴定报告），但 <code>publish_time / audit_time / auditor_id</code> 未被清空（MyBatis-Plus <code>updateById</code> 默认忽略 null 字段），报告详情仍显示发布时间，状态与时间字段不一致</td><td>改为 <code>LambdaUpdateWrapper</code> 显式 <code>set null</code> 清空审核/发布时间（<code>MicroReportServiceImpl#revokeFinalReport</code>），重新打包后 10/10 逆向用例、254/254 断言全部通过</td></tr>
+  <tr><td class="c">6</td><td>取消条码后报告残留（风险）</td><td>常规标本撤销至「已申请」后执行取消条码会物理删除标本，但此前生成的检验报告仍保留在报告列表中（逆向测试两轮累计产生 20 份无标本报告），存在临床误查风险</td><td>建议：撤销审核/撤销核收时同步作废或删除对应报告，或在取消条码前校验是否存在报告并阻断。本次仅记录风险，未改动业务代码</td></tr>
+</table>
+<p>问题 1~4 为环境/部署类问题；问题 5 为逆向操作相关的业务逻辑缺陷，已修复并回归通过；问题 6 为数据一致性风险，建议后续版本处理。修复后 20 条正向全流程用例、20 条质控用例与 254 项逆向断言全部通过。</p>
+
+<h2 id="s9">9. 测试数据统计与影响范围</h2>
+<table>
+  <tr><th>数据对象</th><th class="c" style="width:130px">测试新增</th><th class="c" style="width:160px">测试后累计</th><th>说明</th></tr>
+  <tr><td>检验标本</td><td class="c">20</td><td class="c">929</td><td>正向 20；逆向测试另产生 25 条（常规撤销链最终删除 10 条）</td></tr>
+  <tr><td>常规检验报告</td><td class="c">10</td><td class="c">54</td><td>正向 10 份已发布；逆向测试另产生 20 份（撤销链回退后仍保留，见风险 #6）</td></tr>
+  <tr><td>微生物报告</td><td class="c">10</td><td class="c">41</td><td>正向 10 份；逆向测试另产生 20 份（首轮 10 + 修复后复测 10）</td></tr>
+  <tr><td>培养皿条码</td><td class="c">28</td><td class="c">-</td><td>正向 28 个（10 个已核收）；逆向测试另生成 31 个（含作废用例）</td></tr>
+  <tr><td>常规质控记录</td><td class="c">10</td><td class="c">98</td><td>判定 ACCEPT</td></tr>
+  <tr><td>微生物质控记录</td><td class="c">10</td><td class="c">11</td><td>判定 PASS（逆向测试删除 2 条临时记录）</td></tr>
+  <tr><td>逆向断言步骤</td><td class="c">254</td><td class="c">全部通过</td><td>常规 10×17 + 微生物 10×9 + 分支/删除用例</td></tr>
+</table>
+<div class="note"><b>数据说明：</b>本次测试数据均为自动化脚本构造的测试数据（患者名前缀 AUTO / MIC / SMOKE），建议在验收完成后按环境策略清理或标记，避免与真实业务数据混淆。</div>
+
+<h2 id="s10">10. 结论与建议</h2>
+<h3>10.1 结论</h3>
+<ul>
+  <li>常规检验全流程 10/10 通过，状态机流转与非法操作拦截均符合预期，仪器 ASTH 回传结果准确落库并自动生成已发布报告</li>
+  <li>微生物检验全流程 10/10 通过，培养方案匹配、培养基核收、鉴定/药敏、耐药规则、多级发布链路完整；血培养、阴性报告、仪器鉴定药敏回传三类分支均验证通过</li>
+  <li>两套质控体系（生化 10 次在控、微生物 10 次 PASS）运行正常</li>
+  <li>逆向操作 254/254 断言通过：常规检验可逐级撤销至「已申请」并删除条码；微生物报告支持取消最终、删除鉴定/药敏、重新发布及撤销培养基核收；拒收/退费/作废分支正常；全部非法逆向操作均被正确拦截</li>
+  <li>系统整体满足上线前的功能与数据流验证要求</li>
+</ul>
+<h3>10.2 建议</h3>
+<ul>
+  <li>修复启动脚本的硬编码路径问题，并统一提供单体与微服务两套启动方式，避免误用不可执行 jar</li>
+  <li>微服务聚合部署前增加 Bean 命名规范检查（同名类需显式命名），建议纳入 CI 编译校验</li>
+  <li>生产环境端口规划需避开常见客户端软件占用（如 8090），并在部署文档中声明</li>
+  <li>取消条码前校验并处理关联报告/结果，避免删除标本后报告残留（见缺陷 #6）</li>
+  <li>补充并发/性能与异常回滚场景（仪器断连、重复回传、报告撤销并发）测试</li>
+</ul>
+
+<h2 id="s11">11. 附录 A：接口清单</h2>
+<table>
+  <tr><th style="width:110px">模块</th><th>方法与路径</th><th>用途</th></tr>
+  <tr><td>认证</td><td class="mono">POST /api/auth/login</td><td>登录获取 JWT</td></tr>
+  <tr><td>申请</td><td class="mono">POST /api/sample/orders/receive</td><td>创建检验申请</td></tr>
+  <tr><td>申请</td><td class="mono">GET /api/sample/orders/page</td><td>查询申请</td></tr>
+  <tr><td>标本</td><td class="mono">GET /api/sample/tube-groups</td><td>试管分组（合管）</td></tr>
+  <tr><td>标本</td><td class="mono">POST /api/sample/batch</td><td>批量生成标本条码</td></tr>
+  <tr><td>标本</td><td class="mono">PUT /api/sample/collect | deliver | signoff</td><td>采集 / 送检 / 签收</td></tr>
+  <tr><td>标本</td><td class="mono">GET /api/sample/receive/precheck</td><td>核收预检</td></tr>
+  <tr><td>标本</td><td class="mono">PUT /api/sample/receive</td><td>上机核收</td></tr>
+  <tr><td>仪器</td><td class="mono">POST /api/instrument/data/receive</td><td>仪器结果回传（ASTM）</td></tr>
+  <tr><td>报告</td><td class="mono">GET /api/report/technician/{sampleId}</td><td>技师检验详情</td></tr>
+  <tr><td>报告</td><td class="mono">PUT /api/report/technician/{sampleId}/audit</td><td>审核出报告</td></tr>
+  <tr><td>报告</td><td class="mono">GET /api/report/page</td><td>报告分页查询</td></tr>
+  <tr><td>质控</td><td class="mono">POST /api/qc/auto-collect</td><td>质控仪器结果回传</td></tr>
+  <tr><td>质控</td><td class="mono">GET /api/qc/records/page</td><td>质控记录查询</td></tr>
+  <tr><td>微生物</td><td class="mono">POST /api/micro/sample-plate/generate</td><td>接种，生成培养皿条码</td></tr>
+  <tr><td>微生物</td><td class="mono">POST /api/report/micro/receive-by-plate</td><td>培养基条码核收</td></tr>
+  <tr><td>微生物</td><td class="mono">PUT /api/report/micro/{id}/gram-stain</td><td>革兰氏染色</td></tr>
+  <tr><td>微生物</td><td class="mono">POST /api/report/micro/{id}/organisms</td><td>细菌鉴定</td></tr>
+  <tr><td>微生物</td><td class="mono">POST /api/report/micro/{id}/sensitivities</td><td>药敏结果</td></tr>
+  <tr><td>微生物</td><td class="mono">POST /api/report/micro/{id}/evaluate-rules</td><td>耐药/专家规则评估</td></tr>
+  <tr><td>微生物</td><td class="mono">PUT /api/report/micro/{id}/publish</td><td>多级报告发布</td></tr>
+  <tr><td>微生物</td><td class="mono">PUT /api/report/micro/{id}/negative</td><td>阴性报告</td></tr>
+  <tr><td>微生物</td><td class="mono">POST /api/report/micro/instrument-results/by-barcode</td><td>仪器鉴定/药敏回传</td></tr>
+  <tr><td>微生物</td><td class="mono">POST /api/micro/blood-culture/inoculate | {id}/alarm | {id}/final</td><td>血培养接种 / 报警 / 终判</td></tr>
+  <tr><td>微生物</td><td class="mono">POST /api/micro/qc</td><td>微生物室内质控录入</td></tr>
+  <tr><td>逆向-标本</td><td class="mono">PUT /api/sample/cancel-collect | cancel-deliver | cancel-signoff</td><td>取消采集 / 取消送检 / 取消签收</td></tr>
+  <tr><td>逆向-标本</td><td class="mono">DELETE /api/sample/barcode/{barcode}</td><td>取消条码（仅未采集，物理删除标本）</td></tr>
+  <tr><td>逆向-标本</td><td class="mono">PUT /api/sample/reject | {id}/refund | {id}/void</td><td>标本拒收 / 退费 / 作废</td></tr>
+  <tr><td>逆向-报告</td><td class="mono">POST /api/report/technician/batch-unaudit</td><td>撤销审核（已报告 → 已核收）</td></tr>
+  <tr><td>逆向-报告</td><td class="mono">POST /api/report/technician/cancel-receive</td><td>撤销核收（已核收 → 已签收）</td></tr>
+  <tr><td>逆向-微生物</td><td class="mono">POST /api/report/micro/{id}/revoke-final</td><td>取消最终报告（最终 → 鉴定）</td></tr>
+  <tr><td>逆向-微生物</td><td class="mono">DELETE /api/report/micro/{id}/cancel-receive</td><td>撤销培养基核收（删除报告，培养皿回退未核收）</td></tr>
+  <tr><td>逆向-微生物</td><td class="mono">DELETE /api/micro/sample-plate/{id} | cancel-by-sample</td><td>作废单条 / 批量作废培养基条码</td></tr>
+  <tr><td>逆向-微生物</td><td class="mono">DELETE /api/micro/qc/{id}</td><td>删除微生物质控记录</td></tr>
+</table>
+
+<h2 id="s12">12. 附录 B：复现步骤</h2>
+<ol>
+  <li>启动 Redis：<code>infra\redis\redis-server.exe --port 6379</code></li>
+  <li>启动服务（后台）：<br><code>java -Xms256m -Xmx1200m -jar lis-system\lis-monolith\target\lis-monolith-fresh.jar</code>（需设置 <code>DB_PASSWORD</code>）</li>
+  <li>健康检查：<code>GET http://127.0.0.1:8080/</code> 返回 200，<code>POST /api/auth/login</code> 返回 code=200</li>
+  <li>执行常规全流程：<code>node flow.js</code>（申请 10 条，含采集/送检/签收/上机/仪器回传/质控）</li>
+  <li>执行微生物全流程：<code>node micro-flow.js</code>（申请 10 条，含接种/核收/鉴定/药敏/发布/分支/质控）</li>
+  <li>执行逆向操作测试：<code>node reverse-flow.js</code>（常规撤销链 10 + 异常分支 3 + 微生物回退链 10 + 作废/删除用例）</li>
+  <li>结果文件：<code>reports\lis-autoflow-report.json</code>、<code>reports\lis-microflow-report.json</code>、<code>reports\lis-reverseflow-report.json</code></li>
+</ol>
+
+<h2 id="s13">13. 附录 C：测试数据文件</h2>
+<table>
+  <tr><th>文件</th><th>内容</th></tr>
+  <tr><td class="mono">reports\lis-autoflow-report.json</td><td>常规流程逐例步骤、状态、条码、样本ID、质控明细（JSON）</td></tr>
+  <tr><td class="mono">reports\lis-microflow-report.json</td><td>微生物流程逐例步骤、培养皿数、报告号、鉴定/药敏、分支覆盖（JSON）</td></tr>
+  <tr><td class="mono">reports\lis-reverseflow-report.json</td><td>逆向操作逐例断言步骤、状态回退轨迹、非法操作拦截、作废与删除结果（JSON）</td></tr>
+  <tr><td class="mono">reports\LIS系统自动化测试完整报告_20261110.html</td><td>本报告（可用浏览器打印为 PDF）</td></tr>
+</table>
+
+<p class="small" style="margin-top:26px;border-top:1px solid var(--line);padding-top:12px">本报告由自动化测试脚本执行结果自动汇总生成，数据来源于实际接口返回与数据库落库校验。</p>
+</div></body></html>

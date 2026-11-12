@@ -1,0 +1,54 @@
+# ============================================================
+# 试剂管理系统 - 运行配置
+# 数据库已由用户自行安装，这里只填连接参数。
+# 修改后重启服务生效：bash bin/stop.sh ; bash bin/start.sh
+# ============================================================
+server:
+  port: 8092
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  application:
+    name: lis-reagent
+  datasource:
+    # 格式：jdbc:postgresql://主机:端口/库名?characterEncoding=utf8
+    url: jdbc:postgresql://127.0.0.1:5432/lis_reagent?characterEncoding=utf8
+    username: lis_reagent
+    password: lis_reagent_2026
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+# 试剂业务配置
+reagent:
+  expiry:
+    near-expiry-days: 30      # 近效期预警天数
+    long-term-expiry-days: 90 # 长期效期预警天数
+
+logging:
+  level:
+    root: info
+    com.lis.reagent: info
+  file:
+    name: ${LOG_PATH:./logs}/lis-reagent.log

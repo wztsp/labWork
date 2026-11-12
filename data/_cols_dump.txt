@@ -1,0 +1,1057 @@
+﻿lis_antibiotic|id|bigint||nextval('lis_antibiotic_id_seq'::regclass)|NO
+lis_antibiotic|antibiotic_code|character varying|32||NO
+lis_antibiotic|antibiotic_name|character varying|100||NO
+lis_antibiotic|category|character varying|50||YES
+lis_antibiotic|unit|character varying|20||YES
+lis_antibiotic|status|smallint||1|YES
+lis_antibiotic|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_antibiotic_breakpoint|id|bigint||nextval('lis_antibiotic_breakpoint_id_seq'::regclass)|NO
+lis_antibiotic_breakpoint|antibiotic_id|bigint|||YES
+lis_antibiotic_breakpoint|bacteria_id|bigint|||YES
+lis_antibiotic_breakpoint|method|character varying|20||YES
+lis_antibiotic_breakpoint|standard|character varying|20||YES
+lis_antibiotic_breakpoint|standard_version|character varying|30||YES
+lis_antibiotic_breakpoint|s_breakpoint|character varying|30||YES
+lis_antibiotic_breakpoint|r_breakpoint|character varying|30||YES
+lis_antibiotic_breakpoint|i_breakpoint|character varying|30||YES
+lis_antibiotic_breakpoint|s_dd|character varying|30||YES
+lis_antibiotic_breakpoint|r_dd|character varying|30||YES
+lis_antibiotic_breakpoint|status|smallint||1|YES
+lis_antibiotic_breakpoint|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_antibiotic_sensitivity|id|bigint||nextval('lis_antibiotic_sensitivity_id_seq'::regclass)|NO
+lis_antibiotic_sensitivity|micro_report_id|bigint|||NO
+lis_antibiotic_sensitivity|organism_id|bigint|||YES
+lis_antibiotic_sensitivity|antibiotic_name|character varying|100||YES
+lis_antibiotic_sensitivity|antibiotic_code|character varying|50||YES
+lis_antibiotic_sensitivity|mic_value|character varying|30||YES
+lis_antibiotic_sensitivity|result|character varying|2||YES
+lis_antibiotic_sensitivity|breakpoint|character varying|30||YES
+lis_antibiotic_sensitivity|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_bacteria|id|bigint||nextval('lis_bacteria_id_seq'::regclass)|NO
+lis_bacteria|bacteria_code|character varying|32||NO
+lis_bacteria|bacteria_name|character varying|100||NO
+lis_bacteria|bacteria_name_latin|character varying|150||YES
+lis_bacteria|gram_type|character varying|10||YES
+lis_bacteria|bacteria_category|character varying|50||YES
+lis_bacteria|morphology|character varying|30||YES
+lis_bacteria|is_common|smallint||0|YES
+lis_bacteria|status|smallint||1|YES
+lis_bacteria|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_barcode_print_log|id|bigint||nextval('lis_barcode_print_log_id_seq'::regclass)|NO
+lis_barcode_print_log|sample_id|bigint|||NO
+lis_barcode_print_log|sample_barcode|character varying|64||YES
+lis_barcode_print_log|print_type|character varying|20|'REPRINT'::character varying|YES
+lis_barcode_print_log|copies|smallint||1|YES
+lis_barcode_print_log|printer_name|character varying|64||YES
+lis_barcode_print_log|reason|character varying|200||YES
+lis_barcode_print_log|operator_id|bigint|||YES
+lis_barcode_print_log|operator_name|character varying|64||YES
+lis_barcode_print_log|print_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_barcode_rule|id|bigint|||NO
+lis_barcode_rule|rule_code|character varying|50||NO
+lis_barcode_rule|rule_name|character varying|100||NO
+lis_barcode_rule|prefix|character varying|10|''::character varying|YES
+lis_barcode_rule|date_pattern|character varying|20|'none'::character varying|YES
+lis_barcode_rule|seq_length|integer||6|YES
+lis_barcode_rule|seq_strategy|character varying|20|'daily'::character varying|YES
+lis_barcode_rule|enabled|integer||1|YES
+lis_barcode_rule|remark|character varying|200||YES
+lis_barcode_rule|create_time|timestamp without time zone|||YES
+lis_barcode_rule|update_time|timestamp without time zone|||YES
+lis_blood_culture|id|bigint||nextval('lis_blood_culture_id_seq'::regclass)|NO
+lis_blood_culture|sample_id|bigint|||NO
+lis_blood_culture|bottle_no|character varying|32||NO
+lis_blood_culture|medium_type|character varying|50||YES
+lis_blood_culture|instrument_id|bigint|||YES
+lis_blood_culture|inoculation_time|timestamp without time zone|||YES
+lis_blood_culture|alarm_time|timestamp without time zone|||YES
+lis_blood_culture|final_result|character varying|20||YES
+lis_blood_culture|final_time|timestamp without time zone|||YES
+lis_blood_culture|ttp_hours|numeric|||YES
+lis_blood_culture|operator_id|bigint|||YES
+lis_blood_culture|status|smallint||0|YES
+lis_blood_culture|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_blood_culture_subculture|id|bigint||nextval('lis_blood_culture_subculture_id_seq'::regclass)|NO
+lis_blood_culture_subculture|blood_culture_id|bigint|||NO
+lis_blood_culture_subculture|subculture_time|timestamp without time zone|||YES
+lis_blood_culture_subculture|medium|character varying|50||YES
+lis_blood_culture_subculture|incubator_no|character varying|32||YES
+lis_blood_culture_subculture|operator_id|bigint|||YES
+lis_blood_culture_subculture|result|character varying|255||YES
+lis_blood_culture_subculture|remark|text|||YES
+lis_collection_method|id|bigint|||NO
+lis_collection_method|method_code|character varying|32||NO
+lis_collection_method|method_name|character varying|64||NO
+lis_collection_method|description|character varying|255||YES
+lis_collection_method|status|smallint||1|YES
+lis_collection_method|sort_order|integer||0|YES
+lis_collection_method|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_eqa_record|id|bigint||nextval('lis_eqa_record_id_seq'::regclass)|NO
+lis_eqa_record|eqa_batch_no|character varying|64||YES
+lis_eqa_record|test_item_id|bigint|||YES
+lis_eqa_record|instrument_id|bigint|||YES
+lis_eqa_record|target_value|numeric|||YES
+lis_eqa_record|measure_value|numeric|||YES
+lis_eqa_record|sd|numeric|||YES
+lis_eqa_record|cv|numeric|||YES
+lis_eqa_record|score|numeric|||YES
+lis_eqa_record|grade|character varying|2||YES
+lis_eqa_record|passed|smallint||0|YES
+lis_eqa_record|measure_time|timestamp without time zone|||YES
+lis_eqa_record|result_time|timestamp without time zone|||YES
+lis_eqa_record|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_eqa_record|test_item_name|character varying|100||YES
+lis_eqa_record|instrument_name|character varying|100||YES
+lis_group_instrument|group_id|bigint|||NO
+lis_group_instrument|instrument_id|bigint|||NO
+lis_instrument|id|bigint||nextval('lis_instrument_id_seq'::regclass)|NO
+lis_instrument|instrument_code|character varying|32||NO
+lis_instrument|instrument_name|character varying|100||NO
+lis_instrument|brand|character varying|50||YES
+lis_instrument|model|character varying|50||YES
+lis_instrument|protocol_type|character varying|20||YES
+lis_instrument|connect_type|character varying|20||YES
+lis_instrument|serial_port|character varying|20||YES
+lis_instrument|baud_rate|integer|||YES
+lis_instrument|ip_address|character varying|50||YES
+lis_instrument|port|integer|||YES
+lis_instrument|status|smallint||1|YES
+lis_instrument|last_online_time|timestamp without time zone|||YES
+lis_instrument|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_instrument|serial_no|character varying|64||YES
+lis_instrument|install_date|date|||YES
+lis_instrument|warranty_expiry|date|||YES
+lis_instrument|department|character varying|50||YES
+lis_instrument|work_status|smallint||1|YES
+lis_instrument|channel_type|character varying|20||YES
+lis_instrument_calibration|id|bigint|||NO
+lis_instrument_calibration|instrument_id|bigint|||NO
+lis_instrument_calibration|calibration_no|character varying|64||YES
+lis_instrument_calibration|calibration_type|character varying|32||YES
+lis_instrument_calibration|calibration_time|timestamp without time zone|||YES
+lis_instrument_calibration|next_calibration_time|timestamp without time zone|||YES
+lis_instrument_calibration|operator_id|bigint|||YES
+lis_instrument_calibration|operator_name|character varying|64||YES
+lis_instrument_calibration|result|character varying|16||YES
+lis_instrument_calibration|remark|character varying|255||YES
+lis_instrument_calibration|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_instrument_calibration|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_instrument_comm_log|id|bigint||nextval('lis_instrument_comm_log_id_seq'::regclass)|NO
+lis_instrument_comm_log|instrument_id|bigint|||NO
+lis_instrument_comm_log|direction|character varying|10||YES
+lis_instrument_comm_log|raw_message|text|||YES
+lis_instrument_comm_log|protocol_type|character varying|20||YES
+lis_instrument_comm_log|parse_status|character varying|10||YES
+lis_instrument_comm_log|parse_result|text|||YES
+lis_instrument_comm_log|message_time|timestamp without time zone|||YES
+lis_instrument_comm_log|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_instrument_item_map|id|bigint||nextval('lis_instrument_item_map_id_seq'::regclass)|NO
+lis_instrument_item_map|instrument_id|bigint|||NO
+lis_instrument_item_map|test_item_id|bigint|||NO
+lis_instrument_item_map|instrument_item_code|character varying|32||YES
+lis_instrument_item_map|instrument_item_name|character varying|100||YES
+lis_instrument_item_map|specimen_type|character varying|20||YES
+lis_instrument_item_map|operator_id|bigint|||YES
+lis_instrument_item_map|operator_name|character varying|50||YES
+lis_instrument_item_map|channel_code|character varying|32||YES
+lis_instrument_maintenance_log|id|bigint||nextval('lis_instrument_maintenance_log_id_seq'::regclass)|NO
+lis_instrument_maintenance_log|instrument_id|bigint|||NO
+lis_instrument_maintenance_log|template_id|bigint|||YES
+lis_instrument_maintenance_log|maintenance_date|date|||NO
+lis_instrument_maintenance_log|maintenance_type|character varying|20||YES
+lis_instrument_maintenance_log|operator_id|bigint|||YES
+lis_instrument_maintenance_log|operator_name|character varying|50||YES
+lis_instrument_maintenance_log|reviewer_id|bigint|||YES
+lis_instrument_maintenance_log|reviewer_name|character varying|50||YES
+lis_instrument_maintenance_log|result|smallint||0|YES
+lis_instrument_maintenance_log|remark|text|||YES
+lis_instrument_maintenance_log|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_instrument_maintenance_log_item|id|bigint||nextval('lis_instrument_maintenance_log_item_id_seq'::regclass)|NO
+lis_instrument_maintenance_log_item|log_id|bigint|||NO
+lis_instrument_maintenance_log_item|item_code|character varying|32||YES
+lis_instrument_maintenance_log_item|item_name|character varying|100||YES
+lis_instrument_maintenance_log_item|expected_value|character varying|100||YES
+lis_instrument_maintenance_log_item|actual_value|character varying|100||YES
+lis_instrument_maintenance_log_item|result|smallint||0|YES
+lis_instrument_maintenance_log_item|abnormal_reason|text|||YES
+lis_instrument_maintenance_plan|id|bigint||nextval('lis_instrument_maintenance_plan_id_seq'::regclass)|NO
+lis_instrument_maintenance_plan|instrument_id|bigint|||NO
+lis_instrument_maintenance_plan|plan_type|character varying|20||YES
+lis_instrument_maintenance_plan|cycle_type|character varying|20||YES
+lis_instrument_maintenance_plan|first_date|date|||YES
+lis_instrument_maintenance_plan|next_date|date|||YES
+lis_instrument_maintenance_plan|status|smallint||1|YES
+lis_instrument_maintenance_plan|remark|text|||YES
+lis_instrument_maintenance_plan|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_instrument_maintenance_task|id|bigint||nextval('lis_instrument_maintenance_task_id_seq'::regclass)|NO
+lis_instrument_maintenance_task|plan_id|bigint|||NO
+lis_instrument_maintenance_task|instrument_id|bigint|||NO
+lis_instrument_maintenance_task|plan_type|character varying|20||YES
+lis_instrument_maintenance_task|scheduled_date|date|||YES
+lis_instrument_maintenance_task|finish_date|date|||YES
+lis_instrument_maintenance_task|operator_id|bigint|||YES
+lis_instrument_maintenance_task|status|smallint||0|YES
+lis_instrument_maintenance_task|cost|numeric|||YES
+lis_instrument_maintenance_task|content|text|||YES
+lis_instrument_repair|id|bigint|||NO
+lis_instrument_repair|instrument_id|bigint|||NO
+lis_instrument_repair|repair_no|character varying|64||YES
+lis_instrument_repair|fault_time|timestamp without time zone|||YES
+lis_instrument_repair|fault_desc|character varying|500||YES
+lis_instrument_repair|repair_time|timestamp without time zone|||YES
+lis_instrument_repair|finish_time|timestamp without time zone|||YES
+lis_instrument_repair|repairman|character varying|64||YES
+lis_instrument_repair|downtime_hours|numeric|||YES
+lis_instrument_repair|result|character varying|16||YES
+lis_instrument_repair|parts_replaced|character varying|255||YES
+lis_instrument_repair|cost|numeric|||YES
+lis_instrument_repair|remark|character varying|255||YES
+lis_instrument_repair|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_instrument_repair|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_instrument_specimen_map|id|bigint|||NO
+lis_instrument_specimen_map|instrument_id|bigint|||NO
+lis_instrument_specimen_map|specimen_type_id|bigint|||YES
+lis_instrument_specimen_map|specimen_type_name|character varying|64||YES
+lis_instrument_specimen_map|specimen_type_code|character varying|32||YES
+lis_lab_document|id|bigint||nextval('lis_lab_document_id_seq'::regclass)|NO
+lis_lab_document|doc_code|character varying|32||NO
+lis_lab_document|doc_name|character varying|100||NO
+lis_lab_document|doc_type|character varying|50||YES
+lis_lab_document|version|character varying|20|'1.0'::character varying|YES
+lis_lab_document|group_id|bigint|||YES
+lis_lab_document|file_url|character varying|255||YES
+lis_lab_document|uploader_id|bigint|||YES
+lis_lab_document|upload_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_lab_document|status|smallint||1|YES
+lis_lab_group|id|bigint||nextval('lis_lab_group_id_seq'::regclass)|NO
+lis_lab_group|group_code|character varying|32||NO
+lis_lab_group|group_name|character varying|100||NO
+lis_lab_group|parent_id|bigint||0|YES
+lis_lab_group|leader_id|bigint|||YES
+lis_lab_group|leader_name|character varying|50||YES
+lis_lab_group|location|character varying|100||YES
+lis_lab_group|sort_order|integer||0|YES
+lis_lab_group|status|smallint||1|YES
+lis_lab_group|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_lab_order|id|bigint||nextval('lis_lab_order_id_seq'::regclass)|NO
+lis_lab_order|order_no|character varying|32||NO
+lis_lab_order|visit_id|bigint|||NO
+lis_lab_order|patient_id|bigint|||NO
+lis_lab_order|order_type|smallint|||YES
+lis_lab_order|status|smallint||0|YES
+lis_lab_order|apply_doctor|character varying|50||YES
+lis_lab_order|apply_dept|character varying|50||YES
+lis_lab_order|clinical_diag|text|||YES
+lis_lab_order|apply_time|timestamp without time zone|||YES
+lis_lab_order|receive_time|timestamp without time zone|||YES
+lis_lab_order|cancel_time|timestamp without time zone|||YES
+lis_lab_order|his_sync_status|smallint||0|YES
+lis_lab_order|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_lab_order|collector_id|bigint|||YES
+lis_lab_order|collect_time|timestamp without time zone|||YES
+lis_lab_order|patient_condition|character varying|100||YES
+lis_lab_order|collection_method_id|bigint|||YES
+lis_lab_order|collection_method_name|character varying|64||YES
+lis_maintenance_template|id|bigint||nextval('lis_maintenance_template_id_seq'::regclass)|NO
+lis_maintenance_template|template_code|character varying|32||NO
+lis_maintenance_template|template_name|character varying|100||NO
+lis_maintenance_template|instrument_type|character varying|50||YES
+lis_maintenance_template|cycle_type|character varying|20||YES
+lis_maintenance_template|status|smallint||1|YES
+lis_maintenance_template|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_maintenance_template_item|id|bigint||nextval('lis_maintenance_template_item_id_seq'::regclass)|NO
+lis_maintenance_template_item|template_id|bigint|||NO
+lis_maintenance_template_item|item_code|character varying|32||NO
+lis_maintenance_template_item|item_name|character varying|100||NO
+lis_maintenance_template_item|item_type|smallint|||YES
+lis_maintenance_template_item|expected_value|character varying|100||YES
+lis_maintenance_template_item|sort_order|integer||0|YES
+lis_micro_organism|id|bigint||nextval('lis_micro_organism_id_seq'::regclass)|NO
+lis_micro_organism|micro_report_id|bigint|||NO
+lis_micro_organism|organism_name|character varying|100||YES
+lis_micro_organism|organism_code|character varying|50||YES
+lis_micro_organism|quantity|character varying|50||YES
+lis_micro_organism|culture_method|character varying|50||YES
+lis_micro_organism|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_micro_report|id|bigint||nextval('lis_micro_report_id_seq'::regclass)|NO
+lis_micro_report|report_no|character varying|32||NO
+lis_micro_report|sample_id|bigint|||NO
+lis_micro_report|patient_id|bigint|||YES
+lis_micro_report|patient_name|character varying|50||YES
+lis_micro_report|specimen_type|character varying|50||YES
+lis_micro_report|culture_site|character varying|100||YES
+lis_micro_report|report_status|smallint||1|YES
+lis_micro_report|auditor_id|bigint|||YES
+lis_micro_report|audit_time|timestamp without time zone|||YES
+lis_micro_report|publish_time|timestamp without time zone|||YES
+lis_micro_report|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_micro_report|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_micro_report|gram_stain_result|character varying|200||YES
+lis_micro_report|gram_stain_remark|character varying|500||YES
+lis_micro_report|gram_stain_time|timestamp without time zone|||YES
+lis_micro_report|gram_stain_operator|character varying|50||YES
+lis_micro_report|is_negative|smallint||0|YES
+lis_micro_report|negative_remark|character varying|500||YES
+lis_micro_report|negative_operator|character varying|50||YES
+lis_micro_report|negative_time|timestamp without time zone|||YES
+lis_micro_report|bottle_no|character varying|50||YES
+lis_micro_report|bottle_type|character varying|30||YES
+lis_micro_report|volume|character varying|20||YES
+lis_micro_report|inoculate_time|timestamp without time zone|||YES
+lis_micro_report|alarm_time|timestamp without time zone|||YES
+lis_micro_report|ttp_hours|numeric|||YES
+lis_micro_report|blood_culture_id|bigint|||YES
+lis_micro_report|blood_culture_result|character varying|20||YES
+lis_micro_report_print_config|id|bigint||nextval('lis_micro_report_print_config_id_seq'::regclass)|NO
+lis_micro_report_print_config|config_name|character varying|100||YES
+lis_micro_report_print_config|show_mic|smallint||1|YES
+lis_micro_report_print_config|show_kb|smallint||1|YES
+lis_micro_report_print_config|show_breakpoint|smallint||0|YES
+lis_micro_report_print_config|show_method|smallint||0|YES
+lis_micro_report_print_config|hidden_antibiotics|text|||YES
+lis_micro_report_print_config|order_by_categories|text|||YES
+lis_micro_report_print_config|breakpoint_version|character varying|30||YES
+lis_micro_report_print_config|paper_size|character varying|10|'A4'::character varying|YES
+lis_micro_report_print_config|is_default|smallint||0|YES
+lis_micro_report_print_config|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_micro_report_subculture|id|bigint|||NO
+lis_micro_report_subculture|micro_report_id|bigint|||YES
+lis_micro_report_subculture|subculture_time|timestamp without time zone|||YES
+lis_micro_report_subculture|medium|character varying|100||YES
+lis_micro_report_subculture|incubator_no|character varying|50||YES
+lis_micro_report_subculture|result|character varying|200||YES
+lis_micro_report_subculture|operator|character varying|50||YES
+lis_micro_report_subculture|remark|character varying|500||YES
+lis_micro_report_subculture|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_order_item|id|bigint||nextval('lis_order_item_id_seq'::regclass)|NO
+lis_order_item|order_id|bigint|||NO
+lis_order_item|test_item_id|bigint|||NO
+lis_order_item|test_item_code|character varying|32||YES
+lis_order_item|test_item_name|character varying|100||YES
+lis_order_item|status|smallint||0|YES
+lis_order_item|fee|numeric|||YES
+lis_order_item|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_patient|id|bigint||nextval('lis_patient_id_seq'::regclass)|NO
+lis_patient|patient_no|character varying|32||NO
+lis_patient|id_card_enc|character varying|255||YES
+lis_patient|id_card_hash|character|64||YES
+lis_patient|name|character varying|50||NO
+lis_patient|gender|smallint|||YES
+lis_patient|birth_date|date|||YES
+lis_patient|age|integer|||YES
+lis_patient|phone_enc|character varying|255||YES
+lis_patient|phone_hash|character|64||YES
+lis_patient|address|character varying|255||YES
+lis_patient|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_patient|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_qc_alert|id|bigint||nextval('lis_qc_alert_id_seq'::regclass)|NO
+lis_qc_alert|alert_type|character varying|30||YES
+lis_qc_alert|lot_id|bigint|||YES
+lis_qc_alert|test_item_id|bigint|||YES
+lis_qc_alert|instrument_id|bigint|||YES
+lis_qc_alert|last_measure_value|numeric|||YES
+lis_qc_alert|last_z_score|numeric|||YES
+lis_qc_alert|message|character varying|255||YES
+lis_qc_alert|status|character varying|20|'PENDING'::character varying|YES
+lis_qc_alert|alert_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_qc_alert|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_qc_lot|id|bigint||nextval('lis_qc_lot_id_seq'::regclass)|NO
+lis_qc_lot|lot_no|character varying|32||NO
+lis_qc_lot|test_item_id|bigint|||NO
+lis_qc_lot|instrument_id|bigint|||YES
+lis_qc_lot|target_value|numeric|||YES
+lis_qc_lot|sd|numeric|||YES
+lis_qc_lot|cv|numeric|||YES
+lis_qc_lot|level|smallint|||YES
+lis_qc_lot|start_date|date|||YES
+lis_qc_lot|end_date|date|||YES
+lis_qc_lot|status|smallint||1|YES
+lis_qc_lot|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_qc_record|id|bigint||nextval('lis_qc_record_id_seq'::regclass)|NO
+lis_qc_record|qc_lot_id|bigint|||NO
+lis_qc_record|test_item_id|bigint|||NO
+lis_qc_record|instrument_id|bigint|||YES
+lis_qc_record|measure_value|numeric|||YES
+lis_qc_record|measure_time|timestamp without time zone|||YES
+lis_qc_record|operator_id|bigint|||YES
+lis_qc_record|z_score|numeric|||YES
+lis_qc_record|rule_violation|character varying|50||YES
+lis_qc_record|qc_result|character varying|20||YES
+lis_qc_record|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_qc_rule|id|bigint||nextval('lis_qc_rule_id_seq'::regclass)|NO
+lis_qc_rule|rule_code|character varying|20||NO
+lis_qc_rule|rule_name|character varying|50||NO
+lis_qc_rule|rule_type|character varying|20|'REJECT'::character varying|YES
+lis_qc_rule|enabled|smallint||1|YES
+lis_qc_rule|description|character varying|200||YES
+lis_qc_rule|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent|id|bigint||nextval('lis_reagent_id_seq'::regclass)|NO
+lis_reagent|reagent_code|character varying|32||NO
+lis_reagent|reagent_name|character varying|100||NO
+lis_reagent|specification|character varying|50||YES
+lis_reagent|manufacturer|character varying|100||YES
+lis_reagent|cas_no|character varying|50||YES
+lis_reagent|storage_cond|character varying|50||YES
+lis_reagent|unit|character varying|20||YES
+lis_reagent|instrument_id|bigint|||YES
+lis_reagent|test_item_id|bigint|||YES
+lis_reagent|safety_stock|numeric|||YES
+lis_reagent|status|smallint||1|YES
+lis_reagent|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent|category_id|bigint|||YES
+lis_reagent|manufacturer_id|bigint|||YES
+lis_reagent|reg_cert_no|character varying|64||YES
+lis_reagent|expected_use|text|||YES
+lis_reagent|price_purchase|numeric|||YES
+lis_reagent|price_selling|numeric|||YES
+lis_reagent|usage_per_test|numeric|||YES
+lis_reagent|opened_expiry_days|integer|||YES
+lis_reagent|min_stock|numeric|||YES
+lis_reagent|max_stock|numeric|||YES
+lis_reagent|supplier|character varying|100||YES
+lis_reagent|supplier_id|bigint|||YES
+lis_reagent|hazard_flag|smallint||0|YES
+lis_reagent|hazard_class|character varying|50||YES
+lis_reagent|msds_summary|text|||YES
+lis_reagent|msds_url|character varying|500||YES
+lis_reagent|storage_temp_min|numeric|||YES
+lis_reagent|storage_temp_max|numeric|||YES
+lis_reagent_approval_node|id|bigint||nextval('lis_reagent_approval_node_id_seq'::regclass)|NO
+lis_reagent_approval_node|biz_type|character varying|30||NO
+lis_reagent_approval_node|node_level|smallint|||NO
+lis_reagent_approval_node|node_name|character varying|50||NO
+lis_reagent_approval_node|trigger_cond|character varying|20|'ALWAYS'::character varying|NO
+lis_reagent_approval_node|approver_role_code|character varying|50||YES
+lis_reagent_approval_node|approver_dept_scope|smallint||1|YES
+lis_reagent_approval_node|status|smallint||1|YES
+lis_reagent_approval_node|remark|text|||YES
+lis_reagent_approval_node|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_approval_node|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_budget|id|bigint||nextval('lis_reagent_budget_id_seq'::regclass)|NO
+lis_reagent_budget|budget_no|character varying|32||YES
+lis_reagent_budget|budget_year|integer|||NO
+lis_reagent_budget|dept_id|bigint|||NO
+lis_reagent_budget|dept_name|character varying|100||YES
+lis_reagent_budget|category_id|bigint|||YES
+lis_reagent_budget|category_name|character varying|100||YES
+lis_reagent_budget|total_amount|numeric||0|NO
+lis_reagent_budget|frozen_amount|numeric||0|NO
+lis_reagent_budget|used_amount|numeric||0|NO
+lis_reagent_budget|warn_ratio|numeric||0.8000|NO
+lis_reagent_budget|version|integer||0|NO
+lis_reagent_budget|status|smallint||1|YES
+lis_reagent_budget|remark|text|||YES
+lis_reagent_budget|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_budget|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_budget_record|id|bigint||nextval('lis_reagent_budget_record_id_seq'::regclass)|NO
+lis_reagent_budget_record|budget_id|bigint|||NO
+lis_reagent_budget_record|change_type|smallint|||NO
+lis_reagent_budget_record|amount|numeric|||NO
+lis_reagent_budget_record|before_frozen|numeric|||YES
+lis_reagent_budget_record|after_frozen|numeric|||YES
+lis_reagent_budget_record|before_used|numeric|||YES
+lis_reagent_budget_record|after_used|numeric|||YES
+lis_reagent_budget_record|source_type|character varying|20||YES
+lis_reagent_budget_record|source_id|bigint|||YES
+lis_reagent_budget_record|source_no|character varying|32||YES
+lis_reagent_budget_record|operator_id|bigint|||YES
+lis_reagent_budget_record|operator_name|character varying|50||YES
+lis_reagent_budget_record|remark|text|||YES
+lis_reagent_budget_record|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_category|id|bigint||nextval('lis_reagent_category_id_seq'::regclass)|NO
+lis_reagent_category|category_code|character varying|32||NO
+lis_reagent_category|category_name|character varying|100||NO
+lis_reagent_category|parent_id|bigint||0|NO
+lis_reagent_category|path|character varying|255||YES
+lis_reagent_category|level_no|smallint||1|YES
+lis_reagent_category|hazard_category|smallint||0|YES
+lis_reagent_category|sort_order|integer||0|YES
+lis_reagent_category|status|smallint||1|YES
+lis_reagent_category|remark|text|||YES
+lis_reagent_category|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_category|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_consumption|id|bigint||nextval('lis_reagent_consumption_id_seq'::regclass)|NO
+lis_reagent_consumption|consumption_no|character varying|32||NO
+lis_reagent_consumption|reagent_id|bigint|||NO
+lis_reagent_consumption|stock_id|bigint|||YES
+lis_reagent_consumption|lot_no|character varying|32||YES
+lis_reagent_consumption|quantity|numeric|||NO
+lis_reagent_consumption|unit|character varying|20||YES
+lis_reagent_consumption|consume_type|smallint||1|YES
+lis_reagent_consumption|related_no|character varying|32||YES
+lis_reagent_consumption|operator_id|bigint|||YES
+lis_reagent_consumption|operator_name|character varying|50||YES
+lis_reagent_consumption|remark|text|||YES
+lis_reagent_consumption|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_inbound|id|bigint||nextval('lis_reagent_inbound_id_seq'::regclass)|NO
+lis_reagent_inbound|inbound_no|character varying|32||NO
+lis_reagent_inbound|supplier|character varying|100||YES
+lis_reagent_inbound|total_amount|numeric||0|YES
+lis_reagent_inbound|verify_status|smallint||0|YES
+lis_reagent_inbound|verifier_id|bigint|||YES
+lis_reagent_inbound|verifier_name|character varying|50||YES
+lis_reagent_inbound|verify_time|timestamp without time zone|||YES
+lis_reagent_inbound|remark|text|||YES
+lis_reagent_inbound|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_inbound|order_id|bigint|||YES
+lis_reagent_inbound|order_no|character varying|32||YES
+lis_reagent_inbound|supplier_id|bigint|||YES
+lis_reagent_inbound_item|id|bigint||nextval('lis_reagent_inbound_item_id_seq'::regclass)|NO
+lis_reagent_inbound_item|inbound_id|bigint|||NO
+lis_reagent_inbound_item|reagent_id|bigint|||NO
+lis_reagent_inbound_item|lot_no|character varying|32||NO
+lis_reagent_inbound_item|barcode|character varying|64||YES
+lis_reagent_inbound_item|quantity|numeric|||NO
+lis_reagent_inbound_item|unit|character varying|20||YES
+lis_reagent_inbound_item|purchase_price|numeric|||YES
+lis_reagent_inbound_item|amount|numeric|||YES
+lis_reagent_inbound_item|expiry_date|date|||NO
+lis_reagent_inbound_item|location|character varying|100||YES
+lis_reagent_inbound_item|remark|text|||YES
+lis_reagent_inbound_item|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_inbound_item|order_item_id|bigint|||YES
+lis_reagent_inbound_item|warehouse_id|bigint||0|NO
+lis_reagent_opening|id|bigint||nextval('lis_reagent_opening_id_seq'::regclass)|NO
+lis_reagent_opening|reagent_id|bigint|||NO
+lis_reagent_opening|stock_id|bigint|||YES
+lis_reagent_opening|lot_no|character varying|32||YES
+lis_reagent_opening|open_time|timestamp without time zone|||NO
+lis_reagent_opening|opened_expiry|date|||YES
+lis_reagent_opening|status|smallint||1|YES
+lis_reagent_opening|operator_id|bigint|||YES
+lis_reagent_opening|operator_name|character varying|50||YES
+lis_reagent_opening|remark|text|||YES
+lis_reagent_opening|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_purchase_apply|id|bigint||nextval('lis_reagent_purchase_apply_id_seq'::regclass)|NO
+lis_reagent_purchase_apply|apply_no|character varying|32||NO
+lis_reagent_purchase_apply|apply_dept_id|bigint|||NO
+lis_reagent_purchase_apply|apply_dept_name|character varying|100||YES
+lis_reagent_purchase_apply|apply_user_id|bigint|||YES
+lis_reagent_purchase_apply|apply_user_name|character varying|50||YES
+lis_reagent_purchase_apply|budget_id|bigint|||YES
+lis_reagent_purchase_apply|budget_year|integer|||YES
+lis_reagent_purchase_apply|category_id|bigint|||YES
+lis_reagent_purchase_apply|total_amount|numeric||0|NO
+lis_reagent_purchase_apply|status|smallint||0|YES
+lis_reagent_purchase_apply|current_node_level|smallint||0|YES
+lis_reagent_purchase_apply|total_node_count|smallint||0|YES
+lis_reagent_purchase_apply|over_budget_flag|smallint||0|YES
+lis_reagent_purchase_apply|excess_amount|numeric|||YES
+lis_reagent_purchase_apply|urgent_flag|smallint||0|YES
+lis_reagent_purchase_apply|expect_date|date|||YES
+lis_reagent_purchase_apply|submit_time|timestamp without time zone|||YES
+lis_reagent_purchase_apply|finish_time|timestamp without time zone|||YES
+lis_reagent_purchase_apply|remark|text|||YES
+lis_reagent_purchase_apply|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_purchase_apply|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_purchase_apply_item|id|bigint||nextval('lis_reagent_purchase_apply_item_id_seq'::regclass)|NO
+lis_reagent_purchase_apply_item|apply_id|bigint|||NO
+lis_reagent_purchase_apply_item|reagent_id|bigint|||NO
+lis_reagent_purchase_apply_item|reagent_code|character varying|32||YES
+lis_reagent_purchase_apply_item|reagent_name|character varying|100||YES
+lis_reagent_purchase_apply_item|specification|character varying|50||YES
+lis_reagent_purchase_apply_item|category_id|bigint|||YES
+lis_reagent_purchase_apply_item|quantity|numeric|||NO
+lis_reagent_purchase_apply_item|unit|character varying|20||YES
+lis_reagent_purchase_apply_item|estimated_price|numeric|||YES
+lis_reagent_purchase_apply_item|amount|numeric|||YES
+lis_reagent_purchase_apply_item|remark|text|||YES
+lis_reagent_purchase_apply_item|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_purchase_approval|id|bigint||nextval('lis_reagent_purchase_approval_id_seq'::regclass)|NO
+lis_reagent_purchase_approval|apply_id|bigint|||NO
+lis_reagent_purchase_approval|apply_no|character varying|32||YES
+lis_reagent_purchase_approval|node_level|smallint|||NO
+lis_reagent_purchase_approval|node_name|character varying|50||YES
+lis_reagent_purchase_approval|action|smallint|||NO
+lis_reagent_purchase_approval|approver_id|bigint|||YES
+lis_reagent_purchase_approval|approver_name|character varying|50||YES
+lis_reagent_purchase_approval|opinion|text|||YES
+lis_reagent_purchase_approval|approve_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_purchase_approval|round_no|smallint||1|YES
+lis_reagent_purchase_approval|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_purchase_order|id|bigint||nextval('lis_reagent_purchase_order_id_seq'::regclass)|NO
+lis_reagent_purchase_order|order_no|character varying|32||NO
+lis_reagent_purchase_order|apply_id|bigint|||YES
+lis_reagent_purchase_order|apply_no|character varying|32||YES
+lis_reagent_purchase_order|supplier_id|bigint|||NO
+lis_reagent_purchase_order|supplier_name|character varying|200||YES
+lis_reagent_purchase_order|dept_id|bigint|||YES
+lis_reagent_purchase_order|dept_name|character varying|100||YES
+lis_reagent_purchase_order|total_amount|numeric||0|NO
+lis_reagent_purchase_order|expect_date|date|||YES
+lis_reagent_purchase_order|order_date|date|||YES
+lis_reagent_purchase_order|status|smallint||0|YES
+lis_reagent_purchase_order|operator_id|bigint|||YES
+lis_reagent_purchase_order|operator_name|character varying|50||YES
+lis_reagent_purchase_order|remark|text|||YES
+lis_reagent_purchase_order|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_purchase_order|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_purchase_order_item|id|bigint||nextval('lis_reagent_purchase_order_item_id_seq'::regclass)|NO
+lis_reagent_purchase_order_item|order_id|bigint|||NO
+lis_reagent_purchase_order_item|apply_item_id|bigint|||YES
+lis_reagent_purchase_order_item|reagent_id|bigint|||NO
+lis_reagent_purchase_order_item|reagent_code|character varying|32||YES
+lis_reagent_purchase_order_item|reagent_name|character varying|100||YES
+lis_reagent_purchase_order_item|specification|character varying|50||YES
+lis_reagent_purchase_order_item|quantity|numeric|||NO
+lis_reagent_purchase_order_item|arrived_qty|numeric||0|NO
+lis_reagent_purchase_order_item|unit|character varying|20||YES
+lis_reagent_purchase_order_item|unit_price|numeric|||YES
+lis_reagent_purchase_order_item|amount|numeric|||YES
+lis_reagent_purchase_order_item|remark|text|||YES
+lis_reagent_purchase_order_item|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_requisition|id|bigint||nextval('lis_reagent_requisition_id_seq'::regclass)|NO
+lis_reagent_requisition|req_no|character varying|32||NO
+lis_reagent_requisition|req_type|smallint|||NO
+lis_reagent_requisition|dept_id|bigint|||YES
+lis_reagent_requisition|dept_name|character varying|100||YES
+lis_reagent_requisition|apply_user_id|bigint|||YES
+lis_reagent_requisition|apply_user_name|character varying|50||YES
+lis_reagent_requisition|status|smallint||0|YES
+lis_reagent_requisition|approver_id|bigint|||YES
+lis_reagent_requisition|approver_name|character varying|50||YES
+lis_reagent_requisition|approve_time|timestamp without time zone|||YES
+lis_reagent_requisition|approve_opinion|text|||YES
+lis_reagent_requisition|executor_id|bigint|||YES
+lis_reagent_requisition|executor_name|character varying|50||YES
+lis_reagent_requisition|execute_time|timestamp without time zone|||YES
+lis_reagent_requisition|from_warehouse_id|bigint|||YES
+lis_reagent_requisition|to_warehouse_id|bigint|||YES
+lis_reagent_requisition|hazard_flag|smallint||0|YES
+lis_reagent_requisition|expect_return_date|date|||YES
+lis_reagent_requisition|source_req_id|bigint|||YES
+lis_reagent_requisition|reason|text|||YES
+lis_reagent_requisition|total_amount|numeric|||YES
+lis_reagent_requisition|remark|text|||YES
+lis_reagent_requisition|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_requisition|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_requisition_item|id|bigint||nextval('lis_reagent_requisition_item_id_seq'::regclass)|NO
+lis_reagent_requisition_item|req_id|bigint|||NO
+lis_reagent_requisition_item|reagent_id|bigint|||NO
+lis_reagent_requisition_item|reagent_code|character varying|32||YES
+lis_reagent_requisition_item|reagent_name|character varying|100||YES
+lis_reagent_requisition_item|stock_id|bigint|||YES
+lis_reagent_requisition_item|lot_no|character varying|32||YES
+lis_reagent_requisition_item|expiry_date|date|||YES
+lis_reagent_requisition_item|quantity|numeric|||NO
+lis_reagent_requisition_item|unit|character varying|20||YES
+lis_reagent_requisition_item|unit_price|numeric|||YES
+lis_reagent_requisition_item|amount|numeric|||YES
+lis_reagent_requisition_item|hazard_flag|smallint||0|YES
+lis_reagent_requisition_item|remark|text|||YES
+lis_reagent_requisition_item|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_scrap_disposal|id|bigint||nextval('lis_reagent_scrap_disposal_id_seq'::regclass)|NO
+lis_reagent_scrap_disposal|req_id|bigint|||NO
+lis_reagent_scrap_disposal|disposal_method|character varying|50||YES
+lis_reagent_scrap_disposal|disposal_org|character varying|200||YES
+lis_reagent_scrap_disposal|disposal_cert|character varying|100||YES
+lis_reagent_scrap_disposal|disposal_date|date|||YES
+lis_reagent_scrap_disposal|hazard_flag|smallint||0|YES
+lis_reagent_scrap_disposal|hazard_class|character varying|50||YES
+lis_reagent_scrap_disposal|safety_approver_id|bigint|||YES
+lis_reagent_scrap_disposal|safety_approver_name|character varying|50||YES
+lis_reagent_scrap_disposal|safety_approve_time|timestamp without time zone|||YES
+lis_reagent_scrap_disposal|remark|text|||YES
+lis_reagent_scrap_disposal|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_scrap_disposal|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_stock|id|bigint||nextval('lis_reagent_stock_id_seq'::regclass)|NO
+lis_reagent_stock|reagent_id|bigint|||NO
+lis_reagent_stock|lot_no|character varying|32||NO
+lis_reagent_stock|barcode|character varying|64||YES
+lis_reagent_stock|expiry_date|date|||NO
+lis_reagent_stock|quantity|numeric|||YES
+lis_reagent_stock|location|character varying|100||YES
+lis_reagent_stock|status|smallint||1|YES
+lis_reagent_stock|in_stock_time|timestamp without time zone|||YES
+lis_reagent_stock|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_stock|warehouse_id|bigint||0|NO
+lis_reagent_stock_check|id|bigint||nextval('lis_reagent_stock_check_id_seq'::regclass)|NO
+lis_reagent_stock_check|check_no|character varying|32||NO
+lis_reagent_stock_check|warehouse|character varying|100||YES
+lis_reagent_stock_check|check_date|date|||NO
+lis_reagent_stock_check|status|smallint||0|YES
+lis_reagent_stock_check|operator_id|bigint|||YES
+lis_reagent_stock_check|operator_name|character varying|50||YES
+lis_reagent_stock_check|remark|text|||YES
+lis_reagent_stock_check|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_stock_check|warehouse_id|bigint|||YES
+lis_reagent_stock_check_item|id|bigint||nextval('lis_reagent_stock_check_item_id_seq'::regclass)|NO
+lis_reagent_stock_check_item|check_id|bigint|||NO
+lis_reagent_stock_check_item|stock_id|bigint|||YES
+lis_reagent_stock_check_item|reagent_id|bigint|||NO
+lis_reagent_stock_check_item|lot_no|character varying|32||YES
+lis_reagent_stock_check_item|book_qty|numeric|||NO
+lis_reagent_stock_check_item|actual_qty|numeric|||YES
+lis_reagent_stock_check_item|diff_qty|numeric|||YES
+lis_reagent_stock_check_item|remark|text|||YES
+lis_reagent_stock_check_item|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_stock_record|id|bigint||nextval('lis_reagent_stock_record_id_seq'::regclass)|NO
+lis_reagent_stock_record|stock_id|bigint|||NO
+lis_reagent_stock_record|reagent_id|bigint|||NO
+lis_reagent_stock_record|record_type|smallint|||YES
+lis_reagent_stock_record|quantity|numeric|||YES
+lis_reagent_stock_record|before_qty|numeric|||YES
+lis_reagent_stock_record|after_qty|numeric|||YES
+lis_reagent_stock_record|operator_id|bigint|||YES
+lis_reagent_stock_record|operator_name|character varying|50||YES
+lis_reagent_stock_record|source_no|character varying|32||YES
+lis_reagent_stock_record|related_id|bigint|||YES
+lis_reagent_stock_record|related_type|character varying|20||YES
+lis_reagent_stock_record|remark|text|||YES
+lis_reagent_stock_record|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_stock_record|dept_id|bigint|||YES
+lis_reagent_stock_record|dept_name|character varying|100||YES
+lis_reagent_warehouse|id|bigint||nextval('lis_reagent_warehouse_id_seq'::regclass)|NO
+lis_reagent_warehouse|wh_code|character varying|32||NO
+lis_reagent_warehouse|wh_name|character varying|100||NO
+lis_reagent_warehouse|parent_id|bigint||0|NO
+lis_reagent_warehouse|path|character varying|255||YES
+lis_reagent_warehouse|wh_type|smallint||1|YES
+lis_reagent_warehouse|dept_id|bigint|||YES
+lis_reagent_warehouse|dept_name|character varying|100||YES
+lis_reagent_warehouse|temp_min|numeric|||YES
+lis_reagent_warehouse|temp_max|numeric|||YES
+lis_reagent_warehouse|location_desc|character varying|255||YES
+lis_reagent_warehouse|sort_order|integer||0|YES
+lis_reagent_warehouse|status|smallint||1|YES
+lis_reagent_warehouse|remark|text|||YES
+lis_reagent_warehouse|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reagent_warehouse|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_reference_range|id|bigint||nextval('lis_reference_range_id_seq'::regclass)|NO
+lis_reference_range|test_item_id|bigint|||NO
+lis_reference_range|gender|smallint|||YES
+lis_reference_range|age_min|numeric|||YES
+lis_reference_range|age_max|numeric|||YES
+lis_reference_range|ref_low|character varying|30||YES
+lis_reference_range|ref_high|character varying|30||YES
+lis_reference_range|ref_text|character varying|100||YES
+lis_reference_range|critical_low|character varying|30||YES
+lis_reference_range|critical_high|character varying|30||YES
+lis_reference_range|unit|character varying|30||YES
+lis_reference_range|specimen_type|character varying|20||YES
+lis_reference_range|instrument_id|bigint|||YES
+lis_reference_range|condition_remark|character varying|100||YES
+lis_report|id|bigint||nextval('lis_report_id_seq'::regclass)|NO
+lis_report|report_no|character varying|32||NO
+lis_report|sample_id|bigint|||NO
+lis_report|patient_id|bigint|||NO
+lis_report|patient_name|character varying|50||YES
+lis_report|report_type|smallint|||YES
+lis_report|status|smallint||0|YES
+lis_report|auditor_id|bigint|||YES
+lis_report|audit_time|timestamp without time zone|||YES
+lis_report|publisher_id|bigint|||YES
+lis_report|publish_time|timestamp without time zone|||YES
+lis_report|report_doctor|character varying|50||YES
+lis_report|checker|character varying|50||YES
+lis_report|pdf_path|character varying|255||YES
+lis_report|his_sync_status|smallint||0|YES
+lis_report|his_sync_time|timestamp without time zone|||YES
+lis_report|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_report|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_report|patient_gender|smallint|||YES
+lis_report|patient_age|integer|||YES
+lis_report_modify_log|id|bigint||nextval('lis_report_modify_log_id_seq'::regclass)|NO
+lis_report_modify_log|report_id|bigint|||NO
+lis_report_modify_log|item_id|bigint|||YES
+lis_report_modify_log|old_value|text|||YES
+lis_report_modify_log|new_value|text|||YES
+lis_report_modify_log|modify_reason|character varying|255||YES
+lis_report_modify_log|operator_id|bigint|||YES
+lis_report_modify_log|operator_name|character varying|50||YES
+lis_report_modify_log|modify_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_report_template|id|bigint||nextval('lis_report_template_id_seq'::regclass)|NO
+lis_report_template|template_name|character varying|100||NO
+lis_report_template|instrument_id|bigint|||YES
+lis_report_template|instrument_name|character varying|100||YES
+lis_report_template|template_config|text|||YES
+lis_report_template|dual_column|smallint||0|YES
+lis_report_template|paper_size|character varying|10|'A4'::character varying|YES
+lis_report_template|orientation|character varying|10|'portrait'::character varying|YES
+lis_report_template|margin|integer||10|YES
+lis_report_template|is_default|smallint||0|YES
+lis_report_template|status|smallint||1|YES
+lis_report_template|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_report_template|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_resistance_rule|id|bigint||nextval('lis_resistance_rule_id_seq'::regclass)|NO
+lis_resistance_rule|organism_code|character varying|32||YES
+lis_resistance_rule|antibiotic_codes|text|||YES
+lis_resistance_rule|rule_name|character varying|100||YES
+lis_resistance_rule|is_critical|smallint||1|YES
+lis_resistance_rule|alert_message|character varying|255||YES
+lis_resistance_rule|status|smallint||1|YES
+lis_resistance_rule|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_result|id|bigint||nextval('lis_result_id_seq'::regclass)|NO
+lis_result|sample_id|bigint|||NO
+lis_result|test_item_id|bigint|||NO
+lis_result|result_value|character varying|100||YES
+lis_result|result_text|text|||YES
+lis_result|unit|character varying|30||YES
+lis_result|ref_range|character varying|100||YES
+lis_result|abnormal_flag|character varying|10||YES
+lis_result|is_critical|smallint||0|YES
+lis_result|instrument_id|bigint|||YES
+lis_result|operator_id|bigint|||YES
+lis_result|test_time|timestamp without time zone|||YES
+lis_result|audit_status|smallint||0|YES
+lis_result|auditor_id|bigint|||YES
+lis_result|audit_time|timestamp without time zone|||YES
+lis_result|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_result|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_result|reagent_lot_id|bigint|||YES
+lis_result|reagent_lot_no|character varying|50||YES
+lis_sample|id|bigint||nextval('lis_sample_id_seq'::regclass)|NO
+lis_sample|sample_barcode|character varying|32||NO
+lis_sample|order_id|bigint|||NO
+lis_sample|patient_id|bigint|||NO
+lis_sample|visit_id|bigint|||YES
+lis_sample|patient_name|character varying|50||YES
+lis_sample|sample_type|character varying|20||NO
+lis_sample|container_type|character varying|20||YES
+lis_sample|status|smallint||0|YES
+lis_sample|is_urgent|smallint||0|YES
+lis_sample|collect_time|timestamp without time zone|||YES
+lis_sample|receive_time|timestamp without time zone|||YES
+lis_sample|test_start_time|timestamp without time zone|||YES
+lis_sample|report_time|timestamp without time zone|||YES
+lis_sample|operator_id|bigint|||YES
+lis_sample|department|character varying|50||YES
+lis_sample|remark|text|||YES
+lis_sample|deleted|smallint||0|YES
+lis_sample|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_sample|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_sample|collector_id|bigint|||YES
+lis_sample|sample_no|character varying|32||YES
+lis_sample|instrument_id|bigint|||YES
+lis_sample|deliver_time|timestamp without time zone|||YES
+lis_sample|deliver_person|character varying|64||YES
+lis_sample|sign_off_time|timestamp without time zone|||YES
+lis_sample|sign_off_person|character varying|64||YES
+lis_sample|visit_no|character varying|64||YES
+lis_sample|reject_time|timestamp without time zone|||YES
+lis_sample|reject_person|character varying|50||YES
+lis_sample|reject_type|character varying|50||YES
+lis_sample|reject_reason|character varying|500||YES
+lis_sample|reject_count|integer||0|YES
+lis_sample|deliver_person_id|bigint|||YES
+lis_sample|sign_off_person_id|bigint|||YES
+lis_sample|reject_person_id|bigint|||YES
+lis_sample|waive_flag|smallint||0|YES
+lis_sample|waive_reason|character varying|500||YES
+lis_sample|split_flag|smallint||0|YES
+lis_sample|parent_id|bigint|||YES
+lis_sample|destroy_reason|character varying|500||YES
+lis_sample|destroy_operator|character varying|64||YES
+lis_sample|destroy_time|timestamp without time zone|||YES
+lis_sample|inspector|character varying|64||YES
+lis_sample|inspector_user_id|bigint|||YES
+lis_sample_order_item|id|bigint|||NO
+lis_sample_order_item|sample_id|bigint|||NO
+lis_sample_order_item|order_id|bigint|||NO
+lis_sample_order_item|order_item_id|bigint|||NO
+lis_sample_order_item|test_item_id|bigint|||YES
+lis_sample_order_item|create_time|timestamp without time zone|||YES
+lis_specimen_type|id|bigint||nextval('lis_specimen_type_id_seq'::regclass)|NO
+lis_specimen_type|type_code|character varying|32||NO
+lis_specimen_type|type_name|character varying|100||NO
+lis_specimen_type|description|character varying|200||YES
+lis_specimen_type|status|smallint||1|YES
+lis_specimen_type|sort_order|integer||0|YES
+lis_specimen_type|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_staff|id|bigint||nextval('lis_staff_id_seq'::regclass)|NO
+lis_staff|staff_no|character varying|32||NO
+lis_staff|name|character varying|50||NO
+lis_staff|phone|character varying|32||YES
+lis_staff|email|character varying|100||YES
+lis_staff|group_id|bigint|||YES
+lis_staff|user_id|bigint|||YES
+lis_staff|education|character varying|20||YES
+lis_staff|major|character varying|50||YES
+lis_staff|entry_date|date|||YES
+lis_staff|leave_date|date|||YES
+lis_staff|id_card|character varying|64||YES
+lis_staff|signature_image|character varying|255||YES
+lis_staff|status|smallint||1|YES
+lis_staff|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_staff|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_staff_authorization|id|bigint||nextval('lis_staff_authorization_id_seq'::regclass)|NO
+lis_staff_authorization|staff_id|bigint|||NO
+lis_staff_authorization|auth_type|character varying|50||NO
+lis_staff_authorization|auth_scope|character varying|255||YES
+lis_staff_authorization|start_date|date|||YES
+lis_staff_authorization|end_date|date|||YES
+lis_staff_authorization|grantor_id|bigint|||YES
+lis_staff_authorization|grantor_name|character varying|50||YES
+lis_staff_authorization|attachment_url|character varying|255||YES
+lis_staff_authorization|status|smallint||1|YES
+lis_staff_authorization|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_staff_certificate|id|bigint||nextval('lis_staff_certificate_id_seq'::regclass)|NO
+lis_staff_certificate|staff_id|bigint|||NO
+lis_staff_certificate|cert_type|character varying|50||NO
+lis_staff_certificate|cert_name|character varying|100||NO
+lis_staff_certificate|cert_no|character varying|50||YES
+lis_staff_certificate|issue_date|date|||YES
+lis_staff_certificate|expiry_date|date|||YES
+lis_staff_certificate|issue_org|character varying|100||YES
+lis_staff_certificate|attachment_url|character varying|255||YES
+lis_staff_certificate|alert_days|integer||30|YES
+lis_staff_certificate|status|smallint||1|YES
+lis_staff_certificate|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_staff_schedule|id|bigint||nextval('lis_staff_schedule_id_seq'::regclass)|NO
+lis_staff_schedule|staff_id|bigint|||NO
+lis_staff_schedule|schedule_date|date|||NO
+lis_staff_schedule|shift_type|character varying|20||YES
+lis_staff_schedule|duty_type|character varying|20||YES
+lis_staff_schedule|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_staff_title|id|bigint||nextval('lis_staff_title_id_seq'::regclass)|NO
+lis_staff_title|staff_id|bigint|||NO
+lis_staff_title|title_code|character varying|32||NO
+lis_staff_title|title_name|character varying|50||YES
+lis_staff_title|acquire_date|date|||YES
+lis_staff_title|expiry_date|date|||YES
+lis_staff_title|certificate_no|character varying|50||YES
+lis_staff_title|attachment_url|character varying|255||YES
+lis_staff_title|is_current|smallint||0|YES
+lis_staff_title|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_staff_training|id|bigint||nextval('lis_staff_training_id_seq'::regclass)|NO
+lis_staff_training|staff_id|bigint|||NO
+lis_staff_training|training_name|character varying|100||NO
+lis_staff_training|training_type|character varying|50||YES
+lis_staff_training|training_date|date|||YES
+lis_staff_training|trainer|character varying|50||YES
+lis_staff_training|result|character varying|20||YES
+lis_staff_training|attachment_url|character varying|255||YES
+lis_staff_training|remark|text|||YES
+lis_staff_training|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_station_signin|id|bigint||nextval('lis_station_signin_id_seq'::regclass)|NO
+lis_station_signin|signin_type|character varying|20||NO
+lis_station_signin|instrument_id|bigint|||YES
+lis_station_signin|operator_id|bigint|||YES
+lis_station_signin|operator_name|character varying|64||YES
+lis_station_signin|action|character varying|10|'signin'::character varying|YES
+lis_station_signin|signin_time|timestamp without time zone|||YES
+lis_station_signin|signout_time|timestamp without time zone|||YES
+lis_station_signin|status|smallint||1|YES
+lis_station_signin|remark|character varying|200||YES
+lis_supplier|id|bigint||nextval('lis_supplier_id_seq'::regclass)|NO
+lis_supplier|supplier_code|character varying|32||NO
+lis_supplier|supplier_name|character varying|200||NO
+lis_supplier|short_name|character varying|100||YES
+lis_supplier|credit_code|character varying|64||YES
+lis_supplier|contact_person|character varying|50||YES
+lis_supplier|phone|character varying|30||YES
+lis_supplier|email|character varying|100||YES
+lis_supplier|address|character varying|255||YES
+lis_supplier|license_no|character varying|64||YES
+lis_supplier|license_expiry|date|||YES
+lis_supplier|medical_cert_no|character varying|64||YES
+lis_supplier|medical_cert_expiry|date|||YES
+lis_supplier|qual_status|smallint||0|YES
+lis_supplier|score|numeric|||YES
+lis_supplier|source_type|smallint||1|YES
+lis_supplier|status|smallint||1|YES
+lis_supplier|remark|text|||YES
+lis_supplier|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_supplier|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_technician_favorite|id|bigint||nextval('lis_technician_favorite_id_seq'::regclass)|NO
+lis_technician_favorite|name|character varying|100||NO
+lis_technician_favorite|type|character varying|20|'sample'::character varying|NO
+lis_technician_favorite|payload|json|||YES
+lis_technician_favorite|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_test_item|id|bigint||nextval('lis_test_item_id_seq'::regclass)|NO
+lis_test_item|item_code|character varying|32||NO
+lis_test_item|item_name|character varying|100||NO
+lis_test_item|item_name_en|character varying|100||YES
+lis_test_item|short_name|character varying|50||YES
+lis_test_item|category|character varying|50||YES
+lis_test_item|specimen_type|character varying|20||YES
+lis_test_item|unit|character varying|30||YES
+lis_test_item|method|character varying|50||YES
+lis_test_item|is_panel|smallint||0|YES
+lis_test_item|parent_id|bigint|||YES
+lis_test_item|price|numeric|||YES
+lis_test_item|status|smallint||1|YES
+lis_test_item|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_test_item|tube_id|bigint|||YES
+lis_test_tube|id|bigint||nextval('lis_test_tube_id_seq'::regclass)|NO
+lis_test_tube|tube_code|character varying|32||NO
+lis_test_tube|tube_name|character varying|100||NO
+lis_test_tube|tube_color|character varying|20||YES
+lis_test_tube|tube_type|character varying|20||YES
+lis_test_tube|volume|character varying|20||YES
+lis_test_tube|additive|character varying|100||YES
+lis_test_tube|sort_order|integer||0|YES
+lis_test_tube|status|smallint||1|YES
+lis_test_tube|remark|character varying|200||YES
+lis_test_tube|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+lis_title_dict|id|bigint||nextval('lis_title_dict_id_seq'::regclass)|NO
+lis_title_dict|title_code|character varying|32||NO
+lis_title_dict|title_name|character varying|50||NO
+lis_title_dict|title_level|smallint|||YES
+lis_title_dict|sort_order|integer||0|YES
+lis_title_dict|status|smallint||1|YES
+lis_visit|id|bigint||nextval('lis_visit_id_seq'::regclass)|NO
+lis_visit|visit_no|character varying|32||NO
+lis_visit|patient_id|bigint|||NO
+lis_visit|visit_type|smallint|||YES
+lis_visit|department|character varying|50||YES
+lis_visit|bed_no|character varying|20||YES
+lis_visit|doctor_id|bigint|||YES
+lis_visit|doctor_name|character varying|50||YES
+lis_visit|visit_time|timestamp without time zone|||YES
+lis_visit|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+sys_audit_log|id|bigint||nextval('sys_audit_log_id_seq'::regclass)|NO
+sys_audit_log|user_id|bigint|||YES
+sys_audit_log|username|character varying|50||YES
+sys_audit_log|module|character varying|50||YES
+sys_audit_log|operation|character varying|100||YES
+sys_audit_log|method|character varying|200||YES
+sys_audit_log|params|text|||YES
+sys_audit_log|result|text|||YES
+sys_audit_log|ip|character varying|50||YES
+sys_audit_log|cost_time|integer|||YES
+sys_audit_log|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+sys_config|id|bigint||nextval('sys_config_id_seq'::regclass)|NO
+sys_config|config_key|character varying|100||NO
+sys_config|config_value|text|||YES
+sys_config|config_name|character varying|100||YES
+sys_config|remark|character varying|255||YES
+sys_config|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+sys_config|update_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+sys_department|id|bigint||nextval('sys_department_id_seq'::regclass)|NO
+sys_department|dept_code|character varying|50||NO
+sys_department|dept_name|character varying|100||NO
+sys_department|parent_id|bigint||0|YES
+sys_department|sort_order|integer||0|YES
+sys_department|status|smallint||1|YES
+sys_department|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+sys_permission|id|bigint||nextval('sys_permission_id_seq'::regclass)|NO
+sys_permission|parent_id|bigint||0|YES
+sys_permission|perm_code|character varying|100||NO
+sys_permission|perm_name|character varying|100||NO
+sys_permission|perm_type|smallint|||YES
+sys_permission|path|character varying|255||YES
+sys_permission|component|character varying|255||YES
+sys_permission|icon|character varying|50||YES
+sys_permission|sort_order|integer||0|YES
+sys_permission|status|smallint||1|YES
+sys_role|id|bigint||nextval('sys_role_id_seq'::regclass)|NO
+sys_role|role_code|character varying|50||NO
+sys_role|role_name|character varying|50||NO
+sys_role|description|character varying|255||YES
+sys_role|status|smallint||1|YES
+sys_role|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+sys_role_permission|role_id|bigint|||NO
+sys_role_permission|permission_id|bigint|||NO
+sys_user|id|bigint||nextval('sys_user_id_seq'::regclass)|NO
+sys_user|username|character varying|50||NO
+sys_user|password|character varying|100||NO
+sys_user|real_name|character varying|50||YES
+sys_user|phone|character varying|20||YES
+sys_user|email|character varying|100||YES
+sys_user|department_id|bigint|||YES
+sys_user|status|smallint||1|YES
+sys_user|last_login_time|timestamp without time zone|||YES
+sys_user|create_time|timestamp without time zone||CURRENT_TIMESTAMP|YES
+sys_user_role|user_id|bigint|||NO
+sys_user_role|role_id|bigint|||NO

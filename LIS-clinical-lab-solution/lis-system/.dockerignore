@@ -1,0 +1,11 @@
+# lIS 后端 Docker 构建上下文忽略规则 (置于 lis-system 根目录)
+# 排除编译产物与本地缓存, 减小构建上下文体积
+**/target/
+**/.mvn/
+**/*.iml
+**/.classpath
+**/.project
+**/.settings/
+**/logs/
+**/*.log
+lis-monolith/Dockerfile

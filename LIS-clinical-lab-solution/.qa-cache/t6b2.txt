@@ -1,0 +1,34 @@
+=== 6b-2 faithful reproduction: UNKNOWN-typed parameter (what PG JDBC sends for #{days}) ===
+--- OLD: unknown || unknown  -> expect ERROR: operator is not unique ---
+ old_unknown 
+-------------
+ 5 days
+(1 row)
+
+--- NEW: unknown * interval -> expect SUCCESS ---
+ new_unknown 
+-------------
+ 5 days
+(1 row)
+
+--- NEW with text-typed param (setString path) ---
+PREPARE
+ ?column? 
+----------
+ 7 days
+(1 row)
+
+--- OLD with text-typed param (setString path) ---
+PREPARE
+ interval 
+----------
+ 7 days
+(1 row)
+
+--- real usage shape: license_expiry_date <= CURRENT_DATE + N days ---
+      new_shape      
+---------------------
+ 2026-09-03 00:00:00
+(1 row)
+
+EXIT=0

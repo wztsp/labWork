@@ -1,0 +1,88 @@
+# ============================================================
+# 工作区通用忽略规则（LIS / 试剂 / 安装包 / 测试产物）
+# ============================================================
+
+# ---------- 依赖与构建产物 ----------
+node_modules/
+dist/
+target/
+build/classes/
+*.class
+*.pdb
+*.dSYM/
+__pycache__/
+*.pyc
+
+# ---------- 安装包 / 二进制（不进仓库） ----------
+*.tar.gz
+*.tgz
+*.zip
+*.jar
+*.war
+*.rpm
+*.deb
+*.whl
+*.exe
+*.dll
+*.so
+*.dylib
+*.msi
+*.iso
+*.img
+*.bin
+*.rdb
+dump.rdb
+
+# ---------- 日志与临时目录 ----------
+logs/
+*.log
+*.log.*
+.tmp-*/
+.tmp/
+tmp/
+temp/
+*.tmp
+*.temp
+
+# ---------- 运行时数据 ----------
+pgdata/
+postgres-data/
+infra/nacos/**/data/
+infra/nacos/**/logs/
+
+# ---------- 密钥 / 令牌（严禁提交） ----------
+.token.txt
+_token.txt
+temp_token.txt
+tmp-token.txt
+*token*.txt
+*.pem
+*.key
+*.p12
+*.jks
+.env
+.env.*
+!.env.example
+
+# ---------- 编辑器 / 系统 ----------
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Windows 保留设备名（误创建的空文件，git 无法索引）
+nul
+con
+aux
+prn
+com1
+com2
+com3
+com4
+lpt1
+lpt2
+lpt3
+
+# ---------- 前端构建产物（单体 static 由 maven 从 dist 复制） ----------
+LIS-clinical-lab-solution/lis-system/lis-monolith/src/main/resources/static/

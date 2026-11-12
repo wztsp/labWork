@@ -1,0 +1,58 @@
+=== PRE SNAPSHOT (before re-running fixed script) ===
+ tables 
+--------
+     88
+(1 row)
+
+ suppliers 
+-----------
+         0
+(1 row)
+
+ reagents 
+----------
+        4
+(1 row)
+
+ stock 
+-------
+     4
+(1 row)
+
+ inbound_items 
+---------------
+             0
+(1 row)
+
+--- fn_supplier_name_norm exists? ---
+ fn_exists 
+-----------
+         1
+(1 row)
+
+--- uk_lis_supplier_name_norm exists? ---
+ idx_exists 
+------------
+          1
+(1 row)
+
+--- lis_reagent_stock.warehouse_id nullability ---
+ column_name  | is_nullable | column_default 
+--------------+-------------+----------------
+ warehouse_id | NO          | 0
+(1 row)
+
+--- lis_reagent_stock 3-col uk ---
+          indexname          
+-----------------------------
+ uk_lis_reagent_stock_lot_wh
+(1 row)
+
+--- lis_reagent NOT NULL columns (no default) ---
+ column_name  |             column_default              
+--------------+-----------------------------------------
+ id           | nextval('lis_reagent_id_seq'::regclass)
+ reagent_code | 
+ reagent_name | 
+(3 rows)
+

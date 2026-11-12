@@ -1,0 +1,21 @@
+const { Client } = require('pg');
+const c = new Client({ host: 'localhost', port: 5432, database: 'lis_db', user: 'lis_user', password: 'lis_dev_2026' });
+(async () => {
+  await c.connect();
+  const cbc = await c.query("SELECT id,item_code,item_name,short_name,unit,parent_id FROM lis_test_item WHERE parent_id=9 AND item_code IN ('EOS_P','BASO_P') ORDER BY item_code");
+  console.log('=== 血常规新增 ===');
+  console.table(cbc.rows);
+  const p21 = await c.query("SELECT id,item_code,item_name,short_name FROM lis_test_item WHERE id=21");
+  console.log('=== 尿常规面板 ===');
+  console.table(p21.rows);
+  const ua = await c.query("SELECT item_code,item_name,unit,method FROM lis_test_item WHERE parent_id=21 AND item_code LIKE 'U_%' ORDER BY item_code");
+  console.log('=== 尿常规镜检指标 count=' + ua.rows.length + ' ===');
+  console.table(ua.rows);
+  const sp = await c.query("SELECT id,item_code,item_name,is_panel,tube_id FROM lis_test_item WHERE item_code='STOOL_ROUTINE'");
+  console.log('=== 大便常规面板 ===');
+  console.table(sp.rows);
+  const stool = await c.query("SELECT item_code,item_name,unit,method,parent_id FROM lis_test_item WHERE parent_id=179 ORDER BY item_code");
+  console.log('=== 大便常规指标 count=' + stool.rows.length + ' ===');
+  console.table(stool.rows);
+  await c.end();
+})();

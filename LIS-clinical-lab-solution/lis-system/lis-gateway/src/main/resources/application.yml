@@ -1,0 +1,41 @@
+﻿server:
+  port: 8080
+
+spring:
+  application:
+    name: lis-gateway
+  autoconfigure:
+    exclude:
+      # 网关基于 WebFlux, 不需要 Redis/数据库, 排除相关自动配置避免 Bean 冲突
+      - com.lis.common.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        enabled: false
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            # 仅允许前端开发地址, 禁止通配符来源
+            allowedOriginPatterns:
+              - http://localhost:3000
+              - http://127.0.0.1:3000
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders:
+              - Authorization
+              - Content-Type
+              - X-User-Id
+              - X-Username
+            allowCredentials: true
+
+logging:
+  level:
+    com.lis.gateway: info
+    org.springframework.cloud.gateway: info

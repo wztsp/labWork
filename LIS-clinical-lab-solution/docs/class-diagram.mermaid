@@ -1,0 +1,82 @@
+classDiagram
+    class SirCategory { <<enumeration>> S; I; SDD; R; NI }
+
+    class BreakpointExpr {
+      -Op op
+      -BigDecimal value
+      +parse(String) BreakpointExpr
+      +matches(BigDecimal) boolean
+      +isValid() boolean
+    }
+
+    class InterpretRequest {
+      +Long bacteriaId
+      +Long antibioticId
+      +String method
+      +String rawValue
+      +String standard
+      +String standardVersion
+    }
+
+    class InterpretResult {
+      +SirCategory sir
+      +String rawValue
+      +BigDecimal numericValue
+      +Long matchedBreakpointId
+      +String standard
+      +String standardVersion
+      +String basis
+      +boolean degraded
+      +String message
+    }
+
+    class SusceptibilityInterpreter {
+      <<interface>>
+      +interpret(InterpretRequest, List~AntibioticBreakpoint~) InterpretResult
+      +interpretBatch(List, Map) List~InterpretResult~
+    }
+
+    class ClsiSusceptibilityInterpreter {
+      -selectBreakpoint(...) AntibioticBreakpoint
+      -interpretMic(...) InterpretResult
+      -interpretDiskDiffusion(...) InterpretResult
+      -degrade(String) InterpretResult
+    }
+
+    class SusceptibilityInterpretService {
+      <<interface>>
+      +interpret(InterpretRequest) InterpretResult
+      +interpretBatch(List~InterpretRequest~) List~InterpretResult~
+    }
+    class SusceptibilityInterpretServiceImpl
+
+    class AntibioticBreakpointService {
+      <<interface>>
+      +listByAntibioticAndBacteria(Long, Long) List~AntibioticBreakpoint~
+      +listByBacteria(Long) List~AntibioticBreakpoint~
+    }
+
+    class AntibioticBreakpoint {
+      +Long id
+      +Long antibioticId
+      +Long bacteriaId
+      +String method
+      +String standard
+      +String standardVersion
+      +String sBreakpoint
+      +String iBreakpoint
+      +String rBreakpoint
+      +String sDd
+      +String rDd
+      +Integer status
+    }
+
+    SusceptibilityInterpreter <|.. ClsiSusceptibilityInterpreter
+    ClsiSusceptibilityInterpreter ..> BreakpointExpr : uses
+    ClsiSusceptibilityInterpreter ..> AntibioticBreakpoint : reads
+    ClsiSusceptibilityInterpreter ..> InterpretResult : produces
+    ClsiSusceptibilityInterpreter ..> InterpretRequest : consumes
+    InterpretResult --> SirCategory
+    SusceptibilityInterpretService <|.. SusceptibilityInterpretServiceImpl
+    SusceptibilityInterpretServiceImpl --> SusceptibilityInterpreter : delegates
+    SusceptibilityInterpretServiceImpl --> AntibioticBreakpointService : fetch breakpoints

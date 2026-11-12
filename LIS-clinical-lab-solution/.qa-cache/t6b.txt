@@ -1,0 +1,26 @@
+=== ⑥b licenseExpiryWithinDays old vs new, parameterized (PREPARE int = MyBatis Integer bind) ===
+--- OLD writing: ($1 || ' day')::interval  -> expect ERROR ---
+PREPARE
+ result 
+--------
+ 5 days
+(1 row)
+
+--- NEW writing: ($1 * INTERVAL '1 day')  -> expect SUCCESS (e.g. 5 days) ---
+PREPARE
+ result 
+--------
+ 5 days
+(1 row)
+
+--- literal forms for clarity ---
+ old_literal 
+-------------
+ 5 days
+(1 row)
+
+ new_literal 
+-------------
+ 5 days
+(1 row)
+
